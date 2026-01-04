@@ -1,35 +1,54 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import StatCard from '../components/StatCard.astro';
+import statsData from '../data/stats.json';
 
-const stats = {
-  population: {
-    total: 10_900_000,
-    density: 138,
-    medianAge: 43.5,
-    lifeExpectancy: 79.4,
-  },
-  economy: {
-    gdp: 290,
-    gdpPerCapita: 27_200,
-    unemployment: 2.6,
-    inflation: 2.4,
-    averageWage: 45_854,
-    minWage: 18_900,
-  },
-  geography: {
-    area: 78_871,
-    regions: 14,
-    municipalities: 6_254,
-    highestPoint: 1_603,
-  },
+interface Stat {
+  id: string;
+  label: string;
+  value: string | number;
+  unit?: string;
+  description?: string;
+  source?: string;
+  change?: number;
+  highlight?: boolean;
+}
+
+interface Section {
+  title: string;
+  description: string;
+  stats: Stat[];
+}
+
+const { demografie, ekonomika, geografie, vzdelani, zdravotnictvi, zivotniProstredi, doprava, energie, turismus, meta } = statsData as {
+  meta: { lastUpdated: string; version: string };
+  demografie: Section;
+  ekonomika: Section;
+  geografie: Section;
+  vzdelani: Section;
+  zdravotnictvi: Section;
+  zivotniProstredi: Section;
+  doprava: Section;
+  energie: Section;
+  turismus: Section;
 };
+
+const sections = [
+  { id: 'demografie', data: demografie, cols: 4 },
+  { id: 'ekonomika', data: ekonomika, cols: 3, bg: true },
+  { id: 'geografie', data: geografie, cols: 4 },
+  { id: 'vzdelani', data: vzdelani, cols: 4, bg: true },
+  { id: 'zdravotnictvi', data: zdravotnictvi, cols: 3 },
+  { id: 'zivotni-prostredi', data: zivotniProstredi, cols: 4, bg: true },
+  { id: 'doprava', data: doprava, cols: 4 },
+  { id: 'energie', data: energie, cols: 3, bg: true },
+  { id: 'turismus', data: turismus, cols: 3 },
+];
 ---
 
 <Layout title="Moje Republika – Statistiky České republiky">
   <!-- Hero -->
   <section class="relative bg-gradient-to-br from-gray-50 to-white py-16 sm:py-24 overflow-hidden">
-    <!-- Tricolor top line -->
     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-czech-blue via-white to-czech-red"></div>
     
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
@@ -44,155 +63,48 @@ const stats = {
           Přehledné statistiky a data o České republice na jednom místě. 
           Otevřená data, otevřený zdrojový kód.
         </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Demografie -->
-  <section class="py-12 sm:py-16" id="demografie">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <header class="mb-10">
-        <h2 class="text-2xl sm:text-3xl font-bold text-czech-blue">Demografie</h2>
-        <p class="text-gray-500 mt-2 max-w-xl">
-          Základní demografické údaje o obyvatelstvu České republiky.
+        <p class="text-sm text-gray-400 mt-4">
+          Poslední aktualizace: {new Date(meta.lastUpdated).toLocaleDateString('cs-CZ')}
         </p>
-      </header>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <StatCard 
-          label="Počet obyvatel"
-          value="10,9"
-          unit="mil."
-          description="Celkový počet obyvatel České republiky"
-          source="ČSÚ, 2024"
-          highlight
-        />
-        <StatCard 
-          label="Hustota zalidnění"
-          value={stats.population.density}
-          unit="ob./km²"
-          description="Průměrná hustota zalidnění"
-          source="ČSÚ, 2024"
-        />
-        <StatCard 
-          label="Medián věku"
-          value={stats.population.medianAge}
-          unit="let"
-          description="Polovina populace je mladší, polovina starší"
-          source="ČSÚ, 2024"
-        />
-        <StatCard 
-          label="Očekávaná délka života"
-          value={stats.population.lifeExpectancy}
-          unit="let"
-          description="Průměrná očekávaná délka života při narození"
-          source="ČSÚ, 2024"
-        />
+        
+        <!-- Share button -->
+        <a 
+          href="https://www.facebook.com/sharer/sharer.php?u=https://mojerepublika.cz"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 mt-6 px-4 py-2 bg-[#1877F2] hover:bg-[#166FE5] text-white text-sm font-medium rounded-lg transition-colors"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          Sdílet na Facebooku
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Ekonomika -->
-  <section class="py-12 sm:py-16 bg-gray-50" id="ekonomika">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <header class="mb-10">
-        <h2 class="text-2xl sm:text-3xl font-bold text-czech-blue">Ekonomika</h2>
-        <p class="text-gray-500 mt-2 max-w-xl">
-          Klíčové ekonomické ukazatele a statistiky trhu práce.
-        </p>
-      </header>
+  {sections.map((section) => (
+    <section 
+      class:list={['py-12 sm:py-16', section.bg ? 'bg-gray-50' : '']} 
+      id={section.id}
+    >
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <header class="mb-10">
+          <h2 class="text-2xl sm:text-3xl font-bold text-czech-blue">{section.data.title}</h2>
+          <p class="text-gray-500 mt-2 max-w-xl">
+            {section.data.description}
+          </p>
+        </header>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        <StatCard 
-          label="HDP"
-          value={stats.economy.gdp}
-          unit="mld. €"
-          description="Hrubý domácí produkt"
-          change={2.1}
-          source="Eurostat, 2024"
-          highlight
-        />
-        <StatCard 
-          label="HDP na obyvatele"
-          value="27 200"
-          unit="€"
-          description="HDP na obyvatele v paritě kupní síly"
-          source="Eurostat, 2024"
-        />
-        <StatCard 
-          label="Nezaměstnanost"
-          value={stats.economy.unemployment}
-          unit="%"
-          description="Míra nezaměstnanosti – jedna z nejnižších v EU"
-          change={-0.3}
-          source="ČSÚ, 2024"
-        />
-        <StatCard 
-          label="Inflace"
-          value={stats.economy.inflation}
-          unit="%"
-          description="Meziroční míra inflace"
-          change={-4.2}
-          source="ČNB, 2024"
-        />
-        <StatCard 
-          label="Průměrná mzda"
-          value="45 854"
-          unit="Kč"
-          description="Průměrná hrubá měsíční mzda"
-          change={6.8}
-          source="ČSÚ, Q3 2024"
-        />
-        <StatCard 
-          label="Minimální mzda"
-          value="18 900"
-          unit="Kč"
-          description="Minimální měsíční mzda pro rok 2024"
-          source="MPSV, 2024"
-        />
+        <div class:list={[
+          'grid gap-4 sm:gap-6',
+          section.cols === 4 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+        ]}>
+          {section.data.stats.map((stat: Stat) => (
+            <StatCard {...stat} />
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Geografie -->
-  <section class="py-12 sm:py-16" id="geografie">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <header class="mb-10">
-        <h2 class="text-2xl sm:text-3xl font-bold text-czech-blue">Geografie</h2>
-        <p class="text-gray-500 mt-2 max-w-xl">
-          Územní a geografické údaje.
-        </p>
-      </header>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <StatCard 
-          label="Rozloha"
-          value="78 871"
-          unit="km²"
-          description="Celková rozloha území"
-          source="ČSÚ"
-          highlight
-        />
-        <StatCard 
-          label="Krajů"
-          value={stats.geography.regions}
-          description="Počet samosprávných krajů včetně Prahy"
-          source="ČSÚ"
-        />
-        <StatCard 
-          label="Obcí"
-          value="6 254"
-          description="Počet obcí v České republice"
-          source="ČSÚ, 2024"
-        />
-        <StatCard 
-          label="Nejvyšší bod"
-          value="1 603"
-          unit="m n. m."
-          description="Sněžka v Krkonoších"
-          source="ČÚZK"
-        />
-      </div>
-    </div>
-  </section>
+    </section>
+  ))}
 </Layout>

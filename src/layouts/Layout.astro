@@ -1,13 +1,24 @@
 ---
-import "../styles/global.css";
+import '../styles/global.css';
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = "Statistiky a data o České republice" } =
-  Astro.props;
+const { title, description = 'Statistiky a data o České republice' } = Astro.props;
+
+const navItems = [
+  { href: '/', label: 'Přehled' },
+  { href: '#demografie', label: 'Demografie' },
+  { href: '#ekonomika', label: 'Ekonomika' },
+  { href: '#vzdelani', label: 'Vzdělání' },
+  { href: '#zdravotnictvi', label: 'Zdravotnictví' },
+  { href: '#zivotni-prostredi', label: 'Životní prostředí' },
+  { href: '#doprava', label: 'Doprava' },
+  { href: '#energie', label: 'Energie' },
+  { href: '#turismus', label: 'Turismus' },
+];
 ---
 
 <!doctype html>
@@ -17,140 +28,74 @@ const { title, description = "Statistiky a data o České republice" } =
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#08437f" />
-
+    
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="cs_CZ" />
-    <meta property="og:image" content="https://mojerepublika.cz/og-image.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content="https://mojerepublika.cz" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta
-      name="twitter:image"
-      content="https://mojerepublika.cz/og-image.png"
-    />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-
+    <meta property="og:image" content="/og-image.png" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <title>{title}</title>
   </head>
   <body class="bg-white text-gray-900">
     <!-- Header -->
-    <header class="bg-white border-b-[3px] border-czech-blue sticky top-0 z-50">
+    <header class="bg-white border-b-[3px] border-czech-blue sticky top-0 z-50 shadow-sm">
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <div class="flex items-center justify-between py-4">
+        <div class="flex items-center justify-between py-3">
           <!-- Logo -->
-          <a
-            href="/"
-            class="flex items-center gap-2 font-display text-xl font-bold text-czech-blue"
-          >
-            <svg
-              class="w-12 h-8"
-              viewBox="0 0 900 600"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="900" height="600" fill="#d80c13"></rect>
-              <rect width="900" height="300" fill="#ffffff"></rect>
-              <polygon points="0,0 450,300 0,600" fill="#08437f"></polygon>
+          <a href="/" class="flex items-center gap-2 font-display font-bold text-czech-blue shrink-0">
+            <svg class="w-10 h-7" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+              <rect width="900" height="600" fill="#d80c13"/>
+              <rect width="900" height="300" fill="#ffffff"/>
+              <polygon points="0,0 450,300 0,600" fill="#08437f"/>
             </svg>
-            Moje Republika
+            <span class="text-sm sm:text-lg">Moje Republika</span>
           </a>
-
-          <!-- Desktop nav -->
-          <nav class="hidden md:flex gap-6">
-            <a
-              href="/"
-              class="font-medium text-gray-600 hover:text-czech-blue border-b-2 border-transparent hover:border-czech-red transition-all py-1"
-              >Přehled</a
-            >
-            <a
-              href="#demografie"
-              class="font-medium text-gray-600 hover:text-czech-blue border-b-2 border-transparent hover:border-czech-red transition-all py-1"
-              >Demografie</a
-            >
-            <a
-              href="#ekonomika"
-              class="font-medium text-gray-600 hover:text-czech-blue border-b-2 border-transparent hover:border-czech-red transition-all py-1"
-              >Ekonomika</a
-            >
-            <a
-              href="#kontakt"
-              class="font-medium text-gray-600 hover:text-czech-blue border-b-2 border-transparent hover:border-czech-red transition-all py-1"
-              >Kontakt</a
-            >
+          
+          <!-- Desktop nav - scrollable -->
+          <nav class="hidden lg:flex gap-1 overflow-x-auto">
+            {navItems.map(item => (
+              <a 
+                href={item.href} 
+                class="font-medium text-sm text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all whitespace-nowrap"
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
-
+          
           <!-- Mobile menu button -->
-          <button
-            id="menu-toggle"
-            class="md:hidden p-2 text-czech-blue hover:bg-gray-100 rounded-lg transition-colors"
+          <button 
+            id="menu-toggle" 
+            class="lg:hidden p-2 text-czech-blue hover:bg-gray-100 rounded-lg transition-colors"
             aria-label="Toggle menu"
           >
-            <svg
-              id="menu-icon"
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"></path>
+            <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
-            <svg
-              id="close-icon"
-              class="w-6 h-6 hidden"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"></path>
+            <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
         </div>
-
+        
         <!-- Mobile nav -->
-        <nav
-          id="mobile-menu"
-          class="hidden md:hidden pb-4 border-t border-gray-200"
-        >
-          <div class="flex flex-col gap-2 pt-4">
-            <a
-              href="/"
-              class="font-medium text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all"
-              >Přehled</a
-            >
-            <a
-              href="#demografie"
-              class="font-medium text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all"
-              >Demografie</a
-            >
-            <a
-              href="#ekonomika"
-              class="font-medium text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all"
-              >Ekonomika</a
-            >
-            <a
-              href="#kontakt"
-              class="font-medium text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all"
-              >Kontakt</a
-            >
+        <nav id="mobile-menu" class="hidden lg:hidden pb-4 border-t border-gray-200">
+          <div class="grid grid-cols-2 gap-1 pt-4">
+            {navItems.map(item => (
+              <a 
+                href={item.href} 
+                class="font-medium text-sm text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all"
+              >
+                {item.label}
+              </a>
+            ))}
           </div>
         </nav>
       </div>
@@ -160,76 +105,82 @@ const { title, description = "Statistiky a data o České republice" } =
       <slot />
     </main>
 
+    <!-- Back to top button -->
+    <button 
+      id="back-to-top"
+      class="fixed bottom-6 right-6 w-12 h-12 bg-czech-blue text-white rounded-full shadow-lg hover:bg-czech-blue/90 transition-all opacity-0 invisible z-40"
+      aria-label="Zpět nahoru"
+    >
+      <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+      </svg>
+    </button>
+
     <!-- Tricolor divider -->
-    <div class="h-1 bg-gradient-to-r from-czech-blue via-white to-czech-red">
-    </div>
+    <div class="h-1 bg-gradient-to-r from-czech-blue via-white to-czech-red"></div>
 
     <!-- Footer -->
-    <footer class="bg-czech-blue text-white py-12 mt-16" id="kontakt">
+    <footer class="bg-czech-blue text-white py-12" id="kontakt">
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <!-- Logo & popis -->
           <div>
             <span class="font-display text-xl font-bold">Moje Republika</span>
             <p class="text-white/70 text-sm mt-3">
-              Open source projekt prezentující data o České republice na jednom
-              místě.
+              Open source projekt prezentující data o České republice na jednom místě.
             </p>
           </div>
-
+          
           <!-- Zdroje dat -->
           <div>
             <h3 class="font-semibold mb-3">Zdroje dat</h3>
             <ul class="space-y-2 text-sm text-white/70">
-              <li>
-                <a
-                  href="https://www.czso.cz"
-                  target="_blank"
-                  rel="noopener"
-                  class="hover:text-white transition-colors"
-                  >Český statistický úřad (ČSÚ)</a>
-              </li>
-              <li>
-                <a
-                  href="https://ec.europa.eu/eurostat"
-                  target="_blank"
-                  rel="noopener"
-                  class="hover:text-white transition-colors">Eurostat</a>
-              </li>
-              <li>
-                <a
-                  href="https://www.cnb.cz"
-                  target="_blank"
-                  rel="noopener"
-                  class="hover:text-white transition-colors"
-                  >Česká národní banka (ČNB)</a>
-              </li>
+              <li><a href="https://www.czso.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Český statistický úřad (ČSÚ)</a></li>
+              <li><a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener" class="hover:text-white transition-colors">Eurostat</a></li>
+              <li><a href="https://www.cnb.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Česká národní banka (ČNB)</a></li>
+              <li><a href="https://www.eru.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Energetický regulační úřad (ERÚ)</a></li>
+              <li><a href="https://www.mzp.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Ministerstvo životního prostředí</a></li>
             </ul>
           </div>
-
+          
           <!-- Kontakt -->
           <div>
             <h3 class="font-semibold mb-3">Kontakt</h3>
             <ul class="space-y-2 text-sm text-white/70">
               <li>
-                <a
-                  href="mailto:mojerepublika@noah.fit"
-                  class="hover:text-white transition-colors"
-                >
+                <a href="mailto:mojerepublika@noah.fit" class="hover:text-white transition-colors">
                   mojerepublika@noah.fit
                 </a>
               </li>
+              <li>
+                <a href="https://github.com/your-repo/mojerepublika" target="_blank" rel="noopener" class="hover:text-white transition-colors">
+                  GitHub repozitář
+                </a>
+              </li>
             </ul>
+            
+            <!-- Share -->
+            <h3 class="font-semibold mb-3 mt-6">Sdílejte</h3>
+            <a 
+              href="https://www.facebook.com/sharer/sharer.php?u=https://mojerepublika.cz"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white text-sm rounded-lg transition-colors"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+              Facebook
+            </a>
           </div>
         </div>
-
+        
         <!-- Disclaimer -->
         <div class="border-t border-white/20 mt-8 pt-8">
           <p class="text-xs text-white/50 max-w-3xl">
-            <strong class="text-white/70">Disclaimer:</strong> Informace uvedené na
-            těchto stránkách mají pouze informativní charakter. Přestože se snažíme
-            o maximální přesnost, nemůžeme zaručit úplnost ani aktuálnost všech údajů.
-            Data pocházejí z veřejně dostupných zdrojů a mohou být předmětem revizí.
+            <strong class="text-white/70">Disclaimer:</strong> Informace uvedené na těchto stránkách mají pouze informativní charakter. 
+            Přestože se snažíme o maximální přesnost, nemůžeme zaručit úplnost ani aktuálnost všech údajů. 
+            Data pocházejí z veřejně dostupných zdrojů a mohou být předmětem revizí. 
             Pro oficiální a závazné informace se obracejte přímo na uvedené zdroje.
           </p>
           <p class="text-xs text-white/40 mt-4">
@@ -238,27 +189,45 @@ const { title, description = "Statistiky a data o České republice" } =
         </div>
       </div>
     </footer>
-
-    <!-- Mobile menu script -->
+    
+    <!-- Scripts -->
     <script>
-      const menuToggle = document.getElementById("menu-toggle");
-      const mobileMenu = document.getElementById("mobile-menu");
-      const menuIcon = document.getElementById("menu-icon");
-      const closeIcon = document.getElementById("close-icon");
-
-      menuToggle?.addEventListener("click", () => {
-        mobileMenu?.classList.toggle("hidden");
-        menuIcon?.classList.toggle("hidden");
-        closeIcon?.classList.toggle("hidden");
+      // Mobile menu toggle
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuIcon = document.getElementById('menu-icon');
+      const closeIcon = document.getElementById('close-icon');
+      
+      menuToggle?.addEventListener('click', () => {
+        mobileMenu?.classList.toggle('hidden');
+        menuIcon?.classList.toggle('hidden');
+        closeIcon?.classList.toggle('hidden');
+      });
+      
+      // Close menu on link click
+      mobileMenu?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu?.classList.add('hidden');
+          menuIcon?.classList.remove('hidden');
+          closeIcon?.classList.add('hidden');
+        });
       });
 
-      // Close menu on link click
-      mobileMenu?.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-          mobileMenu?.classList.add("hidden");
-          menuIcon?.classList.remove("hidden");
-          closeIcon?.classList.add("hidden");
-        });
+      // Back to top button
+      const backToTop = document.getElementById('back-to-top');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+          backToTop?.classList.remove('opacity-0', 'invisible');
+          backToTop?.classList.add('opacity-100', 'visible');
+        } else {
+          backToTop?.classList.add('opacity-0', 'invisible');
+          backToTop?.classList.remove('opacity-100', 'visible');
+        }
+      });
+
+      backToTop?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     </script>
   </body>

@@ -1,0 +1,424 @@
+{
+  "meta": {
+    "lastUpdated": "2025-01-04",
+    "version": "2.0.0"
+  },
+  "demografie": {
+    "title": "Demografie",
+    "description": "Základní demografické údaje o obyvatelstvu České republiky.",
+    "stats": [
+      {
+        "id": "population",
+        "label": "Počet obyvatel",
+        "value": "10,9",
+        "unit": "mil.",
+        "description": "Celkový počet obyvatel České republiky",
+        "source": "ČSÚ, 2024",
+        "highlight": true
+      },
+      {
+        "id": "density",
+        "label": "Hustota zalidnění",
+        "value": 138,
+        "unit": "ob./km²",
+        "description": "Průměrná hustota zalidnění",
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "median-age",
+        "label": "Medián věku",
+        "value": 43.5,
+        "unit": "let",
+        "description": "Polovina populace je mladší, polovina starší",
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "life-expectancy",
+        "label": "Očekávaná délka života",
+        "value": 79.4,
+        "unit": "let",
+        "description": "Průměrná očekávaná délka života při narození",
+        "source": "ČSÚ, 2024"
+      }
+    ]
+  },
+  "ekonomika": {
+    "title": "Ekonomika",
+    "description": "Klíčové ekonomické ukazatele a statistiky trhu práce.",
+    "stats": [
+      {
+        "id": "gdp",
+        "label": "HDP",
+        "value": 290,
+        "unit": "mld. €",
+        "description": "Hrubý domácí produkt",
+        "change": 2.1,
+        "source": "Eurostat, 2024",
+        "highlight": true
+      },
+      {
+        "id": "gdp-per-capita",
+        "label": "HDP na obyvatele",
+        "value": "27 200",
+        "unit": "€",
+        "description": "HDP na obyvatele v paritě kupní síly",
+        "source": "Eurostat, 2024"
+      },
+      {
+        "id": "unemployment",
+        "label": "Nezaměstnanost",
+        "value": 2.6,
+        "unit": "%",
+        "description": "Míra nezaměstnanosti – jedna z nejnižších v EU",
+        "change": -0.3,
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "inflation",
+        "label": "Inflace",
+        "value": 2.4,
+        "unit": "%",
+        "description": "Meziroční míra inflace",
+        "change": -4.2,
+        "source": "ČNB, 2024"
+      },
+      {
+        "id": "average-wage",
+        "label": "Průměrná mzda",
+        "value": "45 854",
+        "unit": "Kč",
+        "description": "Průměrná hrubá měsíční mzda",
+        "change": 6.8,
+        "source": "ČSÚ, Q3 2024"
+      },
+      {
+        "id": "min-wage",
+        "label": "Minimální mzda",
+        "value": "18 900",
+        "unit": "Kč",
+        "description": "Minimální měsíční mzda pro rok 2024",
+        "source": "MPSV, 2024"
+      }
+    ]
+  },
+  "geografie": {
+    "title": "Geografie",
+    "description": "Územní a geografické údaje.",
+    "stats": [
+      {
+        "id": "area",
+        "label": "Rozloha",
+        "value": "78 871",
+        "unit": "km²",
+        "description": "Celková rozloha území",
+        "source": "ČSÚ",
+        "highlight": true
+      },
+      {
+        "id": "regions",
+        "label": "Krajů",
+        "value": 14,
+        "description": "Počet samosprávných krajů včetně Prahy",
+        "source": "ČSÚ"
+      },
+      {
+        "id": "municipalities",
+        "label": "Obcí",
+        "value": "6 254",
+        "description": "Počet obcí v České republice",
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "highest-point",
+        "label": "Nejvyšší bod",
+        "value": "1 603",
+        "unit": "m n. m.",
+        "description": "Sněžka v Krkonoších",
+        "source": "ČÚZK"
+      }
+    ]
+  },
+  "vzdelani": {
+    "title": "Vzdělání",
+    "description": "Statistiky o vzdělávání a studentech.",
+    "stats": [
+      {
+        "id": "university-students",
+        "label": "Vysokoškoláků",
+        "value": "315",
+        "unit": "tis.",
+        "description": "Počet studentů na veřejných a soukromých VŠ",
+        "change": 2.1,
+        "source": "ČSÚ, 2024",
+        "highlight": true
+      },
+      {
+        "id": "university-ratio",
+        "label": "Podíl vysokoškoláků",
+        "value": 19.5,
+        "unit": "%",
+        "description": "Podíl studentů VŠ na populaci 20–29 let",
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "foreign-students",
+        "label": "Zahraničních studentů",
+        "value": "56",
+        "unit": "tis.",
+        "description": "Počet studentů s cizí státní příslušností (18 %)",
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "high-school-students",
+        "label": "Středoškoláků",
+        "value": "500",
+        "unit": "tis.",
+        "description": "Počet žáků středních škol",
+        "change": 19,
+        "source": "ČSÚ, 2024"
+      }
+    ]
+  },
+  "zdravotnictvi": {
+    "title": "Zdravotnictví",
+    "description": "Údaje o zdravotní péči a zdravotnických pracovnících.",
+    "stats": [
+      {
+        "id": "doctors",
+        "label": "Lékařů",
+        "value": "48 781",
+        "description": "Počet lékařů ve zdravotnictví",
+        "source": "ČSÚ, 2024",
+        "highlight": true
+      },
+      {
+        "id": "nurses",
+        "label": "Zdravotních sester",
+        "value": "86 580",
+        "description": "Počet všeobecných sester",
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "hospitals",
+        "label": "Nemocnic",
+        "value": 160,
+        "description": "Počet nemocnic akutní péče",
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "hospital-beds",
+        "label": "Nemocničních lůžek",
+        "value": "49 199",
+        "description": "Počet lůžek v nemocnicích akutní péče",
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "gp-offices",
+        "label": "Ordinací praktických lékařů",
+        "value": "7 405",
+        "description": "Pro dospělé (5 378) a děti (2 027)",
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "doctor-salary",
+        "label": "Průměrná mzda lékaře",
+        "value": "124 775",
+        "unit": "Kč",
+        "description": "Průměrná hrubá měsíční mzda lékařů",
+        "source": "ČSÚ, 2024"
+      }
+    ]
+  },
+  "zivotniProstredi": {
+    "title": "Životní prostředí",
+    "description": "Emise, recyklace a ochrana přírody.",
+    "stats": [
+      {
+        "id": "co2-emissions",
+        "label": "Emise CO₂",
+        "value": "103,5",
+        "unit": "mil. t",
+        "description": "Roční emise skleníkových plynů (CO₂ ekvivalent)",
+        "change": -47,
+        "source": "ČHMÚ, 2023",
+        "highlight": true
+      },
+      {
+        "id": "co2-per-capita",
+        "label": "Emise na obyvatele",
+        "value": 9.56,
+        "unit": "t CO₂eq",
+        "description": "Roční emise na jednoho obyvatele",
+        "source": "ČHMÚ, 2023"
+      },
+      {
+        "id": "recycling-rate",
+        "label": "Míra recyklace",
+        "value": 38,
+        "unit": "%",
+        "description": "Podíl recyklovaného komunálního odpadu",
+        "source": "MŽP, 2024"
+      },
+      {
+        "id": "protected-areas",
+        "label": "Chráněná území",
+        "value": 17,
+        "unit": "%",
+        "description": "Podíl chráněných území na rozloze ČR",
+        "source": "MŽP, 2024"
+      }
+    ]
+  },
+  "doprava": {
+    "title": "Doprava",
+    "description": "Dopravní infrastruktura a vozový park.",
+    "stats": [
+      {
+        "id": "highways",
+        "label": "Délka dálnic",
+        "value": "1 501",
+        "unit": "km",
+        "description": "Celková délka dálniční sítě",
+        "source": "ŘSD, 2024",
+        "highlight": true
+      },
+      {
+        "id": "roads",
+        "label": "Délka silnic",
+        "value": "55 888",
+        "unit": "km",
+        "description": "Celková délka silnic a dálnic",
+        "source": "ŘSD, 2024"
+      },
+      {
+        "id": "railways",
+        "label": "Délka železnic",
+        "value": "9 349",
+        "unit": "km",
+        "description": "2. nejhustší železniční síť na světě",
+        "source": "SŽDC, 2023"
+      },
+      {
+        "id": "cars",
+        "label": "Osobních aut",
+        "value": "6,5",
+        "unit": "mil.",
+        "description": "Počet registrovaných osobních automobilů",
+        "source": "ČSÚ, 2024"
+      }
+    ]
+  },
+  "energie": {
+    "title": "Energie",
+    "description": "Výroba a spotřeba elektrické energie.",
+    "stats": [
+      {
+        "id": "electricity-production",
+        "label": "Výroba elektřiny",
+        "value": 74,
+        "unit": "TWh",
+        "description": "Celková roční výroba elektrické energie",
+        "source": "ERÚ, 2024",
+        "highlight": true
+      },
+      {
+        "id": "nuclear-share",
+        "label": "Podíl jádra",
+        "value": 40.2,
+        "unit": "%",
+        "description": "Podíl jaderných elektráren na výrobě",
+        "source": "ERÚ, 2024"
+      },
+      {
+        "id": "coal-share",
+        "label": "Podíl uhlí",
+        "value": 36,
+        "unit": "%",
+        "description": "Podíl uhelných elektráren na výrobě",
+        "change": -5,
+        "source": "ERÚ, 2024"
+      },
+      {
+        "id": "renewables-share",
+        "label": "Podíl OZE",
+        "value": 16.7,
+        "unit": "%",
+        "description": "Podíl obnovitelných zdrojů na výrobě",
+        "change": 2.7,
+        "source": "ERÚ, 2024"
+      },
+      {
+        "id": "nuclear-plants",
+        "label": "Jaderné elektrárny",
+        "value": 2,
+        "description": "Dukovany (4 bloky) a Temelín (2 bloky)",
+        "source": "ČEZ, 2024"
+      },
+      {
+        "id": "installed-capacity",
+        "label": "Instalovaný výkon",
+        "value": "22 929",
+        "unit": "MW",
+        "description": "Celkový instalovaný výkon elektráren",
+        "source": "ERÚ, 2024"
+      }
+    ]
+  },
+  "turismus": {
+    "title": "Turismus",
+    "description": "Cestovní ruch a turistické cíle.",
+    "stats": [
+      {
+        "id": "tourists",
+        "label": "Turistů celkem",
+        "value": "22,8",
+        "unit": "mil.",
+        "description": "Celkový počet turistů v HUZ (rekord)",
+        "change": 7,
+        "source": "ČSÚ, 2024",
+        "highlight": true
+      },
+      {
+        "id": "foreign-tourists",
+        "label": "Zahraničních turistů",
+        "value": "10,5",
+        "unit": "mil.",
+        "description": "Počet zahraničních návštěvníků (46 %)",
+        "change": 10,
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "avg-stay",
+        "label": "Průměrná délka pobytu",
+        "value": 3.5,
+        "unit": "dne",
+        "description": "Průměrná doba pobytu turisty v ČR",
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "unesco-sites",
+        "label": "UNESCO památek",
+        "value": 17,
+        "description": "Památky na seznamu světového dědictví",
+        "source": "UNESCO, 2024"
+      },
+      {
+        "id": "prague-castle",
+        "label": "Pražský hrad",
+        "value": "2,6",
+        "unit": "mil.",
+        "description": "Nejnavštěvovanější památka v ČR",
+        "change": 17,
+        "source": "CzechTourism, 2024"
+      },
+      {
+        "id": "zoo-prague",
+        "label": "Zoo Praha",
+        "value": "1,4",
+        "unit": "mil.",
+        "description": "Nejnavštěvovanější ZOO v ČR",
+        "source": "Zoo Praha, 2024"
+      }
+    ]
+  }
+}
