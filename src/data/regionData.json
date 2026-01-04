@@ -1,0 +1,16 @@
+{
+  "praha": { "name": "Hlavní město Praha", "density": 2714, "unemployment": 2.0, "salary": 55000 },
+  "stredocesky": { "name": "Středočeský kraj", "density": 137, "unemployment": 2.3, "salary": 44000 },
+  "jihocesky": { "name": "Jihočeský kraj", "density": 64, "unemployment": 2.2, "salary": 40000 },
+  "plzensky": { "name": "Plzeňský kraj", "density": 76, "unemployment": 2.1, "salary": 42000 },
+  "karlovarsky": { "name": "Karlovarský kraj", "density": 93, "unemployment": 3.8, "salary": 38000 },
+  "ustecky": { "name": "Ústecký kraj", "density": 153, "unemployment": 4.5, "salary": 40000 },
+  "liberecky": { "name": "Liberecký kraj", "density": 141, "unemployment": 2.8, "salary": 41000 },
+  "kralovehradecky": { "name": "Královéhradecký kraj", "density": 117, "unemployment": 2.4, "salary": 40000 },
+  "pardubicky": { "name": "Pardubický kraj", "density": 117, "unemployment": 2.2, "salary": 39000 },
+  "vysocina": { "name": "Kraj Vysočina", "density": 75, "unemployment": 2.5, "salary": 39000 },
+  "jihomoravsky": { "name": "Jihomoravský kraj", "density": 165, "unemployment": 3.2, "salary": 43000 },
+  "olomoucky": { "name": "Olomoucký kraj", "density": 120, "unemployment": 3.1, "salary": 39000 },
+  "zlinsky": { "name": "Zlínský kraj", "density": 148, "unemployment": 2.5, "salary": 39000 },
+  "moravskoslezsky": { "name": "Moravskoslezský kraj", "density": 223, "unemployment": 4.2, "salary": 41000 }
+}
