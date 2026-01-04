@@ -111,9 +111,18 @@ function initCzechMap() {
     region.addEventListener('mousemove', (e) => {
       const rect = container?.getBoundingClientRect();
       if (rect && tooltip) {
-        const x = e.clientX - rect.left;
+        const tooltipWidth = tooltip.offsetWidth || 150;
+        let x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        tooltip.style.left = `${x + 15}px`;
+        
+        // Pokud by tooltip přesahoval vpravo, posuneme doleva
+        if (x + tooltipWidth + 20 > rect.width) {
+          x = x - tooltipWidth - 15;
+        } else {
+          x = x + 15;
+        }
+        
+        tooltip.style.left = `${Math.max(5, x)}px`;
         tooltip.style.top = `${y - 10}px`;
       }
     });
@@ -139,9 +148,18 @@ function initCzechMap() {
         const touch = e.touches[0];
         const rect = container?.getBoundingClientRect();
         if (rect && tooltip) {
-          const x = touch.clientX - rect.left;
+          const tooltipWidth = tooltip.offsetWidth || 150;
+          let x = touch.clientX - rect.left;
           const y = touch.clientY - rect.top;
-          tooltip.style.left = `${x + 15}px`;
+          
+          // Pokud by tooltip přesahoval vpravo, posuneme doleva
+          if (x + tooltipWidth + 20 > rect.width) {
+            x = x - tooltipWidth - 15;
+          } else {
+            x = x + 15;
+          }
+          
+          tooltip.style.left = `${Math.max(5, x)}px`;
           tooltip.style.top = `${y - 40}px`;
         }
       }
