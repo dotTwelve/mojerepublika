@@ -1,0 +1,27 @@
+{
+  "name": "mojerepublika",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Statistiky o České republice",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tvoje-username/mojerepublika"
+  },
+  "license": "MIT",
+  "keywords": [
+    "czech",
+    "statistics",
+    "data",
+    "astro"
+  ]
+}

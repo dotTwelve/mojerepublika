@@ -1,0 +1,188 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StatCard from '../components/StatCard.astro';
+
+// Data - můžeš je později přesunout do samostatného souboru nebo API
+const stats = {
+  population: {
+    total: 10_900_000,
+    density: 138,
+    medianAge: 43.5,
+    lifeExpectancy: 79.4,
+  },
+  economy: {
+    gdp: 290,
+    gdpPerCapita: 27_200,
+    unemployment: 2.6,
+    inflation: 2.4,
+    averageWage: 45_854,
+    minWage: 18_900,
+  },
+  geography: {
+    area: 78_871,
+    regions: 14,
+    municipalities: 6_254,
+    highestPoint: 1_603,
+  },
+};
+---
+
+<Layout title="Moje Republika – Statistiky České republiky">
+  <section class="hero">
+    <div class="container">
+      <div class="hero__content">
+        <span class="hero__subtitle">Česká republika v číslech</span>
+        <h1 class="hero__title">Moje Republika</h1>
+        <p class="hero__description">
+          Přehledné statistiky a data o České republice na jednom místě. 
+          Otevřená data, otevřený zdrojový kód.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="demografie">
+    <div class="container">
+      <header class="section-header">
+        <h2 class="section-header__title">Demografie</h2>
+        <p class="section-header__description">
+          Základní demografické údaje o obyvatelstvu České republiky.
+        </p>
+      </header>
+
+      <div class="stats-grid">
+        <StatCard 
+          label="Počet obyvatel"
+          value="10,9"
+          unit="mil."
+          description="Celkový počet obyvatel České republiky"
+          source="ČSÚ, 2024"
+          highlight
+        />
+        <StatCard 
+          label="Hustota zalidnění"
+          value={stats.population.density}
+          unit="ob./km²"
+          description="Průměrná hustota zalidnění"
+          source="ČSÚ, 2024"
+        />
+        <StatCard 
+          label="Medián věku"
+          value={stats.population.medianAge}
+          unit="let"
+          description="Polovina populace je mladší, polovina starší"
+          source="ČSÚ, 2024"
+        />
+        <StatCard 
+          label="Očekávaná délka života"
+          value={stats.population.lifeExpectancy}
+          unit="let"
+          description="Průměrná očekávaná délka života při narození"
+          source="ČSÚ, 2024"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ekonomika">
+    <div class="container">
+      <header class="section-header">
+        <h2 class="section-header__title">Ekonomika</h2>
+        <p class="section-header__description">
+          Klíčové ekonomické ukazatele a statistiky trhu práce.
+        </p>
+      </header>
+
+      <div class="stats-grid">
+        <StatCard 
+          label="HDP"
+          value={stats.economy.gdp}
+          unit="mld. €"
+          description="Hrubý domácí produkt"
+          change={2.1}
+          source="Eurostat, 2024"
+          highlight
+        />
+        <StatCard 
+          label="HDP na obyvatele"
+          value="27 200"
+          unit="€"
+          description="HDP na obyvatele v paritě kupní síly"
+          source="Eurostat, 2024"
+        />
+        <StatCard 
+          label="Nezaměstnanost"
+          value={stats.economy.unemployment}
+          unit="%"
+          description="Míra nezaměstnanosti – jedna z nejnižších v EU"
+          change={-0.3}
+          source="ČSÚ, 2024"
+        />
+        <StatCard 
+          label="Inflace"
+          value={stats.economy.inflation}
+          unit="%"
+          description="Meziroční míra inflace"
+          change={-4.2}
+          source="ČNB, 2024"
+        />
+        <StatCard 
+          label="Průměrná mzda"
+          value="45 854"
+          unit="Kč"
+          description="Průměrná hrubá měsíční mzda"
+          change={6.8}
+          source="ČSÚ, Q3 2024"
+        />
+        <StatCard 
+          label="Minimální mzda"
+          value="18 900"
+          unit="Kč"
+          description="Minimální měsíční mzda pro rok 2024"
+          source="MPSV, 2024"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="geografie">
+    <div class="container">
+      <header class="section-header">
+        <h2 class="section-header__title">Geografie</h2>
+        <p class="section-header__description">
+          Územní a geografické údaje.
+        </p>
+      </header>
+
+      <div class="stats-grid">
+        <StatCard 
+          label="Rozloha"
+          value="78 871"
+          unit="km²"
+          description="Celková rozloha území"
+          source="ČSÚ"
+          highlight
+        />
+        <StatCard 
+          label="Krajů"
+          value={stats.geography.regions}
+          description="Počet samosprávných krajů včetně Prahy"
+          source="ČSÚ"
+        />
+        <StatCard 
+          label="Obcí"
+          value="6 254"
+          description="Počet obcí v České republice"
+          source="ČSÚ, 2024"
+        />
+        <StatCard 
+          label="Nejvyšší bod"
+          value="1 603"
+          unit="m n. m."
+          description="Sněžka v Krkonoších"
+          source="ČÚZK"
+        />
+      </div>
+    </div>
+  </section>
+</Layout>

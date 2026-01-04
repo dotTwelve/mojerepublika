@@ -1,0 +1,74 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Statistiky a data o České republice' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#08437f" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="cs_CZ" />
+    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header__inner">
+        <a href="/" class="header__logo">
+          <svg class="header__logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="4" fill="#08437f"/>
+            <path d="M4 16h28" stroke="#fff" stroke-width="2"/>
+            <path d="M4 8h28v8H4z" fill="#fff"/>
+            <path d="M4 16h28v8H4z" fill="#d80c13"/>
+            <path d="M4 8l12 8L4 24V8z" fill="#08437f"/>
+          </svg>
+          Moje Republika
+        </a>
+        <nav class="header__nav">
+          <a href="/" class="active">Přehled</a>
+          <a href="#demografie">Demografie</a>
+          <a href="#ekonomika">Ekonomika</a>
+          <a href="https://github.com/tvoje-username/mojerepublika" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <div class="tricolor-divider"></div>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <span class="footer__logo">Moje Republika</span>
+        <p class="footer__text">
+          Open source projekt prezentující data o České republice.<br />
+          Data pocházejí z veřejně dostupných zdrojů (ČSÚ, Eurostat, ČNB).
+        </p>
+        <div class="footer__links">
+          <a href="https://github.com/tvoje-username/mojerepublika" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.czso.cz" target="_blank" rel="noopener">ČSÚ</a>
+          <a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener">Eurostat</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

@@ -1,0 +1,28 @@
+---
+interface Props {
+  label: string;
+  value: string | number;
+  unit?: string;
+  description?: string;
+  change?: number;
+  source?: string;
+  highlight?: boolean;
+}
+
+const { label, value, unit, description, change, source, highlight = false } = Astro.props;
+---
+
+<article class:list={['stat-card', { 'stat-card--highlight': highlight }]}>
+  <span class="stat-card__label">{label}</span>
+  <div class="stat-card__value">
+    {value}
+    {unit && <span class="stat-card__unit">{unit}</span>}
+  </div>
+  {description && <p class="stat-card__description">{description}</p>}
+  {change !== undefined && (
+    <span class:list={['stat-card__change', change >= 0 ? 'stat-card__change--positive' : 'stat-card__change--negative']}>
+      {change >= 0 ? '↑' : '↓'} {Math.abs(change)}%
+    </span>
+  )}
+  {source && <cite class="source">Zdroj: {source}</cite>}
+</article>
