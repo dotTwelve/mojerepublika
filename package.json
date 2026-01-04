@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
+    "@tailwindcss/vite": "^4.1.18",
     "@vercel/analytics": "^1.6.1",
-    "astro": "^5.0.0"
+    "astro": "^5.0.0",
+    "tailwindcss": "^4.1.18"
   },
   "repository": {
     "type": "git",

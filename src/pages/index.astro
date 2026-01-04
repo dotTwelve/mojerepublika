@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import StatCard from '../components/StatCard.astro';
 
-// Data - můžeš je později přesunout do samostatného souboru nebo API
 const stats = {
   population: {
     total: 10_900_000,
@@ -28,12 +27,20 @@ const stats = {
 ---
 
 <Layout title="Moje Republika – Statistiky České republiky">
-  <section class="hero">
-    <div class="container">
-      <div class="hero__content">
-        <span class="hero__subtitle">Česká republika v číslech</span>
-        <h1 class="hero__title">Moje Republika</h1>
-        <p class="hero__description">
+  <!-- Hero -->
+  <section class="relative bg-gradient-to-br from-gray-50 to-white py-16 sm:py-24 overflow-hidden">
+    <!-- Tricolor top line -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-czech-blue via-white to-czech-red"></div>
+    
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="max-w-2xl">
+        <span class="text-sm font-semibold text-gray-500 uppercase tracking-widest">
+          Česká republika v číslech
+        </span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-czech-blue mt-2 tracking-tight">
+          Moje Republika
+        </h1>
+        <p class="text-lg sm:text-xl text-gray-600 mt-4">
           Přehledné statistiky a data o České republice na jednom místě. 
           Otevřená data, otevřený zdrojový kód.
         </p>
@@ -41,16 +48,17 @@ const stats = {
     </div>
   </section>
 
-  <section class="section" id="demografie">
-    <div class="container">
-      <header class="section-header">
-        <h2 class="section-header__title">Demografie</h2>
-        <p class="section-header__description">
+  <!-- Demografie -->
+  <section class="py-12 sm:py-16" id="demografie">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <header class="mb-10">
+        <h2 class="text-2xl sm:text-3xl font-bold text-czech-blue">Demografie</h2>
+        <p class="text-gray-500 mt-2 max-w-xl">
           Základní demografické údaje o obyvatelstvu České republiky.
         </p>
       </header>
 
-      <div class="stats-grid">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <StatCard 
           label="Počet obyvatel"
           value="10,9"
@@ -84,16 +92,17 @@ const stats = {
     </div>
   </section>
 
-  <section class="section" id="ekonomika">
-    <div class="container">
-      <header class="section-header">
-        <h2 class="section-header__title">Ekonomika</h2>
-        <p class="section-header__description">
+  <!-- Ekonomika -->
+  <section class="py-12 sm:py-16 bg-gray-50" id="ekonomika">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <header class="mb-10">
+        <h2 class="text-2xl sm:text-3xl font-bold text-czech-blue">Ekonomika</h2>
+        <p class="text-gray-500 mt-2 max-w-xl">
           Klíčové ekonomické ukazatele a statistiky trhu práce.
         </p>
       </header>
 
-      <div class="stats-grid">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <StatCard 
           label="HDP"
           value={stats.economy.gdp}
@@ -145,16 +154,17 @@ const stats = {
     </div>
   </section>
 
-  <section class="section" id="geografie">
-    <div class="container">
-      <header class="section-header">
-        <h2 class="section-header__title">Geografie</h2>
-        <p class="section-header__description">
+  <!-- Geografie -->
+  <section class="py-12 sm:py-16" id="geografie">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <header class="mb-10">
+        <h2 class="text-2xl sm:text-3xl font-bold text-czech-blue">Geografie</h2>
+        <p class="text-gray-500 mt-2 max-w-xl">
           Územní a geografické údaje.
         </p>
       </header>
 
-      <div class="stats-grid">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <StatCard 
           label="Rozloha"
           value="78 871"
