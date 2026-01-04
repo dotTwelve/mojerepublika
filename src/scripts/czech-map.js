@@ -121,6 +121,39 @@ function initCzechMap() {
     region.addEventListener('mouseleave', () => {
       tooltip?.classList.remove('visible');
     });
+    
+    // Touch support
+    region.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      regions.forEach(r => r.classList.remove('active'));
+      region.classList.add('active');
+      
+      const regionId = e.target.dataset.region;
+      const data = regionData[regionId];
+      if (data && tooltipName && tooltipValue) {
+        const { unit, format } = metrics[currentMetric];
+        tooltipName.textContent = data.name;
+        tooltipValue.textContent = format(data[currentMetric]) + ' ' + unit;
+        tooltip?.classList.add('visible');
+        
+        const touch = e.touches[0];
+        const rect = container?.getBoundingClientRect();
+        if (rect && tooltip) {
+          const x = touch.clientX - rect.left;
+          const y = touch.clientY - rect.top;
+          tooltip.style.left = `${x + 15}px`;
+          tooltip.style.top = `${y - 40}px`;
+        }
+      }
+    }, { passive: false });
+  });
+  
+  // Hide tooltip when touching outside
+  document.addEventListener('touchstart', (e) => {
+    if (!e.target.classList.contains('region')) {
+      regions.forEach(r => r.classList.remove('active'));
+      tooltip?.classList.remove('visible');
+    }
   });
   
   // Initialize with density
