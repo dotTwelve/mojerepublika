@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import StatCard from '../components/StatCard.astro';
+import CzechMap from '../components/CzechMap.astro';
 import statsData from '../data/stats.json';
 
 interface HistoryPoint {
@@ -64,45 +65,53 @@ const sections = [
     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-czech-blue via-white to-czech-red"></div>
     
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="max-w-2xl">
-        <span class="text-sm font-semibold text-gray-500 uppercase tracking-widest">
-          Česká republika v číslech
-        </span>
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-czech-blue mt-2 tracking-tight">
-          Moje Republika
-        </h1>
-        <p class="text-lg sm:text-xl text-gray-600 mt-4">
-          Přehledné statistiky a data o České republice na jednom místě. 
-          Otevřená data, otevřený zdrojový kód.
-        </p>
-        <p class="text-sm text-gray-400 mt-4">
-          Poslední aktualizace: {new Date(meta.lastUpdated).toLocaleDateString('cs-CZ')}
-        </p>
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <!-- Text content -->
+        <div class="max-w-xl">
+          <span class="text-sm font-semibold text-gray-500 uppercase tracking-widest">
+            Česká republika v číslech
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-czech-blue mt-2 tracking-tight">
+            Moje Republika
+          </h1>
+          <p class="text-lg sm:text-xl text-gray-600 mt-4">
+            Přehledné statistiky a data o České republice na jednom místě. 
+            Otevřená data, otevřený zdrojový kód.
+          </p>
+          <p class="text-sm text-gray-400 mt-4">
+            Poslední aktualizace: {new Date(meta.lastUpdated).toLocaleDateString('cs-CZ')}
+          </p>
+          
+          <!-- Share & Support buttons -->
+          <div class="flex flex-wrap gap-3 mt-6">
+            <a 
+              href="https://www.facebook.com/sharer/sharer.php?u=https://mojerepublika.cz"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 bg-[#1877F2] hover:bg-[#166FE5] text-white text-sm font-medium rounded-lg transition-colors"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+              Sdílet
+            </a>
+            <a 
+              href="https://ko-fi.com/mojerepublika"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 bg-[#FF5E5B] hover:bg-[#e54543] text-white text-sm font-medium rounded-lg transition-colors"
+            >
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311z"/>
+              </svg>
+              Podpořte projekt
+            </a>
+          </div>
+        </div>
         
-        <!-- Share & Support buttons -->
-        <div class="flex flex-wrap gap-3 mt-6">
-          <a 
-            href="https://www.facebook.com/sharer/sharer.php?u=https://mojerepublika.cz"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-4 py-2 bg-[#1877F2] hover:bg-[#166FE5] text-white text-sm font-medium rounded-lg transition-colors"
-          >
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-            </svg>
-            Sdílet
-          </a>
-          <a 
-            href="https://ko-fi.com/mojerepublika"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-4 py-2 bg-[#FF5E5B] hover:bg-[#e54543] text-white text-sm font-medium rounded-lg transition-colors"
-          >
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311z"/>
-            </svg>
-            Podpořte projekt
-          </a>
+        <!-- Interactive map -->
+        <div class="hidden lg:block">
+          <CzechMap />
         </div>
       </div>
     </div>
