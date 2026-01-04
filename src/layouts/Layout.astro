@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import StatModal from '../components/StatModal.astro';
 
 interface Props {
   title: string;
@@ -9,9 +10,9 @@ interface Props {
 const { title, description = 'Statistiky a data o České republice' } = Astro.props;
 
 const navItems = [
-  { href: '/', label: 'Přehled' },
   { href: '#demografie', label: 'Demografie' },
   { href: '#ekonomika', label: 'Ekonomika' },
+  { href: '#geografie', label: 'Geografie' },
   { href: '#vzdelani', label: 'Vzdělání' },
   { href: '#zdravotnictvi', label: 'Zdravotnictví' },
   { href: '#zivotni-prostredi', label: 'Životní prostředí' },
@@ -59,11 +60,12 @@ const navItems = [
           </a>
           
           <!-- Desktop nav - scrollable -->
-          <nav class="hidden lg:flex gap-1 overflow-x-auto">
+          <nav class="hidden lg:flex gap-1 overflow-x-auto" id="desktop-nav">
             {navItems.map(item => (
               <a 
                 href={item.href} 
-                class="font-medium text-sm text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all whitespace-nowrap"
+                data-nav-link={item.href}
+                class="nav-link font-medium text-sm text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all whitespace-nowrap"
               >
                 {item.label}
               </a>
@@ -91,7 +93,8 @@ const navItems = [
             {navItems.map(item => (
               <a 
                 href={item.href} 
-                class="font-medium text-sm text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all"
+                data-nav-link={item.href}
+                class="nav-link font-medium text-sm text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all"
               >
                 {item.label}
               </a>
@@ -189,6 +192,9 @@ const navItems = [
         </div>
       </div>
     </footer>
+
+    <!-- Stat Modal -->
+    <StatModal />
     
     <!-- Scripts -->
     <script>
@@ -229,6 +235,38 @@ const navItems = [
       backToTop?.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
+
+      // Active section highlighting
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            
+            // Remove active class from all links
+            navLinks.forEach(link => {
+              link.classList.remove('text-czech-blue', 'bg-czech-blue/10');
+              link.classList.add('text-gray-600');
+            });
+            
+            // Add active class to matching links
+            document.querySelectorAll(`[data-nav-link="#${id}"]`).forEach(link => {
+              link.classList.add('text-czech-blue', 'bg-czech-blue/10');
+              link.classList.remove('text-gray-600');
+            });
+          }
+        });
+      }, observerOptions);
+      
+      sections.forEach(section => observer.observe(section));
     </script>
   </body>
 </html>

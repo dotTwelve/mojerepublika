@@ -1,5 +1,17 @@
 ---
+interface HistoryPoint {
+  year: number;
+  value: number;
+}
+
+interface Details {
+  chartType?: string;
+  chartLabel?: string;
+  history?: HistoryPoint[];
+}
+
 interface Props {
+  id: string;
   label: string;
   value: string | number;
   unit?: string;
@@ -7,16 +19,31 @@ interface Props {
   change?: number;
   source?: string;
   highlight?: boolean;
+  details?: Details;
 }
 
-const { label, value, unit, description, change, source, highlight = false } = Astro.props;
+const { id, label, value, unit, description, change, source, highlight = false, details } = Astro.props;
+
+const hasDetails = details && details.history && details.history.length > 0;
 ---
 
 <article 
   class:list={[
-    'relative bg-white border rounded-lg p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 overflow-hidden',
-    highlight ? 'border-czech-blue bg-gradient-to-br from-white to-gray-50' : 'border-gray-200'
+    'stat-card relative bg-white border rounded-lg p-6 transition-all duration-300 overflow-hidden',
+    highlight ? 'border-czech-blue bg-gradient-to-br from-white to-gray-50' : 'border-gray-200',
+    hasDetails ? 'hover:shadow-lg hover:-translate-y-0.5 cursor-pointer' : ''
   ]}
+  data-stat-id={id}
+  data-stat-label={label}
+  data-stat-value={value}
+  data-stat-unit={unit || ''}
+  data-stat-description={description || ''}
+  data-stat-change={change !== undefined ? change : ''}
+  data-stat-source={source || ''}
+  data-stat-details={details ? JSON.stringify(details) : ''}
+  data-has-details={hasDetails ? 'true' : 'false'}
+  role={hasDetails ? 'button' : undefined}
+  tabindex={hasDetails ? 0 : undefined}
 >
   <!-- Left accent bar -->
   <div 
@@ -56,5 +83,14 @@ const { label, value, unit, description, change, source, highlight = false } = A
     <cite class="block text-xs text-gray-400 mt-2 not-italic">
       Zdroj: {source}
     </cite>
+  )}
+  
+  <!-- Click hint - only show if has details -->
+  {hasDetails && (
+    <div class="absolute top-3 right-3 text-gray-300 hover:text-czech-blue transition-colors">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+      </svg>
+    </div>
   )}
 </article>

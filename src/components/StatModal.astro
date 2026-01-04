@@ -1,0 +1,324 @@
+---
+// Modal pro detailní zobrazení statistiky
+// Data se načítají z data-stat-details atributu na StatCard
+---
+
+<div 
+  id="stat-modal" 
+  class="fixed inset-0 z-50 hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modal-title"
+>
+  <!-- Overlay -->
+  <div id="modal-overlay" class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"></div>
+  
+  <!-- Modal content -->
+  <div class="absolute inset-4 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:max-w-2xl sm:w-full sm:max-h-[85vh] flex flex-col">
+    <div class="bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-full">
+      <!-- Header -->
+      <div class="relative bg-gradient-to-r from-czech-blue to-czech-blue/90 text-white p-6">
+        <button 
+          id="modal-close" 
+          class="absolute top-4 right-4 p-2 hover:bg-white/20 rounded-lg transition-colors"
+          aria-label="Zavřít"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+        
+        <span id="modal-label" class="text-sm font-semibold text-white/70 uppercase tracking-wider"></span>
+        <div class="flex items-baseline gap-2 mt-2">
+          <span id="modal-value" class="font-display text-5xl font-bold"></span>
+          <span id="modal-unit" class="text-xl text-white/70"></span>
+        </div>
+        <div id="modal-change-wrapper" class="mt-3 hidden">
+          <span id="modal-change" class="inline-flex items-center gap-1 text-sm font-semibold px-2 py-0.5 rounded bg-white/20"></span>
+        </div>
+      </div>
+      
+      <!-- Body -->
+      <div class="p-6 overflow-y-auto flex-1">
+        <p id="modal-description" class="text-gray-600"></p>
+        
+        <!-- Chart area -->
+        <div id="modal-chart-area" class="mt-6">
+          <!-- Actual chart container -->
+          <div id="chart-container" class="hidden">
+            <h3 id="chart-title" class="text-sm font-semibold text-gray-500 mb-4">Historický vývoj</h3>
+            <div id="apex-chart" class="w-full"></div>
+          </div>
+        </div>
+        
+        <!-- Zdroj -->
+        <div id="modal-source-wrapper" class="mt-6 pt-4 border-t border-gray-200 hidden">
+          <span class="text-xs text-gray-400">Zdroj: </span>
+          <span id="modal-source" class="text-xs text-gray-500"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import ApexCharts from 'apexcharts';
+  
+  // Typy
+  interface HistoryPoint {
+    year: number;
+    value: number;
+  }
+  
+  interface Details {
+    chartType?: string;
+    chartLabel?: string;
+    history?: HistoryPoint[];
+  }
+
+  const modal = document.getElementById('stat-modal');
+  const overlay = document.getElementById('modal-overlay');
+  const closeBtn = document.getElementById('modal-close');
+  
+  // Modal elements
+  const modalLabel = document.getElementById('modal-label');
+  const modalValue = document.getElementById('modal-value');
+  const modalUnit = document.getElementById('modal-unit');
+  const modalDescription = document.getElementById('modal-description');
+  const modalChangeWrapper = document.getElementById('modal-change-wrapper');
+  const modalChange = document.getElementById('modal-change');
+  const modalSourceWrapper = document.getElementById('modal-source-wrapper');
+  const modalSource = document.getElementById('modal-source');
+  const chartContainer = document.getElementById('chart-container');
+  const chartTitle = document.getElementById('chart-title');
+  const apexChartEl = document.getElementById('apex-chart');
+  
+  let chartInstance: ApexCharts | null = null;
+  
+  function drawChart(data: HistoryPoint[], label: string) {
+    if (!apexChartEl) return;
+    
+    // Destroy previous chart if exists
+    if (chartInstance) {
+      chartInstance.destroy();
+    }
+    
+    const options: ApexCharts.ApexOptions = {
+      series: [{
+        name: label,
+        data: data.map(d => d.value)
+      }],
+      chart: {
+        type: 'area',
+        height: 280,
+        fontFamily: 'DM Sans, sans-serif',
+        toolbar: {
+          show: false
+        },
+        animations: {
+          enabled: true,
+          speed: 600,
+          dynamicAnimation: {
+            enabled: true,
+            speed: 350
+          }
+        },
+        zoom: {
+          enabled: false
+        }
+      },
+      colors: ['#08437f'],
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0.4,
+          opacityTo: 0.1,
+          stops: [0, 90, 100]
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth',
+        width: 3
+      },
+      xaxis: {
+        categories: data.map(d => d.year.toString()),
+        labels: {
+          style: {
+            colors: '#6b7280',
+            fontSize: '12px'
+          }
+        },
+        axisBorder: {
+          show: false
+        },
+        axisTicks: {
+          show: false
+        }
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: '#6b7280',
+            fontSize: '12px'
+          },
+          formatter: (val: number) => val.toLocaleString('cs-CZ')
+        }
+      },
+      grid: {
+        borderColor: '#e5e7eb',
+        strokeDashArray: 4,
+        xaxis: {
+          lines: {
+            show: false
+          }
+        }
+      },
+      tooltip: {
+        theme: 'light',
+        x: {
+          show: true
+        },
+        y: {
+          formatter: (val: number) => val.toLocaleString('cs-CZ')
+        },
+        marker: {
+          show: true
+        }
+      },
+      markers: {
+        size: 5,
+        colors: ['#08437f'],
+        strokeColors: '#fff',
+        strokeWidth: 2,
+        hover: {
+          size: 7
+        }
+      }
+    };
+    
+    chartInstance = new ApexCharts(apexChartEl, options);
+    chartInstance.render();
+  }
+  
+  function openModal(data: {
+    id: string;
+    label: string;
+    value: string;
+    unit: string;
+    description: string;
+    change: string;
+    source: string;
+    details: Details | null;
+  }) {
+    if (!modal) return;
+    
+    // Populate modal
+    if (modalLabel) modalLabel.textContent = data.label;
+    if (modalValue) modalValue.textContent = data.value;
+    if (modalUnit) modalUnit.textContent = data.unit;
+    if (modalDescription) modalDescription.textContent = data.description || 'Podrobnosti budou brzy k dispozici.';
+    
+    // Change
+    if (data.change && modalChangeWrapper && modalChange) {
+      const changeNum = parseFloat(data.change);
+      modalChange.textContent = `${changeNum >= 0 ? '↑' : '↓'} ${Math.abs(changeNum)}%`;
+      modalChange.className = `inline-flex items-center gap-1 text-sm font-semibold px-2 py-0.5 rounded ${changeNum >= 0 ? 'bg-green-400/30 text-green-100' : 'bg-red-400/30 text-red-100'}`;
+      modalChangeWrapper.classList.remove('hidden');
+    } else {
+      modalChangeWrapper?.classList.add('hidden');
+    }
+    
+    // Source
+    if (data.source && modalSourceWrapper && modalSource) {
+      modalSource.textContent = data.source;
+      modalSourceWrapper.classList.remove('hidden');
+    } else {
+      modalSourceWrapper?.classList.add('hidden');
+    }
+    
+    // Chart - data come from JSON via data attribute
+    if (data.details?.history && chartContainer) {
+      chartContainer.classList.remove('hidden');
+      
+      // Set chart title if provided
+      const chartLabel = data.details.chartLabel || 'Historický vývoj';
+      if (chartTitle) {
+        chartTitle.textContent = chartLabel;
+      }
+      
+      // Small delay to ensure container is visible before rendering
+      setTimeout(() => {
+        drawChart(data.details!.history!, chartLabel);
+      }, 50);
+    } else {
+      chartContainer?.classList.add('hidden');
+    }
+    
+    // Show modal
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeModal() {
+    modal?.classList.add('hidden');
+    document.body.style.overflow = '';
+    
+    // Destroy chart on close to prevent memory leaks
+    if (chartInstance) {
+      chartInstance.destroy();
+      chartInstance = null;
+    }
+  }
+  
+  // Event listeners
+  closeBtn?.addEventListener('click', closeModal);
+  overlay?.addEventListener('click', closeModal);
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+  
+  // Stat card clicks
+  document.querySelectorAll('.stat-card').forEach(card => {
+    card.addEventListener('click', () => {
+      // Only open modal if card has details
+      if (card.getAttribute('data-has-details') !== 'true') return;
+      
+      const detailsStr = card.getAttribute('data-stat-details');
+      let details: Details | null = null;
+      
+      if (detailsStr) {
+        try {
+          details = JSON.parse(detailsStr);
+        } catch (e) {
+          console.error('Failed to parse details:', e);
+        }
+      }
+      
+      const data = {
+        id: card.getAttribute('data-stat-id') || '',
+        label: card.getAttribute('data-stat-label') || '',
+        value: card.getAttribute('data-stat-value') || '',
+        unit: card.getAttribute('data-stat-unit') || '',
+        description: card.getAttribute('data-stat-description') || '',
+        change: card.getAttribute('data-stat-change') || '',
+        source: card.getAttribute('data-stat-source') || '',
+        details,
+      };
+      openModal(data);
+    });
+    
+    // Keyboard support - only for cards with details
+    card.addEventListener('keydown', (e) => {
+      if (card.getAttribute('data-has-details') !== 'true') return;
+      if (e instanceof KeyboardEvent && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        (card as HTMLElement).click();
+      }
+    });
+  });
+</script>

@@ -14,7 +14,23 @@
         "unit": "mil.",
         "description": "Celkový počet obyvatel České republiky",
         "source": "ČSÚ, 2024",
-        "highlight": true
+        "highlight": true,
+        "details": {
+          "chartType": "area",
+          "chartLabel": "Počet obyvatel (v tisících)",
+          "history": [
+            { "year": 2015, "value": 10554 },
+            { "year": 2016, "value": 10579 },
+            { "year": 2017, "value": 10610 },
+            { "year": 2018, "value": 10650 },
+            { "year": 2019, "value": 10694 },
+            { "year": 2020, "value": 10701 },
+            { "year": 2021, "value": 10505 },
+            { "year": 2022, "value": 10828 },
+            { "year": 2023, "value": 10901 },
+            { "year": 2024, "value": 10910 }
+          ]
+        }
       },
       {
         "id": "density",
@@ -27,10 +43,26 @@
       {
         "id": "median-age",
         "label": "Medián věku",
-        "value": 43.5,
+        "value": 44.2,
         "unit": "let",
         "description": "Polovina populace je mladší, polovina starší",
-        "source": "ČSÚ, 2024"
+        "source": "ČSÚ, 2024",
+        "details": {
+          "chartType": "line",
+          "chartLabel": "Medián věku obyvatel (roky)",
+          "history": [
+            { "year": 2015, "value": 40.8 },
+            { "year": 2016, "value": 41.0 },
+            { "year": 2017, "value": 41.3 },
+            { "year": 2018, "value": 41.6 },
+            { "year": 2019, "value": 41.9 },
+            { "year": 2020, "value": 42.2 },
+            { "year": 2021, "value": 42.7 },
+            { "year": 2022, "value": 43.7 },
+            { "year": 2023, "value": 44.0 },
+            { "year": 2024, "value": 44.2 }
+          ]
+        }
       },
       {
         "id": "life-expectancy",
@@ -38,7 +70,22 @@
         "value": 79.4,
         "unit": "let",
         "description": "Průměrná očekávaná délka života při narození",
-        "source": "ČSÚ, 2024"
+        "source": "ČSÚ, 2023",
+        "details": {
+          "chartType": "line",
+          "chartLabel": "Naděje dožití při narození (roky)",
+          "history": [
+            { "year": 2015, "value": 78.6 },
+            { "year": 2016, "value": 79.1 },
+            { "year": 2017, "value": 78.9 },
+            { "year": 2018, "value": 79.0 },
+            { "year": 2019, "value": 79.2 },
+            { "year": 2020, "value": 78.1 },
+            { "year": 2021, "value": 77.2 },
+            { "year": 2022, "value": 78.5 },
+            { "year": 2023, "value": 79.4 }
+          ]
+        }
       }
     ]
   },
@@ -52,9 +99,25 @@
         "value": 290,
         "unit": "mld. €",
         "description": "Hrubý domácí produkt",
-        "change": 2.1,
+        "change": 1.1,
         "source": "Eurostat, 2024",
-        "highlight": true
+        "highlight": true,
+        "details": {
+          "chartType": "area",
+          "chartLabel": "Meziroční růst HDP (%)",
+          "history": [
+            { "year": 2015, "value": 5.4 },
+            { "year": 2016, "value": 2.5 },
+            { "year": 2017, "value": 5.2 },
+            { "year": 2018, "value": 3.2 },
+            { "year": 2019, "value": 3.0 },
+            { "year": 2020, "value": -5.5 },
+            { "year": 2021, "value": 3.6 },
+            { "year": 2022, "value": 2.4 },
+            { "year": 2023, "value": -0.4 },
+            { "year": 2024, "value": 1.1 }
+          ]
+        }
       },
       {
         "id": "gdp-per-capita",
@@ -67,29 +130,77 @@
       {
         "id": "unemployment",
         "label": "Nezaměstnanost",
-        "value": 2.6,
+        "value": 2.8,
         "unit": "%",
         "description": "Míra nezaměstnanosti – jedna z nejnižších v EU",
-        "change": -0.3,
-        "source": "ČSÚ, 2024"
+        "change": 0.2,
+        "source": "ČSÚ, 2024",
+        "details": {
+          "chartType": "line",
+          "chartLabel": "Obecná míra nezaměstnanosti (%)",
+          "history": [
+            { "year": 2015, "value": 5.0 },
+            { "year": 2016, "value": 4.0 },
+            { "year": 2017, "value": 2.9 },
+            { "year": 2018, "value": 2.2 },
+            { "year": 2019, "value": 2.0 },
+            { "year": 2020, "value": 2.6 },
+            { "year": 2021, "value": 2.8 },
+            { "year": 2022, "value": 2.2 },
+            { "year": 2023, "value": 2.6 },
+            { "year": 2024, "value": 2.8 }
+          ]
+        }
       },
       {
         "id": "inflation",
         "label": "Inflace",
         "value": 2.4,
         "unit": "%",
-        "description": "Meziroční míra inflace",
-        "change": -4.2,
-        "source": "ČNB, 2024"
+        "description": "Průměrná roční míra inflace",
+        "change": -8.3,
+        "source": "ČSÚ, 2024",
+        "details": {
+          "chartType": "area",
+          "chartLabel": "Průměrná roční míra inflace (%)",
+          "history": [
+            { "year": 2015, "value": 0.3 },
+            { "year": 2016, "value": 0.7 },
+            { "year": 2017, "value": 2.5 },
+            { "year": 2018, "value": 2.1 },
+            { "year": 2019, "value": 2.8 },
+            { "year": 2020, "value": 3.2 },
+            { "year": 2021, "value": 3.8 },
+            { "year": 2022, "value": 15.1 },
+            { "year": 2023, "value": 10.7 },
+            { "year": 2024, "value": 2.4 }
+          ]
+        }
       },
       {
         "id": "average-wage",
         "label": "Průměrná mzda",
-        "value": "45 854",
+        "value": "46 165",
         "unit": "Kč",
         "description": "Průměrná hrubá měsíční mzda",
-        "change": 6.8,
-        "source": "ČSÚ, Q3 2024"
+        "change": 7.1,
+        "source": "ČSÚ, 2024",
+        "details": {
+          "chartType": "area",
+          "chartLabel": "Průměrná hrubá měsíční mzda (Kč)",
+          "history": [
+            { "year": 2015, "value": 26467 },
+            { "year": 2016, "value": 27589 },
+            { "year": 2017, "value": 29504 },
+            { "year": 2018, "value": 31885 },
+            { "year": 2019, "value": 34125 },
+            { "year": 2020, "value": 35611 },
+            { "year": 2021, "value": 37903 },
+            { "year": 2022, "value": 40353 },
+            { "year": 2023, "value": 43341 },
+            { "year": 2024, "value": 46165 }
+          ]
+        }
       },
       {
         "id": "min-wage",
@@ -171,10 +282,10 @@
       {
         "id": "high-school-students",
         "label": "Středoškoláků",
-        "value": "500",
+        "value": "505",
         "unit": "tis.",
         "description": "Počet žáků středních škol",
-        "change": 19,
+        "change": 4.7,
         "source": "ČSÚ, 2024"
       }
     ]
@@ -236,11 +347,11 @@
       {
         "id": "co2-emissions",
         "label": "Emise CO₂",
-        "value": "103,5",
+        "value": "99",
         "unit": "mil. t",
         "description": "Roční emise skleníkových plynů (CO₂ ekvivalent)",
-        "change": -47,
-        "source": "ČHMÚ, 2023",
+        "change": -13,
+        "source": "MŽP, 2024",
         "highlight": true
       },
       {
@@ -332,10 +443,10 @@
       {
         "id": "coal-share",
         "label": "Podíl uhlí",
-        "value": 36,
+        "value": 35,
         "unit": "%",
         "description": "Podíl uhelných elektráren na výrobě",
-        "change": -5,
+        "change": -12,
         "source": "ERÚ, 2024"
       },
       {

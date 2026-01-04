@@ -3,6 +3,17 @@ import Layout from '../layouts/Layout.astro';
 import StatCard from '../components/StatCard.astro';
 import statsData from '../data/stats.json';
 
+interface HistoryPoint {
+  year: number;
+  value: number;
+}
+
+interface Details {
+  chartType?: string;
+  chartLabel?: string;
+  history?: HistoryPoint[];
+}
+
 interface Stat {
   id: string;
   label: string;
@@ -12,6 +23,7 @@ interface Stat {
   source?: string;
   change?: number;
   highlight?: boolean;
+  details?: Details;
 }
 
 interface Section {
