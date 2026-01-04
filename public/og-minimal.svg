@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!-- Pozadí -->
+  <rect width="1200" height="630" fill="#ffffff"/>
+  
+  <!-- Horní trikolorový pruh -->
+  <rect x="0" y="0" width="400" height="8" fill="#08437f"/>
+  <rect x="400" y="0" width="400" height="8" fill="#ffffff"/>
+  <rect x="800" y="0" width="400" height="8" fill="#d80c13"/>
+  
+  <!-- Spodní trikolorový pruh -->
+  <rect x="0" y="622" width="400" height="8" fill="#08437f"/>
+  <rect x="400" y="622" width="400" height="8" fill="#ffffff"/>
+  <rect x="800" y="622" width="400" height="8" fill="#d80c13"/>
+  
+  <!-- Vlajka -->
+  <g transform="translate(100, 215)">
+    <rect width="180" height="120" fill="#d80c13" rx="4"/>
+    <rect width="180" height="60" fill="#ffffff" rx="4"/>
+    <polygon points="0,0 90,60 0,120" fill="#08437f"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="320" y="260" font-family="Georgia, serif" font-size="72" font-weight="bold" fill="#08437f">Moje Republika</text>
+  <text x="320" y="320" font-family="system-ui, sans-serif" font-size="28" fill="#6b7280">Česká republika v číslech</text>
+  
+  <!-- URL -->
+  <text x="320" y="380" font-family="system-ui, sans-serif" font-size="24" fill="#9ca3af">mojerepublika.cz</text>
+</svg>

@@ -1,12 +1,13 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = 'Statistiky a data o České republice' } = Astro.props;
+const { title, description = "Statistiky a data o České republice" } =
+  Astro.props;
 ---
 
 <!doctype html>
@@ -16,16 +17,30 @@ const { title, description = 'Statistiky a data o České republice' } = Astro.p
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#08437f" />
-    
+
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="cs_CZ" />
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
-    
+    <meta property="og:image" content="https://mojerepublika.cz/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://mojerepublika.cz" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta
+      name="twitter:image"
+      content="https://mojerepublika.cz/og-image.png"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
@@ -35,45 +50,107 @@ const { title, description = 'Statistiky a data o České republice' } = Astro.p
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="flex items-center justify-between py-4">
           <!-- Logo -->
-          <a href="/" class="flex items-center gap-2 font-display text-xl font-bold text-czech-blue">
-            <svg class="w-12 h-8" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
-              <rect width="900" height="600" fill="#d80c13"/>
-              <rect width="900" height="300" fill="#ffffff"/>
-              <polygon points="0,0 450,300 0,600" fill="#08437f"/>
+          <a
+            href="/"
+            class="flex items-center gap-2 font-display text-xl font-bold text-czech-blue"
+          >
+            <svg
+              class="w-12 h-8"
+              viewBox="0 0 900 600"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect width="900" height="600" fill="#d80c13"></rect>
+              <rect width="900" height="300" fill="#ffffff"></rect>
+              <polygon points="0,0 450,300 0,600" fill="#08437f"></polygon>
             </svg>
             Moje Republika
           </a>
-          
+
           <!-- Desktop nav -->
           <nav class="hidden md:flex gap-6">
-            <a href="/" class="font-medium text-gray-600 hover:text-czech-blue border-b-2 border-transparent hover:border-czech-red transition-all py-1">Přehled</a>
-            <a href="#demografie" class="font-medium text-gray-600 hover:text-czech-blue border-b-2 border-transparent hover:border-czech-red transition-all py-1">Demografie</a>
-            <a href="#ekonomika" class="font-medium text-gray-600 hover:text-czech-blue border-b-2 border-transparent hover:border-czech-red transition-all py-1">Ekonomika</a>
-            <a href="#kontakt" class="font-medium text-gray-600 hover:text-czech-blue border-b-2 border-transparent hover:border-czech-red transition-all py-1">Kontakt</a>
+            <a
+              href="/"
+              class="font-medium text-gray-600 hover:text-czech-blue border-b-2 border-transparent hover:border-czech-red transition-all py-1"
+              >Přehled</a
+            >
+            <a
+              href="#demografie"
+              class="font-medium text-gray-600 hover:text-czech-blue border-b-2 border-transparent hover:border-czech-red transition-all py-1"
+              >Demografie</a
+            >
+            <a
+              href="#ekonomika"
+              class="font-medium text-gray-600 hover:text-czech-blue border-b-2 border-transparent hover:border-czech-red transition-all py-1"
+              >Ekonomika</a
+            >
+            <a
+              href="#kontakt"
+              class="font-medium text-gray-600 hover:text-czech-blue border-b-2 border-transparent hover:border-czech-red transition-all py-1"
+              >Kontakt</a
+            >
           </nav>
-          
+
           <!-- Mobile menu button -->
-          <button 
-            id="menu-toggle" 
+          <button
+            id="menu-toggle"
             class="md:hidden p-2 text-czech-blue hover:bg-gray-100 rounded-lg transition-colors"
             aria-label="Toggle menu"
           >
-            <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            <svg
+              id="menu-icon"
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
-            <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            <svg
+              id="close-icon"
+              class="w-6 h-6 hidden"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
         </div>
-        
+
         <!-- Mobile nav -->
-        <nav id="mobile-menu" class="hidden md:hidden pb-4 border-t border-gray-200">
+        <nav
+          id="mobile-menu"
+          class="hidden md:hidden pb-4 border-t border-gray-200"
+        >
           <div class="flex flex-col gap-2 pt-4">
-            <a href="/" class="font-medium text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all">Přehled</a>
-            <a href="#demografie" class="font-medium text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all">Demografie</a>
-            <a href="#ekonomika" class="font-medium text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all">Ekonomika</a>
-            <a href="#kontakt" class="font-medium text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all">Kontakt</a>
+            <a
+              href="/"
+              class="font-medium text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all"
+              >Přehled</a
+            >
+            <a
+              href="#demografie"
+              class="font-medium text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all"
+              >Demografie</a
+            >
+            <a
+              href="#ekonomika"
+              class="font-medium text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all"
+              >Ekonomika</a
+            >
+            <a
+              href="#kontakt"
+              class="font-medium text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all"
+              >Kontakt</a
+            >
           </div>
         </nav>
       </div>
@@ -84,7 +161,8 @@ const { title, description = 'Statistiky a data o České republice' } = Astro.p
     </main>
 
     <!-- Tricolor divider -->
-    <div class="h-1 bg-gradient-to-r from-czech-blue via-white to-czech-red"></div>
+    <div class="h-1 bg-gradient-to-r from-czech-blue via-white to-czech-red">
+    </div>
 
     <!-- Footer -->
     <footer class="bg-czech-blue text-white py-12 mt-16" id="kontakt">
@@ -94,39 +172,64 @@ const { title, description = 'Statistiky a data o České republice' } = Astro.p
           <div>
             <span class="font-display text-xl font-bold">Moje Republika</span>
             <p class="text-white/70 text-sm mt-3">
-              Open source projekt prezentující data o České republice na jednom místě.
+              Open source projekt prezentující data o České republice na jednom
+              místě.
             </p>
           </div>
-          
+
           <!-- Zdroje dat -->
           <div>
             <h3 class="font-semibold mb-3">Zdroje dat</h3>
             <ul class="space-y-2 text-sm text-white/70">
-              <li><a href="https://www.czso.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Český statistický úřad (ČSÚ)</a></li>
-              <li><a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener" class="hover:text-white transition-colors">Eurostat</a></li>
-              <li><a href="https://www.cnb.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Česká národní banka (ČNB)</a></li>
+              <li>
+                <a
+                  href="https://www.czso.cz"
+                  target="_blank"
+                  rel="noopener"
+                  class="hover:text-white transition-colors"
+                  >Český statistický úřad (ČSÚ)</a>
+              </li>
+              <li>
+                <a
+                  href="https://ec.europa.eu/eurostat"
+                  target="_blank"
+                  rel="noopener"
+                  class="hover:text-white transition-colors">Eurostat</a>
+              </li>
+              <li>
+                <a
+                  href="https://www.cnb.cz"
+                  target="_blank"
+                  rel="noopener"
+                  class="hover:text-white transition-colors"
+                  >Česká národní banka (ČNB)</a>
+              </li>
             </ul>
           </div>
-          
+
           <!-- Kontakt -->
           <div>
             <h3 class="font-semibold mb-3">Kontakt</h3>
             <ul class="space-y-2 text-sm text-white/70">
               <li>
-                <a href="mailto:mojerepublika@noah.fit" class="hover:text-white transition-colors">
+                <a
+                  href="mailto:mojerepublika@noah.fit"
+                  class="hover:text-white transition-colors"
+                >
                   mojerepublika@noah.fit
                 </a>
               </li>
             </ul>
           </div>
         </div>
-        
+
         <!-- Disclaimer -->
         <div class="border-t border-white/20 mt-8 pt-8">
           <p class="text-xs text-white/50 max-w-3xl">
-            <strong class="text-white/70">Disclaimer:</strong> Informace uvedené na těchto stránkách mají pouze informativní charakter. 
-            Přestože se snažíme o maximální přesnost, nemůžeme zaručit úplnost ani aktuálnost všech údajů. 
-            Data pocházejí z veřejně dostupných zdrojů a mohou být předmětem revizí. 
+            <strong class="text-white/70">Disclaimer:</strong> Informace uvedené na
+            těchto stránkách mají pouze informativní charakter. Přestože se snažíme
+            o maximální přesnost, nemůžeme zaručit úplnost ani aktuálnost všech údajů.
+            Data pocházejí z veřejně dostupných zdrojů a mohou být předmětem revizí.
             Pro oficiální a závazné informace se obracejte přímo na uvedené zdroje.
           </p>
           <p class="text-xs text-white/40 mt-4">
@@ -135,26 +238,26 @@ const { title, description = 'Statistiky a data o České republice' } = Astro.p
         </div>
       </div>
     </footer>
-    
+
     <!-- Mobile menu script -->
     <script>
-      const menuToggle = document.getElementById('menu-toggle');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const menuIcon = document.getElementById('menu-icon');
-      const closeIcon = document.getElementById('close-icon');
-      
-      menuToggle?.addEventListener('click', () => {
-        mobileMenu?.classList.toggle('hidden');
-        menuIcon?.classList.toggle('hidden');
-        closeIcon?.classList.toggle('hidden');
+      const menuToggle = document.getElementById("menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const menuIcon = document.getElementById("menu-icon");
+      const closeIcon = document.getElementById("close-icon");
+
+      menuToggle?.addEventListener("click", () => {
+        mobileMenu?.classList.toggle("hidden");
+        menuIcon?.classList.toggle("hidden");
+        closeIcon?.classList.toggle("hidden");
       });
-      
+
       // Close menu on link click
-      mobileMenu?.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu?.classList.add('hidden');
-          menuIcon?.classList.remove('hidden');
-          closeIcon?.classList.add('hidden');
+      mobileMenu?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu?.classList.add("hidden");
+          menuIcon?.classList.remove("hidden");
+          closeIcon?.classList.add("hidden");
         });
       });
     </script>
