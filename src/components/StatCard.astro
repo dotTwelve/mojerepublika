@@ -31,7 +31,7 @@ const hasDetails = details && details.history && details.history.length > 0;
   class:list={[
     'stat-card relative bg-white border rounded-lg p-6 transition-all duration-300 overflow-hidden',
     highlight ? 'border-czech-blue bg-gradient-to-br from-white to-gray-50' : 'border-gray-200',
-    hasDetails ? 'hover:shadow-lg hover:-translate-y-0.5 cursor-pointer' : ''
+    hasDetails ? 'hover:shadow-lg hover:-translate-y-0.5 cursor-pointer border-l-4 border-l-blue-400' : ''
   ]}
   data-stat-id={id}
   data-stat-label={label}
@@ -45,14 +45,6 @@ const hasDetails = details && details.history && details.history.length > 0;
   role={hasDetails ? 'button' : undefined}
   tabindex={hasDetails ? 0 : undefined}
 >
-  <!-- Left accent bar -->
-  <div 
-    class:list={[
-      'absolute left-0 top-0 h-full transition-colors duration-200',
-      highlight ? 'w-1.5 bg-czech-red' : 'w-1 bg-czech-blue group-hover:bg-czech-red'
-    ]}
-  ></div>
-  
   <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">
     {label}
   </span>
@@ -85,11 +77,11 @@ const hasDetails = details && details.history && details.history.length > 0;
     </cite>
   )}
   
-  <!-- Click hint - only show if has details -->
+  <!-- Chart icon - only show if has details -->
   {hasDetails && (
-    <div class="absolute top-3 right-3 text-gray-300 hover:text-czech-blue transition-colors">
+    <div class="absolute top-3 right-3 text-blue-400 transition-colors">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4v16"/>
       </svg>
     </div>
   )}
