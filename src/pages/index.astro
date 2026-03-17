@@ -10,107 +10,81 @@ const isStale = monthsOld > 12;
 ---
 
 <Layout title="Moje Republika – Statistiky České republiky v číslech | Otevřená data">
-  <!-- Hero — Bento Grid -->
-  <section class="relative bg-surface py-10 sm:py-16 lg:py-20 overflow-hidden">
-    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-czech-blue via-accent to-czech-red"></div>
+  <!-- Hero -->
+  <section class="relative bg-bg overflow-hidden">
+    <!-- Top tricolor accent -->
+    <div class="h-1 bg-gradient-to-r from-brand-blue via-accent to-czech-red"></div>
 
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-10 sm:mb-14">
-        <span class="inline-block text-xs font-semibold text-accent uppercase tracking-[0.2em] mb-3">
-          Česká republika v číslech
-        </span>
-        <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-primary tracking-tight leading-[0.95]">
-          Moje Republika
-        </h1>
-        <p class:list={['text-sm mt-3', isStale ? 'text-amber-600' : 'text-muted/60']}>
-          {isStale && (
-            <svg class="w-4 h-4 inline-block mr-1 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/>
-            </svg>
-          )}
-          Aktualizace {lastUpdate.toLocaleDateString('cs-CZ')}
-          {isStale && <span class="font-medium"> — data starší než rok</span>}
-        </p>
+    <!-- Headline -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-20 pb-10 sm:pb-14 text-center">
+      <h1 class="text-5xl sm:text-6xl lg:text-8xl font-bold text-primary tracking-tight leading-[0.9]">
+        Česká republika
+        <span class="block text-accent">v číslech</span>
+      </h1>
+      <p class="text-muted text-lg sm:text-xl mt-6 max-w-2xl mx-auto leading-relaxed">
+        67 ověřených statistik ze 14 sekcí. Otevřená data z ČSÚ, Eurostatu a dalších zdrojů.
+      </p>
+      <p class:list={['text-sm mt-3', isStale ? 'text-amber-600' : 'text-muted/40']}>
+        Aktualizace {lastUpdate.toLocaleDateString('cs-CZ')}
+        {isStale && <span class="font-medium"> — data starší než rok</span>}
+      </p>
+
+      <!-- CTA -->
+      <div class="flex flex-wrap justify-center gap-3 mt-8">
+        <a
+          href="#sekce"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-accent hover:bg-accent/90 text-primary-text text-sm font-medium rounded-lg transition-colors"
+        >
+          Prozkoumat data
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+        <a
+          href="https://www.facebook.com/sharer/sharer.php?u=https://mojerepublika.cz"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-5 py-2.5 border border-border hover:border-accent text-muted hover:text-accent text-sm font-medium rounded-lg transition-colors"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Sdílet
+        </a>
       </div>
+    </div>
 
-      <!-- Split hero: Map left, Stats right -->
-      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-        <!-- Map -->
-        <div class="order-2 lg:order-1">
-          <CzechMap />
-        </div>
-
-        <!-- Stats -->
-        <div class="order-1 lg:order-2 space-y-4">
-          <!-- Population (hero stat) -->
-          <div class="bg-primary text-primary-text rounded-2xl p-6 relative overflow-hidden">
-            <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-accent/10 rounded-full"></div>
-            <span class="text-xs font-semibold text-primary-text/50 uppercase tracking-wider">Počet obyvatel</span>
-            <div class="flex items-baseline gap-2 mt-2">
-              <span class="font-display text-5xl sm:text-6xl font-bold tabular-nums counter" data-target="10.9" data-decimals="1">0</span>
-              <span class="text-xl text-primary-text/60">mil.</span>
-            </div>
+    <!-- Key metrics strip -->
+    <div class="border-y border-border bg-surface">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 divide-x divide-border">
+          <div class="py-6 sm:py-8 px-4 sm:px-6 text-center">
+            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="10.9" data-decimals="1">0</span>
+            <span class="block text-xs text-muted mt-1 uppercase tracking-wider">mil. obyvatel</span>
           </div>
-
-          <!-- 2x2 grid of key stats -->
-          <div class="grid grid-cols-2 gap-4">
-            <div class="bg-card rounded-xl p-4 border border-border">
-              <span class="text-xs font-semibold text-muted uppercase tracking-wider">HDP</span>
-              <div class="mt-1">
-                <span class="font-display text-2xl sm:text-3xl font-bold text-primary tabular-nums counter" data-target="290">0</span>
-                <span class="text-sm text-muted ml-1">mld. €</span>
-              </div>
-              <span class="inline-flex items-center text-xs font-semibold text-positive tabular-nums mt-1">↑ +1,1%</span>
-            </div>
-
-            <div class="bg-card rounded-xl p-4 border border-border">
-              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Rozloha</span>
-              <div class="mt-1">
-                <span class="font-display text-2xl sm:text-3xl font-bold text-primary tabular-nums counter" data-target="78871" data-separator="true">0</span>
-                <span class="block text-xs text-muted mt-1">km² · 14 krajů</span>
-              </div>
-            </div>
-
-            <div class="bg-card rounded-xl p-4 border border-accent/10">
-              <span class="text-xs font-semibold text-accent uppercase tracking-wider">Délka života</span>
-              <div class="mt-1">
-                <span class="font-display text-2xl sm:text-3xl font-bold text-primary tabular-nums counter" data-target="79.4" data-decimals="1">0</span>
-                <span class="text-sm text-muted ml-1">let</span>
-              </div>
-              <span class="text-xs text-muted mt-1">Průměr EU: 80,1</span>
-            </div>
-
-            <div class="bg-card rounded-xl p-4 border border-border">
-              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Turistů</span>
-              <div class="mt-1">
-                <span class="font-display text-2xl sm:text-3xl font-bold text-primary tabular-nums counter" data-target="22.8" data-decimals="1">0</span>
-                <span class="text-sm text-muted ml-1">mil./rok</span>
-              </div>
-              <span class="inline-flex items-center text-xs font-semibold text-positive tabular-nums mt-1">↑ +3,6%</span>
-            </div>
+          <div class="py-6 sm:py-8 px-4 sm:px-6 text-center">
+            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="290">0</span>
+            <span class="block text-xs text-muted mt-1 uppercase tracking-wider">mld. € HDP</span>
           </div>
-
-          <!-- CTA -->
-          <div class="flex flex-wrap gap-3 pt-2">
-            <a
-              href="#sekce"
-              class="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-primary-text text-sm font-medium rounded-lg transition-colors"
-            >
-              Prozkoumat data
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-            </a>
-            <a
-              href="https://www.facebook.com/sharer/sharer.php?u=https://mojerepublika.cz"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 px-4 py-2 border border-border hover:border-accent text-muted hover:text-accent text-sm font-medium rounded-lg transition-colors"
-            >
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-              Sdílet
-            </a>
+          <div class="py-6 sm:py-8 px-4 sm:px-6 text-center hidden sm:block">
+            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="78871" data-separator="true">0</span>
+            <span class="block text-xs text-muted mt-1 uppercase tracking-wider">km² rozloha</span>
+          </div>
+          <div class="py-6 sm:py-8 px-4 sm:px-6 text-center hidden sm:block">
+            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="79.4" data-decimals="1">0</span>
+            <span class="block text-xs text-muted mt-1 uppercase tracking-wider">let dožití</span>
+          </div>
+          <div class="py-6 sm:py-8 px-4 sm:px-6 text-center hidden lg:block">
+            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="22.8" data-decimals="1">0</span>
+            <span class="block text-xs text-muted mt-1 uppercase tracking-wider">mil. turistů</span>
+          </div>
+          <div class="py-6 sm:py-8 px-4 sm:px-6 text-center hidden lg:block">
+            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums">14</span>
+            <span class="block text-xs text-muted mt-1 uppercase tracking-wider">krajů</span>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Map section -->
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+      <CzechMap />
     </div>
   </section>
 
