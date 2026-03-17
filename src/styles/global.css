@@ -1,23 +1,71 @@
 @import "tailwindcss";
 
 @theme {
-  /* Czech flag branding */
-  --color-czech-red: #d80c13;
-  --color-czech-red-dark: #a80a0f;
-  --color-czech-blue: #0F172A;
-  --color-czech-blue-light: #0369A1;
-  --color-czech-blue-dark: #020617;
+  /* Semantic color tokens — referenced via Tailwind classes */
+  --color-primary: var(--c-primary);
+  --color-primary-text: var(--c-primary-text);
+  --color-accent: var(--c-accent);
+  --color-bg: var(--c-bg);
+  --color-card: var(--c-card);
+  --color-surface: var(--c-surface);
+  --color-surface-alt: var(--c-surface-alt);
+  --color-text: var(--c-text);
+  --color-text-secondary: var(--c-text-secondary);
+  --color-muted: var(--c-muted);
+  --color-border: var(--c-border);
+  --color-border-light: var(--c-border-light);
+  --color-positive: var(--c-positive);
+  --color-positive-bg: var(--c-positive-bg);
+  --color-negative: var(--c-negative);
+  --color-negative-bg: var(--c-negative-bg);
 
-  /* Government civic palette — light mode defaults */
-  --color-accent: #0369A1;
-  --color-surface: #F8FAFC;
-  --color-surface-alt: #F1F5F9;
-  --color-muted: #64748B;
-  --color-border: #E2E8F0;
+  /* Branding — fixed across themes */
+  --color-czech-red: #d80c13;
+  --color-brand-blue: #0F172A;
 
   /* Typography */
   --font-display: 'Libre Baskerville', Georgia, serif;
   --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* ===== Light theme (default) ===== */
+:root {
+  --c-primary: #0F172A;
+  --c-primary-text: #FFFFFF;
+  --c-accent: #0369A1;
+  --c-bg: #FFFFFF;
+  --c-card: #FFFFFF;
+  --c-surface: #F8FAFC;
+  --c-surface-alt: #F1F5F9;
+  --c-text: #020617;
+  --c-text-secondary: #334155;
+  --c-muted: #64748B;
+  --c-border: #E2E8F0;
+  --c-border-light: #F1F5F9;
+  --c-positive: #059669;
+  --c-positive-bg: #ECFDF5;
+  --c-negative: #DC2626;
+  --c-negative-bg: #FEF2F2;
+}
+
+/* ===== Dark theme ===== */
+:root.dark {
+  --c-primary: #E2E8F0;
+  --c-primary-text: #0B0F19;
+  --c-accent: #38BDF8;
+  --c-bg: #0B0F19;
+  --c-card: #131A2B;
+  --c-surface: #131A2B;
+  --c-surface-alt: #1A2332;
+  --c-text: #E2E8F0;
+  --c-text-secondary: #CBD5E1;
+  --c-muted: #94A3B8;
+  --c-border: #1E293B;
+  --c-border-light: #1A2332;
+  --c-positive: #34D399;
+  --c-positive-bg: rgba(16, 185, 129, 0.1);
+  --c-negative: #F87171;
+  --c-negative-bg: rgba(239, 68, 68, 0.1);
 }
 
 @layer base {
@@ -30,245 +78,14 @@
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: var(--body-text);
-    background: var(--body-bg);
+    color: var(--c-text);
+    background: var(--c-bg);
     transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
   }
-}
-
-/* ===== Theme tokens ===== */
-:root {
-  --body-bg: #FFFFFF;
-  --body-text: #020617;
-  --card-bg: #FFFFFF;
-  --header-bg: rgba(255, 255, 255, 0.95);
-  --footer-bg: #0F172A;
-}
-
-:root.dark {
-  --body-bg: #0B0F19;
-  --body-text: #E2E8F0;
-  --card-bg: #131A2B;
-  --header-bg: rgba(11, 15, 25, 0.95);
-  --footer-bg: #060A13;
-
-  --color-czech-blue: #E2E8F0;
-  --color-czech-blue-dark: #F8FAFC;
-  --color-accent: #38BDF8;
-  --color-surface: #131A2B;
-  --color-surface-alt: #1A2332;
-  --color-muted: #94A3B8;
-  --color-border: #1E293B;
-}
-
-/* Dark mode overrides for elements using hardcoded colors */
-:root.dark body {
-  color: #E2E8F0;
-  background: #0B0F19;
-}
-
-:root.dark .bg-white {
-  background-color: var(--card-bg) !important;
-}
-
-:root.dark .text-czech-blue {
-  color: #E2E8F0 !important;
-}
-
-:root.dark .text-czech-blue-dark {
-  color: #F8FAFC !important;
-}
-
-:root.dark .bg-surface {
-  background-color: #131A2B !important;
-}
-
-:root.dark .bg-surface-alt {
-  background-color: #1A2332 !important;
-}
-
-:root.dark .border-border {
-  border-color: #1E293B !important;
-}
-
-:root.dark .text-muted {
-  color: #94A3B8 !important;
-}
-
-:root.dark .bg-emerald-50 {
-  background-color: rgba(16, 185, 129, 0.1) !important;
-}
-
-:root.dark .bg-red-50 {
-  background-color: rgba(239, 68, 68, 0.1) !important;
-}
-
-:root.dark .hover\:shadow-md:hover,
-:root.dark .hover\:shadow-lg:hover,
-:root.dark .hover\:shadow-sm:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-}
-
-/* Header */
-:root.dark header.sticky {
-  background: var(--header-bg) !important;
-  backdrop-filter: blur(12px);
-}
-
-/* Footer */
-:root.dark footer {
-  background: var(--footer-bg) !important;
-}
-
-/* Mega menu */
-:root.dark #nav-panel {
-  background: #131A2B !important;
-}
-
-/* Bento hero cards */
-:root.dark .bento-card {
-  border-color: #1E293B;
-  background-color: #131A2B;
-}
-
-:root.dark .bento-card.bg-czech-blue {
-  background-color: #1E293B !important;
-}
-
-:root.dark .bento-card.bg-gradient-to-br {
-  background: linear-gradient(to bottom right, rgba(3, 105, 161, 0.08), rgba(3, 105, 161, 0.15)) !important;
-}
-
-/* CTA buttons */
-:root.dark .bg-czech-blue {
-  background-color: #38BDF8 !important;
-  color: #0B0F19 !important;
-}
-
-:root.dark .bg-czech-blue:hover {
-  background-color: #0EA5E9 !important;
-}
-
-/* Stat cards */
-:root.dark .stat-card {
-  background-color: #131A2B !important;
-  border-color: #1E293B !important;
-}
-
-:root.dark .stat-card .text-czech-blue {
-  color: #E2E8F0 !important;
-}
-
-/* Section preview cards on homepage */
-:root.dark .group.bg-white {
-  background-color: #131A2B !important;
-}
-
-/* Breadcrumb */
-:root.dark .text-border {
-  color: #334155 !important;
-}
-
-/* Section header numbers */
-:root.dark .text-border.select-none {
-  color: #1E293B !important;
-}
-
-/* Table */
-:root.dark .bg-surface tr {
-  background-color: #1A2332 !important;
-}
-
-:root.dark table td, :root.dark table th {
-  border-color: #1E293B !important;
-}
-
-/* Segmented control on map */
-:root.dark .segmented-control {
-  background: #1A2332 !important;
-}
-
-:root.dark .seg-indicator {
-  background: #131A2B !important;
-}
-
-:root.dark .seg-btn {
-  color: #94A3B8 !important;
-}
-
-:root.dark .seg-btn:hover {
-  color: #E2E8F0 !important;
-}
-
-:root.dark .seg-btn.active {
-  color: #E2E8F0 !important;
-}
-
-:root.dark .map-btn {
-  background: #1A2332 !important;
-  border-color: #1E293B !important;
-  color: #94A3B8 !important;
-}
-
-:root.dark .map-btn.active {
-  background: #38BDF8 !important;
-  border-color: #38BDF8 !important;
-  color: #0B0F19 !important;
-}
-
-/* Back to top button */
-:root.dark #back-to-top {
-  background-color: #38BDF8 !important;
-  color: #0B0F19 !important;
-}
-
-/* Map tooltip */
-:root.dark .map-tooltip {
-  background: rgba(30, 41, 59, 0.95) !important;
-}
-
-/* Map legend */
-:root.dark .legend-title,
-:root.dark .legend-labels span {
-  color: #64748B !important;
-}
-
-/* Region stroke in dark mode */
-:root.dark .region {
-  stroke: #1E293B;
-}
-
-/* Stat takeover */
-:root.dark .stat-takeover .bg-white {
-  background-color: #131A2B !important;
-}
-
-/* Chart tooltip */
-:root.dark .apexcharts-tooltip {
-  background: #1E293B !important;
-}
-
-/* Catch-all dark mode borders and inputs */
-:root.dark input, :root.dark select, :root.dark textarea {
-  background-color: #1A2332;
-  border-color: #1E293B;
-  color: #E2E8F0;
-}
-
-:root.dark [class*="border-border"] {
-  border-color: #1E293B !important;
-}
-
-:root.dark [class*="border-white"] {
-  border-color: rgba(255, 255, 255, 0.1) !important;
-}
-
-:root.dark [class*="bg-gray"] {
-  background-color: #1A2332 !important;
 }
 
 /* Tabular numbers for data values */

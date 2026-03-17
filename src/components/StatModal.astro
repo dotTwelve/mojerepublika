@@ -1,29 +1,24 @@
 ---
-// Takeover detail view
-// Clicking a stat card replaces the grid with a full-width detail card
-// Uses Chart.js — lightweight, canvas-based, responsive
+// Takeover detail view — uses Chart.js, semantic color tokens
 ---
 
-<!-- Takeover panel (inserted into DOM dynamically) -->
 <template id="stat-takeover-template">
   <div class="stat-takeover">
-    <!-- Close button -->
-    <button class="takeover-close inline-flex items-center gap-2 text-sm text-muted hover:text-czech-blue mb-6 group transition-colors">
+    <button class="takeover-close inline-flex items-center gap-2 text-sm text-muted hover:text-primary mb-6 group transition-colors">
       <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="15 18 9 12 15 6"/>
       </svg>
       Zpět na přehled
     </button>
 
-    <!-- Detail card -->
-    <div class="bg-white border border-border rounded-2xl overflow-hidden">
+    <div class="bg-card border border-border rounded-2xl overflow-hidden">
       <!-- Header -->
       <div class="p-4 sm:p-8 border-b border-border">
         <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
             <span class="takeover-label text-xs font-semibold text-muted uppercase tracking-wider"></span>
             <div class="flex items-baseline gap-2 mt-2">
-              <span class="takeover-value font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-czech-blue tabular-nums"></span>
+              <span class="takeover-value font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-primary tabular-nums"></span>
               <span class="takeover-unit text-base sm:text-xl text-muted"></span>
             </div>
           </div>
@@ -42,12 +37,12 @@
         </div>
       </div>
 
-      <!-- Full data table -->
+      <!-- Data table -->
       <div class="px-4 sm:px-8 pb-4 sm:pb-8">
         <div class="border border-border rounded-xl overflow-hidden">
           <table class="takeover-table w-full text-sm">
             <thead>
-              <tr class="bg-surface">
+              <tr class="bg-surface-alt">
                 <th class="text-left px-3 sm:px-4 py-2.5 text-xs font-semibold text-muted uppercase tracking-wider">Rok</th>
                 <th class="text-right px-3 sm:px-4 py-2.5 text-xs font-semibold text-muted uppercase tracking-wider">Hodnota</th>
                 <th class="text-right px-3 sm:px-4 py-2.5 text-xs font-semibold text-muted uppercase tracking-wider hidden sm:table-cell">Změna</th>
@@ -101,9 +96,21 @@
     return `${label}: ${trend} trend od ${first.year} (${first.value.toLocaleString('cs-CZ')}) do ${last.year} (${last.value.toLocaleString('cs-CZ')})`;
   }
 
+  function getThemeColors() {
+    const style = getComputedStyle(document.documentElement);
+    return {
+      accent: style.getPropertyValue('--c-accent').trim() || '#0369A1',
+      muted: style.getPropertyValue('--c-muted').trim() || '#64748B',
+      border: style.getPropertyValue('--c-border').trim() || '#E2E8F0',
+      text: style.getPropertyValue('--c-text').trim() || '#020617',
+      bg: style.getPropertyValue('--c-bg').trim() || '#FFFFFF',
+    };
+  }
+
   async function renderChart(canvas: HTMLCanvasElement, data: HistoryPoint[], label: string) {
     const Chart = await loadChartJS();
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const colors = getThemeColors();
 
     if (activeChartInstance) {
       activeChartInstance.destroy();
@@ -114,11 +121,9 @@
     canvas.setAttribute('aria-label', generateAriaLabel(data, label));
 
     const ctx = canvas.getContext('2d')!;
-
-    // Gradient fill
     const gradient = ctx.createLinearGradient(0, 0, 0, canvas.parentElement!.offsetHeight);
-    gradient.addColorStop(0, 'rgba(3, 105, 161, 0.2)');
-    gradient.addColorStop(1, 'rgba(3, 105, 161, 0.02)');
+    gradient.addColorStop(0, colors.accent + '33');
+    gradient.addColorStop(1, colors.accent + '05');
 
     activeChartInstance = new Chart(ctx, {
       type: 'line',
@@ -127,76 +132,50 @@
         datasets: [{
           label: label,
           data: data.map(d => d.value),
-          borderColor: '#0369A1',
+          borderColor: colors.accent,
           backgroundColor: gradient,
           borderWidth: 2.5,
           fill: true,
           tension: 0.35,
-          pointBackgroundColor: '#0369A1',
-          pointBorderColor: '#fff',
+          pointBackgroundColor: colors.accent,
+          pointBorderColor: colors.bg,
           pointBorderWidth: 2,
           pointRadius: 4,
           pointHoverRadius: 7,
-          pointHoverBackgroundColor: '#0369A1',
-          pointHoverBorderColor: '#fff',
+          pointHoverBackgroundColor: colors.accent,
+          pointHoverBorderColor: colors.bg,
           pointHoverBorderWidth: 2,
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        animation: {
-          duration: reducedMotion ? 0 : 600,
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
+        animation: { duration: reducedMotion ? 0 : 600 },
+        interaction: { intersect: false, mode: 'index' },
         plugins: {
-          legend: {
-            display: false,
-          },
+          legend: { display: false },
           tooltip: {
-            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+            backgroundColor: colors.border,
+            titleColor: colors.text,
+            bodyColor: colors.text,
             titleFont: { family: 'Inter, sans-serif', size: 12 },
             bodyFont: { family: 'Inter, sans-serif', size: 13, weight: '600' },
             padding: { top: 8, bottom: 8, left: 12, right: 12 },
             cornerRadius: 8,
             displayColors: false,
-            callbacks: {
-              label: (ctx: any) => ctx.parsed.y.toLocaleString('cs-CZ'),
-            }
+            callbacks: { label: (ctx: any) => ctx.parsed.y.toLocaleString('cs-CZ') }
           },
         },
         scales: {
           x: {
-            grid: {
-              color: '#E2E8F0',
-              drawTicks: false,
-            },
-            border: {
-              display: false,
-            },
-            ticks: {
-              color: '#94A3B8',
-              font: { family: 'Inter, sans-serif', size: 11 },
-              padding: 8,
-            },
+            grid: { color: colors.border, drawTicks: false },
+            border: { display: false },
+            ticks: { color: colors.muted, font: { family: 'Inter, sans-serif', size: 11 }, padding: 8 },
           },
           y: {
-            grid: {
-              color: '#E2E8F0',
-              drawTicks: false,
-            },
-            border: {
-              display: false,
-            },
-            ticks: {
-              color: '#94A3B8',
-              font: { family: 'Inter, sans-serif', size: 11 },
-              padding: 8,
-              callback: (v: any) => Number(v).toLocaleString('cs-CZ'),
-            },
+            grid: { color: colors.border, drawTicks: false },
+            border: { display: false },
+            ticks: { color: colors.muted, font: { family: 'Inter, sans-serif', size: 11 }, padding: 8, callback: (v: any) => Number(v).toLocaleString('cs-CZ') },
           },
         },
       },
@@ -214,14 +193,14 @@
       if (prev && prev.value !== 0) {
         const pct = ((d.value - prev.value) / prev.value * 100).toFixed(1);
         const num = parseFloat(pct);
-        const color = num >= 0 ? 'text-emerald-600' : 'text-red-600';
+        const color = num >= 0 ? 'text-positive' : 'text-negative';
         const sign = num >= 0 ? '+' : '';
         changeHtml = `<td class="text-right px-3 sm:px-4 py-2 hidden sm:table-cell ${color}">${sign}${pct}%</td>`;
       }
       return `
-        <tr class="border-t border-border/50 hover:bg-surface/50 transition-colors">
-          <td class="px-3 sm:px-4 py-2 text-czech-blue-dark font-medium">${d.year}</td>
-          <td class="text-right px-3 sm:px-4 py-2 font-semibold text-czech-blue">${d.value.toLocaleString('cs-CZ')}</td>
+        <tr class="border-t border-border-light hover:bg-surface transition-colors">
+          <td class="px-3 sm:px-4 py-2 text-text font-medium">${d.year}</td>
+          <td class="text-right px-3 sm:px-4 py-2 font-semibold text-primary">${d.value.toLocaleString('cs-CZ')}</td>
           ${changeHtml}
         </tr>`;
     }).join('');
@@ -229,12 +208,7 @@
 
   function closeTakeover() {
     if (!activeGrid || !activeTakeover) return;
-
-    if (activeChartInstance) {
-      activeChartInstance.destroy();
-      activeChartInstance = null;
-    }
-
+    if (activeChartInstance) { activeChartInstance.destroy(); activeChartInstance = null; }
     activeGrid.classList.remove('hidden');
     activeTakeover.remove();
     activeTakeover = null;
@@ -244,7 +218,7 @@
   function openTakeover(card: HTMLElement) {
     if (activeTakeover) closeTakeover();
 
-    const grid = card.closest('.stat-grid-wrapper') || card.closest('.stat-grid') as HTMLElement;
+    const grid = (card.closest('.stat-grid-wrapper') || card.closest('.stat-grid')) as HTMLElement;
     if (!grid) return;
 
     const template = document.getElementById('stat-takeover-template') as HTMLTemplateElement;
@@ -274,7 +248,7 @@
       const changeEl = takeoverEl.querySelector('.takeover-change') as HTMLElement;
       const changeWrapper = takeoverEl.querySelector('.takeover-change-wrapper') as HTMLElement;
       changeEl.textContent = `${changeNum >= 0 ? '↑ +' : '↓ −'}${Math.abs(changeNum)}%`;
-      changeEl.className = `takeover-change inline-flex items-center gap-1 text-sm font-semibold px-3 py-1 rounded-lg tabular-nums ${changeNum >= 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-600'}`;
+      changeEl.className = `takeover-change inline-flex items-center gap-1 text-sm font-semibold px-3 py-1 rounded-lg tabular-nums ${changeNum >= 0 ? 'bg-positive-bg text-positive' : 'bg-negative-bg text-negative'}`;
       changeWrapper.classList.remove('hidden');
     }
 
@@ -285,7 +259,6 @@
 
     const chartTitle = details.chartLabel || 'Historický vývoj';
     takeoverEl.querySelector('.takeover-chart-title')!.textContent = chartTitle;
-
     takeoverEl.querySelector('.takeover-close')!.addEventListener('click', closeTakeover);
 
     activeGrid = grid;
@@ -294,7 +267,6 @@
     activeTakeover = takeoverEl;
 
     const canvas = activeTakeover.querySelector('.takeover-chart') as HTMLCanvasElement;
-
     populateTable(activeTakeover, details!.history!);
 
     requestAnimationFrame(() => {
@@ -302,7 +274,6 @@
     });
   }
 
-  // Bind events
   document.querySelectorAll('.stat-card[data-has-details="true"]').forEach(card => {
     card.addEventListener('click', () => openTakeover(card as HTMLElement));
     card.addEventListener('keydown', (e) => {
@@ -313,7 +284,6 @@
     });
   });
 
-  // ESC to close
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeTakeover();
   });
