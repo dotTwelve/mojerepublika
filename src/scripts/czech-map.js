@@ -83,6 +83,18 @@ function updateMap(metric) {
   }
   if (legendMin) legendMin.textContent = format(min) + ' ' + unit;
   if (legendMax) legendMax.textContent = format(max) + ' ' + unit;
+
+  // Update pinned tooltip if a region is active
+  const activeRegion = document.querySelector('.region.active');
+  if (activeRegion) {
+    const regionId = activeRegion.dataset.region;
+    const data = regionData[regionId];
+    const tooltipName = document.querySelector('.tooltip-name');
+    const tooltipValue = document.querySelector('.tooltip-value');
+    if (data && tooltipName && tooltipValue) {
+      tooltipValue.textContent = format(data[metric]) + ' ' + unit;
+    }
+  }
 }
 
 function initCzechMap() {
@@ -111,6 +123,38 @@ function initCzechMap() {
     });
   });
 
+  // Show tooltip pinned to a region's center
+  function showPinnedTooltip(region) {
+    const regionId = region.dataset.region;
+    const data = regionData[regionId];
+    if (!data || !tooltipName || !tooltipValue || !tooltip || !container) return;
+
+    const { unit, format } = metrics[currentMetric];
+    tooltipName.textContent = data.name;
+    tooltipValue.textContent = format(data[currentMetric]) + ' ' + unit;
+    tooltip.classList.add('visible');
+
+    // Position at region center
+    const bbox = region.getBBox();
+    const svgEl = container.querySelector('svg');
+    if (!svgEl) return;
+    const svgRect = svgEl.getBoundingClientRect();
+    const viewBox = svgEl.viewBox.baseVal;
+    const scaleX = svgRect.width / viewBox.width;
+    const scaleY = svgRect.height / viewBox.height;
+
+    const cx = (bbox.x + bbox.width / 2) * scaleX;
+    const cy = (bbox.y + bbox.height / 2) * scaleY;
+    const tooltipWidth = tooltip.offsetWidth || 150;
+
+    let x = cx - tooltipWidth / 2;
+    if (x < 5) x = 5;
+    if (x + tooltipWidth > svgRect.width - 5) x = svgRect.width - tooltipWidth - 5;
+
+    tooltip.style.left = `${x}px`;
+    tooltip.style.top = `${cy - 40}px`;
+  }
+
   // Click to select region (desktop)
   regions.forEach(region => {
     region.addEventListener('click', () => {
@@ -118,8 +162,10 @@ function initCzechMap() {
       regions.forEach(r => r.classList.remove('active'));
       if (!wasActive) {
         region.classList.add('active');
-        // Move to end of SVG so it renders on top (SVG has no z-index)
         region.parentNode.appendChild(region);
+        showPinnedTooltip(region);
+      } else {
+        tooltip?.classList.remove('visible');
       }
     });
   });
@@ -156,47 +202,36 @@ function initCzechMap() {
     });
 
     region.addEventListener('mouseleave', () => {
-      tooltip?.classList.remove('visible');
+      // Don't hide tooltip if this region is active (pinned)
+      if (!region.classList.contains('active')) {
+        tooltip?.classList.remove('visible');
+      }
     });
 
     // Touch support
     region.addEventListener('touchstart', (e) => {
       e.preventDefault();
+      const wasActive = region.classList.contains('active');
       regions.forEach(r => r.classList.remove('active'));
-      region.classList.add('active');
-      region.parentNode.appendChild(region);
-
-      const regionId = e.target.dataset.region;
-      const data = regionData[regionId];
-      if (data && tooltipName && tooltipValue) {
-        const { unit, format } = metrics[currentMetric];
-        tooltipName.textContent = data.name;
-        tooltipValue.textContent = format(data[currentMetric]) + ' ' + unit;
-        tooltip?.classList.add('visible');
-
-        const touch = e.touches[0];
-        const rect = container?.getBoundingClientRect();
-        if (rect && tooltip) {
-          const tooltipWidth = tooltip.offsetWidth || 150;
-          let x = touch.clientX - rect.left;
-          const y = touch.clientY - rect.top;
-
-          if (x + tooltipWidth + 20 > rect.width) {
-            x = x - tooltipWidth - 15;
-          } else {
-            x = x + 15;
-          }
-
-          tooltip.style.left = `${Math.max(5, x)}px`;
-          tooltip.style.top = `${y - 40}px`;
-        }
+      if (!wasActive) {
+        region.classList.add('active');
+        region.parentNode.appendChild(region);
+        showPinnedTooltip(region);
+      } else {
+        tooltip?.classList.remove('visible');
       }
     }, { passive: false });
   });
 
-  // Hide tooltip when touching outside
+  // Hide tooltip and deselect when clicking/touching outside map
+  document.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('region') && !e.target.closest('.map-header')) {
+      regions.forEach(r => r.classList.remove('active'));
+      tooltip?.classList.remove('visible');
+    }
+  });
   document.addEventListener('touchstart', (e) => {
-    if (!e.target.classList.contains('region')) {
+    if (!e.target.classList.contains('region') && !e.target.closest('.map-header')) {
       regions.forEach(r => r.classList.remove('active'));
       tooltip?.classList.remove('visible');
     }

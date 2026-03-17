@@ -48,10 +48,10 @@
 </div>
 
 <style>
-  .czech-map-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; }
+  .czech-map-wrapper { width: 100%; }
 
   /* Header: segmented control + legend centered */
-  .map-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; flex-wrap: wrap; justify-content: center; }
+  .map-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
 
   /* Segmented control */
   .segmented-control {
@@ -96,8 +96,8 @@
   .legend-labels { display: flex; justify-content: space-between; margin-top: 2px; font-size: 0.6rem; font-variant-numeric: tabular-nums; }
 
   /* Map */
-  .czech-map-container { position: relative; overflow: hidden; }
-  .czech-map-svg { width: 100%; height: auto; max-width: 36rem; display: block; }
+  .czech-map-container { position: relative; overflow: hidden; width: 100%; }
+  .czech-map-svg { width: 100%; height: auto; display: block; }
   .region { stroke-width: 1; cursor: pointer; transition: all 0.2s ease; -webkit-tap-highlight-color: transparent; }
   .region:hover { stroke-width: 2; filter: drop-shadow(0 0 4px rgba(15, 23, 42, 0.2)); }
   .region.active { stroke-width: 2; filter: drop-shadow(0 0 6px rgba(15, 23, 42, 0.3)); }
