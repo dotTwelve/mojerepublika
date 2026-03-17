@@ -16,7 +16,7 @@ const sectionIndex = sections.findIndex(s => s.id === section.id);
 const prevSection = sectionIndex > 0 ? sections[sectionIndex - 1] : null;
 const nextSection = sectionIndex < sections.length - 1 ? sections[sectionIndex + 1] : null;
 const description = seoDescriptions[section.id] || section.data.description;
-const showMap = section.id === 'demografie' || section.id === 'geografie';
+const showMap = section.id === 'geografie';
 ---
 
 <Layout
