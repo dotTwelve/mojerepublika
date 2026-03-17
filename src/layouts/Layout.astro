@@ -8,7 +8,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = 'Statistiky a data o České republice' } = Astro.props;
+const { title, description = 'Přehledné statistiky a otevřená data o České republice — demografie, ekonomika, bydlení, vzdělání, zdravotnictví a další. 67 ověřených ukazatelů z ČSÚ, Eurostatu a dalších zdrojů.' } = Astro.props;
 
 const navGroups = [
   {
@@ -59,14 +59,82 @@ const allNavItems = navGroups.flatMap(g => g.items);
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0F172A" />
     <meta name="color-scheme" content="light" />
+    <link rel="canonical" href="https://mojerepublika.cz/" />
 
+    <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mojerepublika.cz/" />
     <meta property="og:locale" content="cs_CZ" />
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:site_name" content="Moje Republika" />
+    <meta property="og:image" content="https://mojerepublika.cz/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Moje Republika – Statistiky České republiky" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://mojerepublika.cz/og-image.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Moje Republika",
+          "url": "https://mojerepublika.cz",
+          "description": "Přehledné statistiky a data o České republice na jednom místě. Demografie, ekonomika, bydlení, vzdělání, zdravotnictví a další.",
+          "inLanguage": "cs",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Moje Republika",
+            "url": "https://mojerepublika.cz"
+          }
+        },
+        {
+          "@type": "Dataset",
+          "name": "Statistiky České republiky",
+          "description": "Otevřená data o České republice — 14 tematických sekcí, 67 statistik z ověřených zdrojů (ČSÚ, Eurostat, PČR, NIPOS).",
+          "url": "https://mojerepublika.cz",
+          "license": "https://creativecommons.org/licenses/by/4.0/",
+          "inLanguage": "cs",
+          "temporalCoverage": "2015/2024",
+          "spatialCoverage": {
+            "@type": "Place",
+            "name": "Česká republika"
+          },
+          "creator": {
+            "@type": "Organization",
+            "name": "Moje Republika"
+          },
+          "distribution": {
+            "@type": "DataDownload",
+            "encodingFormat": "application/json",
+            "contentUrl": "https://mojerepublika.cz"
+          },
+          "keywords": [
+            "Česká republika", "statistiky", "demografie", "ekonomika", "HDP",
+            "obyvatelstvo", "nezaměstnanost", "bydlení", "vzdělání", "zdravotnictví",
+            "kriminalita", "doprava", "energie", "turismus", "kultura", "otevřená data"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Domů",
+              "item": "https://mojerepublika.cz"
+            }
+          ]
+        }
+      ]
+    })} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
