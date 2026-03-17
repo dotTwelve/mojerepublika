@@ -1,90 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import StatCard from '../components/StatCard.astro';
 import CzechMap from '../components/CzechMap.astro';
-import statsData from '../data/stats.json';
-
-interface HistoryPoint {
-  year: number;
-  value: number;
-}
-
-interface Details {
-  chartType?: string;
-  chartLabel?: string;
-  history?: HistoryPoint[];
-}
-
-interface Stat {
-  id: string;
-  label: string;
-  value: string | number;
-  unit?: string;
-  description?: string;
-  source?: string;
-  change?: number;
-  highlight?: boolean;
-  details?: Details;
-}
-
-interface Section {
-  title: string;
-  description: string;
-  stats: Stat[];
-}
-
-const { demografie, ekonomika, geografie, vzdelani, zdravotnictvi, zivotniProstredi, doprava, energie, turismus, bydleni, digitalizace, kultura, bezpecnost, zajimavosti, meta } = statsData as {
-  meta: { lastUpdated: string; version: string };
-  demografie: Section;
-  ekonomika: Section;
-  geografie: Section;
-  vzdelani: Section;
-  zdravotnictvi: Section;
-  zivotniProstredi: Section;
-  doprava: Section;
-  energie: Section;
-  turismus: Section;
-  bydleni: Section;
-  digitalizace: Section;
-  kultura: Section;
-  bezpecnost: Section;
-  zajimavosti: Section;
-};
-
-// SVG icon markup per section (full inline SVG content, not just path)
-const sectionIcons: Record<string, string> = {
-  'demografie': '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-  'ekonomika': '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
-  'geografie': '<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>',
-  'vzdelani': '<path d="M22 10v6"/><path d="M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/>',
-  'zdravotnictvi': '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
-  'zivotni-prostredi': '<path d="M17 22v-2"/><path d="M7 22v-2"/><path d="M12 2L7 7h3l-4 5h3l-5 6h16l-5-6h3l-4-5h3z"/>',
-  'doprava': '<rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>',
-  'energie': '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
-  'turismus': '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
-  'bydleni': '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
-  'digitalizace': '<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
-  'kultura': '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
-  'bezpecnost': '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
-  'zajimavosti': '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
-};
-
-const sections = [
-  { id: 'demografie', data: demografie, cols: 3 },
-  { id: 'ekonomika', data: ekonomika, cols: 4, bg: true },
-  { id: 'bydleni', data: bydleni, cols: 4 },
-  { id: 'vzdelani', data: vzdelani, cols: 4, bg: true },
-  { id: 'zdravotnictvi', data: zdravotnictvi, cols: 3 },
-  { id: 'bezpecnost', data: bezpecnost, cols: 3, bg: true },
-  { id: 'geografie', data: geografie, cols: 4 },
-  { id: 'doprava', data: doprava, cols: 4, bg: true },
-  { id: 'energie', data: energie, cols: 3 },
-  { id: 'zivotni-prostredi', data: zivotniProstredi, cols: 4, bg: true },
-  { id: 'digitalizace', data: digitalizace, cols: 4 },
-  { id: 'kultura', data: kultura, cols: 4, bg: true },
-  { id: 'turismus', data: turismus, cols: 3 },
-  { id: 'zajimavosti', data: zajimavosti, cols: 4, bg: true },
-];
+import { sections, meta, type Stat } from '../data/sections';
 
 const lastUpdate = new Date(meta.lastUpdated);
 const now = new Date();
@@ -95,11 +12,9 @@ const isStale = monthsOld > 12;
 <Layout title="Moje Republika – Statistiky České republiky v číslech | Otevřená data">
   <!-- Hero — Bento Grid -->
   <section class="relative bg-surface py-10 sm:py-16 lg:py-20 overflow-hidden">
-    <!-- Top accent line -->
     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-czech-blue via-accent to-czech-red"></div>
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <!-- Headline -->
       <div class="text-center mb-10 sm:mb-14">
         <span class="inline-block text-xs font-semibold text-accent uppercase tracking-[0.2em] mb-3">
           Česká republika v číslech
@@ -120,8 +35,7 @@ const isStale = monthsOld > 12;
 
       <!-- Bento Grid -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 auto-rows-[140px] sm:auto-rows-[160px]">
-
-        <!-- Big stat: Population — spans 2 cols, 1 row -->
+        <!-- Big stat: Population -->
         <div class="bento-card col-span-2 row-span-1 bg-czech-blue text-white rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden group">
           <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-accent/10 rounded-full"></div>
           <span class="text-xs font-semibold text-white/50 uppercase tracking-wider">Počet obyvatel</span>
@@ -151,7 +65,7 @@ const isStale = monthsOld > 12;
           <span class="text-xs text-muted">14 krajů</span>
         </div>
 
-        <!-- Map — spans 2 cols, 2 rows, no card styling -->
+        <!-- Map -->
         <div class="col-span-2 row-span-2 p-2 sm:p-4">
           <CzechMap />
         </div>
@@ -176,14 +90,14 @@ const isStale = monthsOld > 12;
           <span class="inline-flex items-center text-xs font-semibold text-emerald-600 tabular-nums">↑ +3,6%</span>
         </div>
 
-        <!-- CTA row — spans 2 cols -->
+        <!-- CTA row -->
         <div class="col-span-2 flex flex-col sm:flex-row items-start sm:items-center gap-3 py-2">
           <p class="text-muted text-sm leading-relaxed flex-1">
-            Otevřená data, otevřený zdrojový kód. Prozkoumejte 9 tematických sekcí.
+            Otevřená data z ČSÚ, Eurostatu a dalších zdrojů. 14 sekcí, 67 statistik.
           </p>
           <div class="flex gap-2 shrink-0">
             <a
-              href="#demografie"
+              href="#sekce"
               class="inline-flex items-center gap-2 px-4 py-2 bg-czech-blue hover:bg-czech-blue/90 text-white text-sm font-medium rounded-lg transition-colors"
             >
               Prozkoumat data
@@ -204,42 +118,63 @@ const isStale = monthsOld > 12;
     </div>
   </section>
 
-  {sections.map((section, index) => (
-    <section
-      class:list={['py-16 sm:py-24', section.bg ? 'bg-surface' : 'bg-white']}
-      id={section.id}
-    >
-      <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <header class="mb-12">
-          <div class="flex items-center gap-4">
-            <span class="text-5xl sm:text-6xl font-display font-bold text-border select-none leading-none">
-              {String(index + 1).padStart(2, '0')}
-            </span>
-            <div>
-              <div class="flex items-center gap-2">
-                {sectionIcons[section.id] && (
-                  <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={sectionIcons[section.id]} />
-                )}
-                <h2 class="text-2xl sm:text-3xl font-bold text-czech-blue">{section.data.title}</h2>
-              </div>
-              <p class="text-muted mt-1 max-w-2xl">
-                {section.data.description}
-              </p>
-            </div>
-          </div>
-        </header>
+  <!-- Section previews -->
+  <section class="py-16 sm:py-24" id="sekce">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <header class="mb-12 text-center">
+        <h2 class="text-2xl sm:text-3xl font-bold text-czech-blue">Prozkoumejte data</h2>
+        <p class="text-muted mt-2">14 tematických sekcí s ověřenými statistikami</p>
+      </header>
 
-        <div class:list={[
-          'stat-grid grid gap-4 sm:gap-6 items-start',
-          section.cols === 4 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-        ]}>
-          {section.data.stats.map((stat: Stat) => (
-            <StatCard {...stat} />
-          ))}
-        </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        {sections.map((section) => {
+          const highlightStat = section.data.stats.find((s: Stat) => s.highlight) || section.data.stats[0];
+          return (
+            <a
+              href={`/${section.slug}`}
+              class="group bg-white border border-border rounded-xl p-6 hover:shadow-lg hover:border-accent/30 transition-all"
+            >
+              <!-- Icon + Title -->
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-lg bg-surface-alt group-hover:bg-accent/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={section.icon} />
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-czech-blue group-hover:text-accent transition-colors">{section.data.title}</h3>
+                  <p class="text-xs text-muted">{section.data.stats.length} statistik</p>
+                </div>
+              </div>
+
+              <!-- Highlight stat -->
+              <div class="mb-3">
+                <span class="text-xs font-semibold text-muted uppercase tracking-wider">{highlightStat.label}</span>
+                <div class="font-display text-3xl font-bold text-czech-blue mt-1 tabular-nums">
+                  {highlightStat.value}
+                  {highlightStat.unit && <span class="text-base text-muted font-body font-normal ml-1">{highlightStat.unit}</span>}
+                </div>
+                {highlightStat.change !== undefined && (
+                  <span class:list={['inline-flex items-center text-xs font-semibold mt-1 tabular-nums', highlightStat.change >= 0 ? 'text-emerald-600' : 'text-red-600']}>
+                    {highlightStat.change >= 0 ? '↑ +' : '↓ −'}{Math.abs(highlightStat.change)}%
+                  </span>
+                )}
+              </div>
+
+              <!-- Description -->
+              <p class="text-sm text-muted leading-relaxed line-clamp-2">{section.data.description}</p>
+
+              <!-- Arrow -->
+              <div class="mt-4 flex items-center gap-1 text-xs font-medium text-accent/60 group-hover:text-accent transition-colors">
+                Zobrazit vše
+                <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </div>
+            </a>
+          );
+        })}
       </div>
-    </section>
-  ))}
+    </div>
+  </section>
 </Layout>
 
 <script>
@@ -270,7 +205,6 @@ const isStale = monthsOld > 12;
         function update(now: number) {
           const elapsed = now - start;
           const progress = Math.min(elapsed / duration, 1);
-          // Ease out cubic
           const eased = 1 - Math.pow(1 - progress, 3);
           const current = eased * target;
 

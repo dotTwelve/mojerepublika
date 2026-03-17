@@ -14,35 +14,35 @@ const navGroups = [
   {
     label: 'Společnost',
     items: [
-      { href: '#demografie', label: 'Demografie', desc: 'Obyvatelstvo a věková struktura', icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
-      { href: '#vzdelani', label: 'Vzdělání', desc: 'Školy, studenti a gramotnost', icon: '<path d="M22 10v6"/><path d="M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/>' },
-      { href: '#zdravotnictvi', label: 'Zdravotnictví', desc: 'Lékaři, nemocnice a zdraví', icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>' },
-      { href: '#bezpecnost', label: 'Bezpečnost', desc: 'Kriminalita a dopravní nehody', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' },
+      { href: '/demografie', label: 'Demografie', desc: 'Obyvatelstvo a věková struktura', icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
+      { href: '/vzdelani', label: 'Vzdělání', desc: 'Školy, studenti a gramotnost', icon: '<path d="M22 10v6"/><path d="M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/>' },
+      { href: '/zdravotnictvi', label: 'Zdravotnictví', desc: 'Lékaři, nemocnice a zdraví', icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>' },
+      { href: '/bezpecnost', label: 'Bezpečnost', desc: 'Kriminalita a dopravní nehody', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' },
     ]
   },
   {
     label: 'Ekonomika',
     items: [
-      { href: '#ekonomika', label: 'Ekonomika', desc: 'HDP, mzdy a zaměstnanost', icon: '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>' },
-      { href: '#bydleni', label: 'Bydlení', desc: 'Ceny bytů, nájmy a výstavba', icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
-      { href: '#doprava', label: 'Doprava', desc: 'Silnice, železnice a vozidla', icon: '<rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>' },
-      { href: '#energie', label: 'Energie', desc: 'Výroba a obnovitelné zdroje', icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
+      { href: '/ekonomika', label: 'Ekonomika', desc: 'HDP, mzdy a zaměstnanost', icon: '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>' },
+      { href: '/bydleni', label: 'Bydlení', desc: 'Ceny bytů, nájmy a výstavba', icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
+      { href: '/doprava', label: 'Doprava', desc: 'Silnice, železnice a vozidla', icon: '<rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>' },
+      { href: '/energie', label: 'Energie', desc: 'Výroba a obnovitelné zdroje', icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
     ]
   },
   {
     label: 'Prostředí',
     items: [
-      { href: '#geografie', label: 'Geografie', desc: 'Rozloha, kraje a příroda', icon: '<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>' },
-      { href: '#zivotni-prostredi', label: 'Životní prostředí', desc: 'Lesy, chráněná území a emise', icon: '<path d="M17 22v-2"/><path d="M7 22v-2"/><path d="M12 2L7 7h3l-4 5h3l-5 6h16l-5-6h3l-4-5h3z"/>' },
-      { href: '#digitalizace', label: 'Digitalizace', desc: 'Internet a technologie', icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>' },
+      { href: '/geografie', label: 'Geografie', desc: 'Rozloha, kraje a příroda', icon: '<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>' },
+      { href: '/zivotni-prostredi', label: 'Životní prostředí', desc: 'Lesy, chráněná území a emise', icon: '<path d="M17 22v-2"/><path d="M7 22v-2"/><path d="M12 2L7 7h3l-4 5h3l-5 6h16l-5-6h3l-4-5h3z"/>' },
+      { href: '/digitalizace', label: 'Digitalizace', desc: 'Internet a technologie', icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>' },
     ]
   },
   {
     label: 'Kultura',
     items: [
-      { href: '#kultura', label: 'Kultura', desc: 'Knihovny, muzea a divadla', icon: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>' },
-      { href: '#turismus', label: 'Turismus', desc: 'Návštěvnost a UNESCO památky', icon: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>' },
-      { href: '#zajimavosti', label: 'Zajímavosti', desc: 'Unikátní fakta a rekordy', icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>' },
+      { href: '/kultura', label: 'Kultura', desc: 'Knihovny, muzea a divadla', icon: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>' },
+      { href: '/turismus', label: 'Turismus', desc: 'Návštěvnost a UNESCO památky', icon: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>' },
+      { href: '/zajimavosti', label: 'Zajímavosti', desc: 'Unikátní fakta a rekordy', icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>' },
     ]
   }
 ];
@@ -444,40 +444,22 @@ const allNavItems = navGroups.flatMap(g => g.items);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
-      // Active section highlighting via IntersectionObserver
-      const sections = document.querySelectorAll('section[id]');
+      // Highlight current page in nav
+      const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
       const navLinks = document.querySelectorAll('.nav-link');
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id');
-
-            navLinks.forEach(link => {
-              link.classList.remove('bg-accent/10');
-              link.removeAttribute('aria-current');
-            });
-
-            document.querySelectorAll(`[data-nav-link="#${id}"]`).forEach(link => {
-              link.classList.add('bg-accent/10');
-              link.setAttribute('aria-current', 'true');
-
-              // Update header label
-              const label = link.querySelector('.text-sm.font-semibold')?.textContent
-                || link.textContent?.trim() || '';
-              if (activeSectionLabel) {
-                activeSectionLabel.textContent = label;
-              }
-            });
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href')?.replace(/\/$/, '') || '';
+        if (href === currentPath) {
+          link.classList.add('bg-accent/10');
+          link.setAttribute('aria-current', 'page');
+          // Update header label
+          const label = link.querySelector('.text-sm.font-semibold')?.textContent
+            || link.textContent?.trim() || '';
+          if (activeSectionLabel) {
+            activeSectionLabel.textContent = label;
           }
-        });
-      }, {
-        root: null,
-        rootMargin: '-20% 0px -60% 0px',
-        threshold: 0
+        }
       });
-
-      sections.forEach(section => observer.observe(section));
     </script>
   </body>
 </html>

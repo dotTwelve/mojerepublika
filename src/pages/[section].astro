@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StatCard from '../components/StatCard.astro';
+import StatModal from '../components/StatModal.astro';
+import CzechMap from '../components/CzechMap.astro';
+import { sections, seoDescriptions, type Stat } from '../data/sections';
+
+export function getStaticPaths() {
+  return sections.map(s => ({
+    params: { section: s.slug },
+    props: { section: s },
+  }));
+}
+
+const { section } = Astro.props;
+const sectionIndex = sections.findIndex(s => s.id === section.id);
+const prevSection = sectionIndex > 0 ? sections[sectionIndex - 1] : null;
+const nextSection = sectionIndex < sections.length - 1 ? sections[sectionIndex + 1] : null;
+const description = seoDescriptions[section.id] || section.data.description;
+const showMap = section.id === 'demografie' || section.id === 'geografie';
+---
+
+<Layout
+  title={`${section.data.title} – Statistiky ČR | Moje Republika`}
+  description={description}
+>
+  <section class="py-12 sm:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <!-- Breadcrumb -->
+      <nav class="mb-8 text-sm" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-2 text-muted">
+          <li><a href="/" class="hover:text-accent transition-colors">Domů</a></li>
+          <li><span class="text-border">/</span></li>
+          <li class="text-czech-blue font-medium">{section.data.title}</li>
+        </ol>
+      </nav>
+
+      <!-- Header -->
+      <header class="mb-12">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={section.icon} />
+          </div>
+          <div>
+            <h1 class="text-3xl sm:text-4xl font-bold text-czech-blue">{section.data.title}</h1>
+            <p class="text-muted mt-1 max-w-2xl">{section.data.description}</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- Map for demografie/geografie -->
+      {showMap && (
+        <div class="mb-12 max-w-xl">
+          <CzechMap />
+        </div>
+      )}
+
+      <!-- Stats grid -->
+      <div class:list={[
+        'stat-grid grid gap-4 sm:gap-6 items-start',
+        section.data.stats.length <= 3 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
+      ]}>
+        {section.data.stats.map((stat: Stat) => (
+          <StatCard {...stat} />
+        ))}
+      </div>
+
+      <!-- Prev/Next navigation -->
+      <nav class="mt-16 pt-8 border-t border-border flex items-center justify-between">
+        {prevSection ? (
+          <a href={`/${prevSection.slug}`} class="group flex items-center gap-3 text-muted hover:text-czech-blue transition-colors">
+            <svg class="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            <div>
+              <span class="block text-xs text-muted">Předchozí</span>
+              <span class="block text-sm font-semibold">{prevSection.data.title}</span>
+            </div>
+          </a>
+        ) : <div />}
+        {nextSection ? (
+          <a href={`/${nextSection.slug}`} class="group flex items-center gap-3 text-muted hover:text-czech-blue transition-colors text-right">
+            <div>
+              <span class="block text-xs text-muted">Další</span>
+              <span class="block text-sm font-semibold">{nextSection.data.title}</span>
+            </div>
+            <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </a>
+        ) : <div />}
+      </nav>
+    </div>
+  </section>
+
+  <StatModal />
+</Layout>
