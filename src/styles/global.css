@@ -8,14 +8,14 @@
   --color-czech-blue-light: #0369A1;
   --color-czech-blue-dark: #020617;
 
-  /* Government civic palette */
+  /* Government civic palette — light mode defaults */
   --color-accent: #0369A1;
   --color-surface: #F8FAFC;
   --color-surface-alt: #F1F5F9;
   --color-muted: #64748B;
   --color-border: #E2E8F0;
 
-  /* Typography — Inter (body) + Libre Baskerville (display) */
+  /* Typography */
   --font-display: 'Libre Baskerville', Georgia, serif;
   --font-body: 'Inter', system-ui, sans-serif;
 }
@@ -30,13 +30,118 @@
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #020617;
-    background: #FFFFFF;
+    color: var(--body-text);
+    background: var(--body-bg);
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
   }
+}
+
+/* ===== Theme tokens ===== */
+:root {
+  --body-bg: #FFFFFF;
+  --body-text: #020617;
+  --card-bg: #FFFFFF;
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --footer-bg: #0F172A;
+}
+
+:root.dark {
+  --body-bg: #0B0F19;
+  --body-text: #E2E8F0;
+  --card-bg: #131A2B;
+  --header-bg: rgba(11, 15, 25, 0.95);
+  --footer-bg: #060A13;
+
+  --color-czech-blue: #E2E8F0;
+  --color-czech-blue-dark: #F8FAFC;
+  --color-accent: #38BDF8;
+  --color-surface: #131A2B;
+  --color-surface-alt: #1A2332;
+  --color-muted: #94A3B8;
+  --color-border: #1E293B;
+}
+
+/* Dark mode overrides for elements using hardcoded colors */
+:root.dark body {
+  color: #E2E8F0;
+  background: #0B0F19;
+}
+
+:root.dark .bg-white {
+  background-color: var(--card-bg) !important;
+}
+
+:root.dark .text-czech-blue {
+  color: #E2E8F0 !important;
+}
+
+:root.dark .text-czech-blue-dark {
+  color: #F8FAFC !important;
+}
+
+:root.dark .bg-surface {
+  background-color: #131A2B !important;
+}
+
+:root.dark .bg-surface-alt {
+  background-color: #1A2332 !important;
+}
+
+:root.dark .border-border {
+  border-color: #1E293B !important;
+}
+
+:root.dark .text-muted {
+  color: #94A3B8 !important;
+}
+
+:root.dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+}
+
+:root.dark .bg-red-50 {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+:root.dark .hover\:shadow-md:hover,
+:root.dark .hover\:shadow-lg:hover,
+:root.dark .hover\:shadow-sm:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Header */
+:root.dark header.sticky {
+  background: var(--header-bg) !important;
+  backdrop-filter: blur(12px);
+}
+
+/* Footer */
+:root.dark footer {
+  background: var(--footer-bg) !important;
+}
+
+/* Mega menu */
+:root.dark #nav-panel {
+  background: #131A2B !important;
+}
+
+/* Bento hero cards */
+:root.dark .bento-card {
+  border-color: #1E293B;
+}
+
+/* Stat takeover */
+:root.dark .stat-takeover .bg-white {
+  background-color: #131A2B !important;
+}
+
+/* Chart tooltip */
+:root.dark .apexcharts-tooltip {
+  background: #1E293B !important;
 }
 
 /* Tabular numbers for data values */
