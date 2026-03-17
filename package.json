@@ -6,15 +6,16 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/generate-og.js && astro build",
+    "og": "node scripts/generate-og.js",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
+    "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/vite": "^4.1.18",
     "@vercel/analytics": "^1.6.1",
-    "apexcharts": "^5.3.6",
     "astro": "^5.0.0",
     "chart.js": "^4.5.1",
     "sharp": "^0.34.5",
