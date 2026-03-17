@@ -1,0 +1,120 @@
+---
+import { sections, type Stat, type SectionDef } from '../data/sections';
+
+// Build flat search index at build time
+const searchIndex = sections.flatMap((section: SectionDef) =>
+  section.data.stats.map((stat: Stat) => ({
+    label: stat.label,
+    value: String(stat.value),
+    unit: stat.unit || '',
+    section: section.data.title,
+    slug: section.slug,
+    description: stat.description || '',
+  }))
+);
+---
+
+<!-- Search modal -->
+<div id="search-modal" class="fixed inset-0 z-[70] hidden">
+  <div id="search-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+  <div class="absolute inset-x-4 top-[15%] sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-lg">
+    <div class="bg-card border border-border rounded-2xl shadow-2xl overflow-hidden">
+      <!-- Input -->
+      <div class="flex items-center gap-3 px-4 border-b border-border">
+        <svg class="w-5 h-5 text-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Hledat statistiku..."
+          class="w-full py-3 bg-transparent text-text text-sm outline-none placeholder:text-muted/50"
+          autocomplete="off"
+        />
+        <kbd class="hidden sm:inline-flex text-[10px] text-muted/50 bg-surface px-1.5 py-0.5 rounded border border-border">ESC</kbd>
+      </div>
+
+      <!-- Results -->
+      <div id="search-results" class="max-h-[50vh] overflow-y-auto">
+        <div class="p-3 text-sm text-muted/50 text-center">Zadejte hledaný výraz</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search data (embedded at build time) -->
+<script define:vars={{ searchIndex }}>
+  window.__searchIndex = searchIndex;
+</script>
+
+<script>
+  const modal = document.getElementById('search-modal');
+  const backdrop = document.getElementById('search-backdrop');
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  const results = document.getElementById('search-results');
+  const index = (window as any).__searchIndex as Array<{
+    label: string; value: string; unit: string;
+    section: string; slug: string; description: string;
+  }>;
+
+  function openSearch() {
+    modal?.classList.remove('hidden');
+    input?.focus();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSearch() {
+    modal?.classList.add('hidden');
+    document.body.style.overflow = '';
+    if (input) input.value = '';
+    renderResults('');
+  }
+
+  function renderResults(query: string) {
+    if (!results) return;
+
+    if (!query.trim()) {
+      results.innerHTML = '<div class="p-3 text-sm text-muted/50 text-center">Zadejte hledaný výraz</div>';
+      return;
+    }
+
+    const q = query.toLowerCase();
+    const matches = index.filter(item =>
+      item.label.toLowerCase().includes(q) ||
+      item.section.toLowerCase().includes(q) ||
+      item.description.toLowerCase().includes(q) ||
+      item.value.toLowerCase().includes(q)
+    ).slice(0, 8);
+
+    if (!matches.length) {
+      results.innerHTML = '<div class="p-3 text-sm text-muted/50 text-center">Žádné výsledky</div>';
+      return;
+    }
+
+    results.innerHTML = matches.map(item => `
+      <a href="/${item.slug}" class="flex items-center justify-between gap-4 px-4 py-3 hover:bg-surface transition-colors border-b border-border-light last:border-0">
+        <div class="min-w-0">
+          <span class="block text-sm font-medium text-text truncate">${item.label}</span>
+          <span class="block text-xs text-muted truncate">${item.section}${item.description ? ' · ' + item.description : ''}</span>
+        </div>
+        <span class="text-sm font-bold text-primary tabular-nums shrink-0">${item.value}${item.unit ? ' ' + item.unit : ''}</span>
+      </a>
+    `).join('');
+  }
+
+  // Input handler
+  input?.addEventListener('input', () => renderResults(input.value));
+
+  // Close handlers
+  backdrop?.addEventListener('click', closeSearch);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeSearch();
+
+    // Ctrl+K or Cmd+K to open
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      const isOpen = !modal?.classList.contains('hidden');
+      isOpen ? closeSearch() : openSearch();
+    }
+  });
+</script>

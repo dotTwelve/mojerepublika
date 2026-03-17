@@ -29,7 +29,7 @@ const hasDetails = details && details.history && details.history.length > 0;
 
 <article
   class:list={[
-    'stat-card group relative bg-card border border-border rounded-xl p-6 transition-all duration-200 overflow-hidden focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:outline-none',
+    'stat-card reveal group relative bg-card border border-border rounded-xl p-6 transition-all duration-200 overflow-hidden focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:outline-none',
     highlight ? 'ring-1 ring-accent/20' : '',
     hasDetails ? 'hover:shadow-md hover:border-accent/40 cursor-pointer' : 'hover:shadow-sm'
   ]}

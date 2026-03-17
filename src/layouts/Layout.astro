@@ -2,6 +2,7 @@
 import Analytics from '@vercel/analytics/astro'
 import '../styles/global.css';
 import StatModal from '../components/StatModal.astro';
+import Search from '../components/Search.astro';
 
 interface Props {
   title: string;
@@ -194,6 +195,17 @@ const allNavItems = navGroups.flatMap(g => g.items);
               </svg>
               Podpořit
             </a>
+
+          <!-- Search button -->
+          <button
+            id="search-trigger"
+            class="p-2 text-muted hover:text-primary hover:bg-surface rounded-lg transition-colors min-h-[44px]"
+            aria-label="Hledat"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
 
           <!-- Dark mode toggle -->
           <button
@@ -406,6 +418,7 @@ const allNavItems = navGroups.flatMap(g => g.items);
     </footer>
 
     <StatModal />
+    <Search />
     <Analytics />
 
     <script>
@@ -448,6 +461,14 @@ const allNavItems = navGroups.flatMap(g => g.items);
       // Close on link click
       navOverlay?.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', closeNav);
+      });
+
+      // Search trigger
+      document.getElementById('search-trigger')?.addEventListener('click', () => {
+        const searchModal = document.getElementById('search-modal');
+        searchModal?.classList.remove('hidden');
+        (document.getElementById('search-input') as HTMLInputElement)?.focus();
+        document.body.style.overflow = 'hidden';
       });
 
       // Dark mode toggle
@@ -521,6 +542,23 @@ const allNavItems = navGroups.flatMap(g => g.items);
           }
         }
       });
+      // Scroll reveal
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+              const el = entry.target as HTMLElement;
+              el.style.transitionDelay = `${(i % 4) * 80}ms`;
+              el.classList.add('visible');
+              revealObserver.unobserve(el);
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+      } else {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+      }
     </script>
   </body>
 </html>
