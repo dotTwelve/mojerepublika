@@ -86,6 +86,21 @@
             { "year": 2023, "value": 79.4 }
           ]
         }
+      },
+      {
+        "id": "births",
+        "label": "Živě narozených",
+        "value": "84 311",
+        "description": "Historicky nejnižší počet narozených dětí",
+        "change": -5.8,
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "net-migration",
+        "label": "Čistá migrace",
+        "value": "36 800",
+        "description": "Počet přistěhovalých minus vystěhovalých",
+        "source": "ČSÚ, 2024"
       }
     ]
   },
@@ -209,6 +224,23 @@
         "unit": "Kč",
         "description": "Minimální měsíční mzda pro rok 2024",
         "source": "MPSV, 2024"
+      },
+      {
+        "id": "avg-pension",
+        "label": "Průměrný důchod",
+        "value": "20 736",
+        "unit": "Kč",
+        "description": "Průměrný starobní důchod",
+        "source": "ČSSZ, 2024"
+      },
+      {
+        "id": "state-debt",
+        "label": "Státní dluh",
+        "value": 42,
+        "unit": "% HDP",
+        "description": "Dluh vládních institucí vůči HDP",
+        "change": 1.2,
+        "source": "ČSÚ, 2024"
       }
     ]
   },
@@ -576,6 +608,216 @@
         "unit": "mil.",
         "description": "Nejnavštěvovanější ZOO v ČR",
         "source": "Zoo Praha, 2024"
+      }
+    ]
+  },
+  "bydleni": {
+    "title": "Bydlení",
+    "description": "Ceny nemovitostí, výstavba a dostupnost bydlení.",
+    "stats": [
+      {
+        "id": "apartment-price",
+        "label": "Cena bytu",
+        "value": "63 521",
+        "unit": "Kč/m²",
+        "description": "Průměrná realizovaná cena bytů v ČR",
+        "source": "ČSÚ, 2024",
+        "highlight": true
+      },
+      {
+        "id": "completed-dwellings",
+        "label": "Dokončených bytů",
+        "value": "30 311",
+        "description": "Počet dokončených bytů za rok",
+        "change": -20,
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "home-ownership",
+        "label": "Vlastnické bydlení",
+        "value": 78,
+        "unit": "%",
+        "description": "Podíl domácností žijících ve vlastním bydlení",
+        "source": "Eurostat, 2023"
+      },
+      {
+        "id": "avg-rent",
+        "label": "Průměrný nájem",
+        "value": 344,
+        "unit": "Kč/m²",
+        "description": "Průměrné tržní nájemné za m² měsíčně",
+        "source": "ČSÚ, 2024"
+      }
+    ]
+  },
+  "digitalizace": {
+    "title": "Digitalizace",
+    "description": "Internet, technologie a digitální služby.",
+    "stats": [
+      {
+        "id": "internet-households",
+        "label": "Domácnosti s internetem",
+        "value": 89,
+        "unit": "%",
+        "description": "Podíl domácností s přístupem k internetu",
+        "source": "ČSÚ, 2024",
+        "highlight": true,
+        "details": {
+          "chartType": "area",
+          "chartLabel": "Domácnosti s internetem (%)",
+          "history": [
+            { "year": 2015, "value": 73 },
+            { "year": 2016, "value": 77 },
+            { "year": 2017, "value": 78 },
+            { "year": 2018, "value": 81 },
+            { "year": 2019, "value": 81 },
+            { "year": 2020, "value": 83 },
+            { "year": 2021, "value": 84 },
+            { "year": 2022, "value": 85 },
+            { "year": 2023, "value": 87 },
+            { "year": 2024, "value": 89 }
+          ]
+        }
+      },
+      {
+        "id": "egovernment",
+        "label": "E-government",
+        "value": 21,
+        "unit": "%",
+        "description": "Podíl občanů vyplňujících online formuláře veřejné správy",
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "ict-workers",
+        "label": "ICT odborníků",
+        "value": 223,
+        "unit": "tis.",
+        "description": "Počet ICT odborníků zaměstnaných v ČR",
+        "source": "ČSÚ, 2024"
+      },
+      {
+        "id": "internet-speed",
+        "label": "Průměrná rychlost",
+        "value": 88,
+        "unit": "Mbps",
+        "description": "Průměrná rychlost pevného připojení k internetu",
+        "source": "ČTÚ, 2024"
+      }
+    ]
+  },
+  "kultura": {
+    "title": "Kultura",
+    "description": "Knihovny, muzea, divadla a kulturní dědictví.",
+    "stats": [
+      {
+        "id": "libraries",
+        "label": "Veřejných knihoven",
+        "value": "5 256",
+        "description": "Nejhustší síť veřejných knihoven v EU",
+        "source": "NIPOS, 2023",
+        "highlight": true
+      },
+      {
+        "id": "museums",
+        "label": "Muzeí a galerií",
+        "value": 477,
+        "description": "Počet muzeí, galerií a památníků",
+        "source": "NIPOS, 2023"
+      },
+      {
+        "id": "theater-visitors",
+        "label": "Návštěvníků divadel",
+        "value": "5,9",
+        "unit": "mil.",
+        "description": "Celková roční návštěvnost divadel v ČR",
+        "source": "NIPOS, 2023"
+      },
+      {
+        "id": "theaters",
+        "label": "Divadel",
+        "value": 84,
+        "description": "Počet profesionálních divadel",
+        "source": "NIPOS, 2023"
+      }
+    ]
+  },
+  "bezpecnost": {
+    "title": "Bezpečnost",
+    "description": "Kriminalita, bezpečnost a policejní statistiky.",
+    "stats": [
+      {
+        "id": "crime-total",
+        "label": "Trestných činů",
+        "value": 173,
+        "unit": "tis.",
+        "description": "Registrované trestné činy, meziroční pokles 4,5 %",
+        "change": -4.5,
+        "source": "PČR, 2024",
+        "highlight": true
+      },
+      {
+        "id": "crime-clearance",
+        "label": "Objasněnost",
+        "value": 54.7,
+        "unit": "%",
+        "description": "Podíl objasněných trestných činů",
+        "source": "PČR, 2024"
+      },
+      {
+        "id": "traffic-accidents",
+        "label": "Dopravních nehod",
+        "value": "92 217",
+        "description": "Počet dopravních nehod za rok, 443 usmrcených",
+        "change": -2.9,
+        "source": "PČR, 2024"
+      }
+    ]
+  },
+  "zajimavosti": {
+    "title": "Zajímavosti",
+    "description": "Unikátní fakta a rekordy České republiky.",
+    "stats": [
+      {
+        "id": "beer-consumption",
+        "label": "Spotřeba piva",
+        "value": 126,
+        "unit": "l/osobu",
+        "description": "ČR je celosvětově první ve spotřebě piva na obyvatele",
+        "source": "Český svaz pivovarů, 2024",
+        "highlight": true,
+        "details": {
+          "chartType": "area",
+          "chartLabel": "Spotřeba piva (l/osobu)",
+          "history": [
+            { "year": 2019, "value": 142 },
+            { "year": 2020, "value": 135 },
+            { "year": 2021, "value": 129 },
+            { "year": 2022, "value": 136 },
+            { "year": 2023, "value": 128 },
+            { "year": 2024, "value": 126 }
+          ]
+        }
+      },
+      {
+        "id": "castles",
+        "label": "Hradů a zámků",
+        "value": "2 000+",
+        "description": "Hrady, zámky, tvrze a zříceniny. NPÚ spravuje 106 státních objektů",
+        "source": "NPÚ"
+      },
+      {
+        "id": "ponds",
+        "label": "Rybníků",
+        "value": "24 000",
+        "description": "Historická síť rybníků, celková plocha 52 000 ha",
+        "source": "MZe"
+      },
+      {
+        "id": "breweries",
+        "label": "Pivovarů",
+        "value": 599,
+        "description": "Počet aktivních pivovarů, z toho přes 500 minipivovarů",
+        "source": "Evropský svaz pivovarníků, 2024"
       }
     ]
   }
