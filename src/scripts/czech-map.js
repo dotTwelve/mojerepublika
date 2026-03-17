@@ -147,9 +147,11 @@ function initCzechMap() {
 
   function hideRegionInfo() {
     regionInfo?.classList.add('hidden');
+    container?.querySelector('svg')?.classList.remove('has-active');
   }
 
   // Click to select region (desktop)
+  const svgEl = container?.querySelector('svg');
   regions.forEach(region => {
     region.addEventListener('click', () => {
       const wasActive = region.classList.contains('active');
@@ -157,6 +159,7 @@ function initCzechMap() {
       if (!wasActive) {
         region.classList.add('active');
         region.parentNode.appendChild(region);
+        svgEl?.classList.add('has-active');
         showRegionInfo(region);
       } else {
         hideRegionInfo();
@@ -207,6 +210,7 @@ function initCzechMap() {
       if (!wasActive) {
         region.classList.add('active');
         region.parentNode.appendChild(region);
+        svgEl?.classList.add('has-active');
         showRegionInfo(region);
       } else {
         hideRegionInfo();

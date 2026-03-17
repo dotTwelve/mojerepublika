@@ -103,9 +103,12 @@
   /* Map */
   .czech-map-container { position: relative; overflow: hidden; width: 100%; }
   .czech-map-svg { width: 100%; height: auto; display: block; }
-  .region { stroke-width: 1; cursor: pointer; transition: transform 0.2s ease; -webkit-tap-highlight-color: transparent; transform-origin: center; }
-  .region:hover { transform: scale(1.02); }
-  .region.active { transform: scale(1.04); }
+  .region { stroke-width: 1; cursor: pointer; transition: opacity 0.2s ease; -webkit-tap-highlight-color: transparent; }
+  .czech-map-svg.has-active .region { opacity: 0.4; }
+  .czech-map-svg.has-active .region.active { opacity: 1; }
+  .region:hover { opacity: 0.85; }
+  .czech-map-svg.has-active .region:hover { opacity: 0.7; }
+  .czech-map-svg.has-active .region.active:hover { opacity: 1; }
 
   /* Tooltip */
   .map-tooltip { position: absolute; padding: 8px 12px; border-radius: 8px; font-size: 12px; pointer-events: none; opacity: 0; transform: translateY(8px); transition: all 0.2s ease; max-width: 200px; white-space: normal; z-index: 100; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); }
