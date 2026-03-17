@@ -102,6 +102,16 @@
   display: none;
 }
 
+/* Map — needs global scope for CSS var access */
+.region { stroke: var(--c-border); }
+.region:hover, .region.active { stroke: var(--c-text); }
+.segmented-control { background: var(--c-surface-alt); }
+.seg-indicator { background: var(--c-card); }
+.seg-btn { color: var(--c-muted); }
+.seg-btn:hover, .seg-btn.active { color: var(--c-text); }
+.map-tooltip { background: var(--c-surface-alt); color: var(--c-text); border: 1px solid var(--c-border); }
+.legend-labels { color: var(--c-muted); }
+
 /* Scroll progress bar */
 #scroll-progress {
   transform-origin: left;

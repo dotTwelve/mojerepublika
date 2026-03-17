@@ -57,7 +57,6 @@
   .segmented-control {
     position: relative;
     display: inline-flex;
-    background: var(--c-surface-alt);
     border-radius: 8px;
     padding: 2px;
   }
@@ -67,7 +66,6 @@
     padding: 0.5rem 0.75rem;
     font-size: 0.7rem;
     font-weight: 500;
-    color: var(--c-muted);
     background: none;
     border: none;
     border-radius: 6px;
@@ -76,14 +74,12 @@
     white-space: nowrap;
     min-height: 36px;
   }
-  .seg-btn:hover { color: var(--c-text); }
-  .seg-btn.active { color: var(--c-text); font-weight: 600; }
+  .seg-btn.active { font-weight: 600; }
   .seg-indicator {
     position: absolute;
     top: 2px;
     left: 2px;
     height: calc(100% - 4px);
-    background: var(--c-card);
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -97,17 +93,17 @@
   /* Inline legend */
   .map-legend-inline { flex: 1; min-width: 80px; max-width: 160px; }
   .legend-bar { height: 6px; border-radius: 3px; }
-  .legend-labels { display: flex; justify-content: space-between; margin-top: 2px; font-size: 0.6rem; color: var(--c-muted); font-variant-numeric: tabular-nums; }
+  .legend-labels { display: flex; justify-content: space-between; margin-top: 2px; font-size: 0.6rem; font-variant-numeric: tabular-nums; }
 
   /* Map */
   .czech-map-container { position: relative; overflow: hidden; }
   .czech-map-svg { width: 100%; height: auto; max-width: 36rem; }
-  .region { stroke: var(--c-border); stroke-width: 1; cursor: pointer; transition: all 0.2s ease; -webkit-tap-highlight-color: transparent; }
-  .region:hover { stroke: var(--c-text); stroke-width: 2; filter: drop-shadow(0 0 4px rgba(15, 23, 42, 0.2)); }
-  .region.active { stroke: var(--c-text); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(15, 23, 42, 0.3)); }
+  .region { stroke-width: 1; cursor: pointer; transition: all 0.2s ease; -webkit-tap-highlight-color: transparent; }
+  .region:hover { stroke-width: 2; filter: drop-shadow(0 0 4px rgba(15, 23, 42, 0.2)); }
+  .region.active { stroke-width: 2; filter: drop-shadow(0 0 6px rgba(15, 23, 42, 0.3)); }
 
   /* Tooltip */
-  .map-tooltip { position: absolute; background: var(--c-surface-alt); color: var(--c-text); border: 1px solid var(--c-border); padding: 8px 12px; border-radius: 8px; font-size: 12px; pointer-events: none; opacity: 0; transform: translateY(8px); transition: all 0.2s ease; max-width: 200px; white-space: normal; z-index: 100; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); }
+  .map-tooltip { position: absolute; padding: 8px 12px; border-radius: 8px; font-size: 12px; pointer-events: none; opacity: 0; transform: translateY(8px); transition: all 0.2s ease; max-width: 200px; white-space: normal; z-index: 100; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); }
   .map-tooltip.visible { opacity: 1; transform: translateY(0); }
   .tooltip-name { font-weight: 600; margin-bottom: 2px; font-size: 0.7rem; }
   .tooltip-value { font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; }
