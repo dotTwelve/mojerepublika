@@ -132,6 +132,72 @@
 /* Bento hero cards */
 :root.dark .bento-card {
   border-color: #1E293B;
+  background-color: #131A2B;
+}
+
+:root.dark .bento-card.bg-czech-blue {
+  background-color: #1E293B !important;
+}
+
+:root.dark .bento-card.bg-gradient-to-br {
+  background: linear-gradient(to bottom right, rgba(3, 105, 161, 0.08), rgba(3, 105, 161, 0.15)) !important;
+}
+
+/* CTA buttons */
+:root.dark .bg-czech-blue {
+  background-color: #38BDF8 !important;
+  color: #0B0F19 !important;
+}
+
+:root.dark .bg-czech-blue:hover {
+  background-color: #0EA5E9 !important;
+}
+
+/* Stat cards */
+:root.dark .stat-card {
+  background-color: #131A2B !important;
+  border-color: #1E293B !important;
+}
+
+:root.dark .stat-card .text-czech-blue {
+  color: #E2E8F0 !important;
+}
+
+/* Section preview cards on homepage */
+:root.dark .group.bg-white {
+  background-color: #131A2B !important;
+}
+
+/* Breadcrumb */
+:root.dark .text-border {
+  color: #334155 !important;
+}
+
+/* Section header numbers */
+:root.dark .text-border.select-none {
+  color: #1E293B !important;
+}
+
+/* Table */
+:root.dark .bg-surface tr {
+  background-color: #1A2332 !important;
+}
+
+:root.dark table td, :root.dark table th {
+  border-color: #1E293B !important;
+}
+
+/* Segmented control on map */
+:root.dark .segmented-control {
+  background: #1A2332 !important;
+}
+
+:root.dark .seg-indicator {
+  background: #131A2B !important;
+}
+
+:root.dark .seg-btn.active {
+  color: #E2E8F0 !important;
 }
 
 /* Stat takeover */
