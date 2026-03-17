@@ -50,40 +50,40 @@ const isStale = monthsOld > 12;
       </div>
     </div>
 
-    <!-- Key metrics strip -->
+    <!-- Key metrics strip — horizontal scroll on mobile -->
     <div class="border-y border-border bg-surface">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 divide-x divide-border">
-          <div class="py-6 sm:py-8 px-4 sm:px-6 text-center">
-            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="10.9" data-decimals="1">0</span>
-            <span class="block text-xs text-muted mt-1 uppercase tracking-wider">mil. obyvatel</span>
+      <div class="overflow-x-auto scrollbar-hide">
+        <div class="flex min-w-max divide-x divide-border mx-auto max-w-6xl">
+          <div class="py-5 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
+            <span class="font-display text-2xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="10.9" data-decimals="1">0</span>
+            <span class="block text-[10px] sm:text-xs text-muted mt-1 uppercase tracking-wider">mil. obyvatel</span>
           </div>
-          <div class="py-6 sm:py-8 px-4 sm:px-6 text-center">
-            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="290">0</span>
-            <span class="block text-xs text-muted mt-1 uppercase tracking-wider">mld. € HDP</span>
+          <div class="py-5 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
+            <span class="font-display text-2xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="290">0</span>
+            <span class="block text-[10px] sm:text-xs text-muted mt-1 uppercase tracking-wider">mld. € HDP</span>
           </div>
-          <div class="py-6 sm:py-8 px-4 sm:px-6 text-center hidden sm:block">
-            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="78871" data-separator="true">0</span>
-            <span class="block text-xs text-muted mt-1 uppercase tracking-wider">km² rozloha</span>
+          <div class="py-5 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
+            <span class="font-display text-2xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="78871" data-separator="true">0</span>
+            <span class="block text-[10px] sm:text-xs text-muted mt-1 uppercase tracking-wider">km² rozloha</span>
           </div>
-          <div class="py-6 sm:py-8 px-4 sm:px-6 text-center hidden sm:block">
-            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="79.4" data-decimals="1">0</span>
-            <span class="block text-xs text-muted mt-1 uppercase tracking-wider">let dožití</span>
+          <div class="py-5 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
+            <span class="font-display text-2xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="79.4" data-decimals="1">0</span>
+            <span class="block text-[10px] sm:text-xs text-muted mt-1 uppercase tracking-wider">let dožití</span>
           </div>
-          <div class="py-6 sm:py-8 px-4 sm:px-6 text-center hidden lg:block">
-            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="22.8" data-decimals="1">0</span>
-            <span class="block text-xs text-muted mt-1 uppercase tracking-wider">mil. turistů</span>
+          <div class="py-5 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
+            <span class="font-display text-2xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="22.8" data-decimals="1">0</span>
+            <span class="block text-[10px] sm:text-xs text-muted mt-1 uppercase tracking-wider">mil. turistů</span>
           </div>
-          <div class="py-6 sm:py-8 px-4 sm:px-6 text-center hidden lg:block">
-            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums">14</span>
-            <span class="block text-xs text-muted mt-1 uppercase tracking-wider">krajů</span>
+          <div class="py-5 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
+            <span class="font-display text-2xl sm:text-4xl font-bold text-primary tabular-nums">14</span>
+            <span class="block text-[10px] sm:text-xs text-muted mt-1 uppercase tracking-wider">krajů</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Map section -->
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+    <!-- Map as visual element -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <CzechMap />
     </div>
   </section>
