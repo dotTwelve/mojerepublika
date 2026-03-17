@@ -97,7 +97,7 @@ const svg = `
   <!-- Bottom bar -->
   <rect x="0" y="${HEIGHT - 80}" width="${WIDTH}" height="80" fill="rgba(0,0,0,0.3)"/>
   <text x="60" y="${HEIGHT - 40}" fill="#64748B" font-family="Arial, sans-serif" font-size="14">mojerepublika.cz</text>
-  <text x="350" y="${HEIGHT - 40}" fill="#475569" font-family="Arial, sans-serif" font-size="13">14 sekcí · 67 statistik · Otevřená data</text>
+  <text x="350" y="${HEIGHT - 40}" fill="#475569" font-family="Arial, sans-serif" font-size="13">15 sekcí · 75+ statistik · Otevřená data</text>
   <text x="${WIDTH - 60}" y="${HEIGHT - 40}" fill="#475569" font-family="Arial, sans-serif" font-size="13" text-anchor="end">Aktualizace: ${lastUpdated}</text>
 
   <!-- Bottom tricolor -->

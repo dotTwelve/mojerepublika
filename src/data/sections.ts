@@ -56,6 +56,7 @@ export const sectionIcons: Record<string, string> = {
   'kultura': '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
   'turismus': '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
   'zajimavosti': '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
+  'politika': '<path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/>',
 };
 
 // Section order + slug mapping
@@ -74,6 +75,7 @@ const sectionDefs: { id: string; slug: string; dataKey: string }[] = [
   { id: 'kultura', slug: 'kultura', dataKey: 'kultura' },
   { id: 'turismus', slug: 'turismus', dataKey: 'turismus' },
   { id: 'zajimavosti', slug: 'zajimavosti', dataKey: 'zajimavosti' },
+  { id: 'politika', slug: 'politika', dataKey: 'politika' },
 ];
 
 export const sections: SectionDef[] = sectionDefs.map(s => ({
@@ -98,4 +100,5 @@ export const seoDescriptions: Record<string, string> = {
   'kultura': 'Knihovny, muzea, galerie a divadla v České republice. Kulturní statistiky z NIPOS.',
   'turismus': 'Počet turistů, UNESCO památky a cestovní ruch v České republice.',
   'zajimavosti': 'Spotřeba piva, počet hradů, zámků, rybníků a pivovarů v ČR. Unikátní česká čísla.',
+  'politika': 'Výsledky parlamentních voleb 2025, volební účast a složení Poslanecké sněmovny. Data z ČSÚ.',
 };

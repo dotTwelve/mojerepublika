@@ -12,7 +12,7 @@ interface Props {
 
 const {
   title,
-  description = 'Přehledné statistiky a otevřená data o České republice — demografie, ekonomika, bydlení, vzdělání, zdravotnictví a další. 67 ověřených ukazatelů z ČSÚ, Eurostatu a dalších zdrojů.',
+  description = 'Přehledné statistiky a otevřená data o České republice — demografie, ekonomika, bydlení, vzdělání, zdravotnictví a další. 75+ ověřených ukazatelů z ČSÚ, Eurostatu a dalších zdrojů.',
   ogImage = 'https://mojerepublika.cz/og-image.png',
   canonicalPath = '/'
 } = Astro.props;
@@ -27,6 +27,7 @@ const navGroups = [
       { href: '/vzdelani', label: 'Vzdělání', desc: 'Školy, studenti a gramotnost', icon: '<path d="M22 10v6"/><path d="M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/>' },
       { href: '/zdravotnictvi', label: 'Zdravotnictví', desc: 'Lékaři, nemocnice a zdraví', icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>' },
       { href: '/bezpecnost', label: 'Bezpečnost', desc: 'Kriminalita a dopravní nehody', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' },
+      { href: '/politika', label: 'Politika', desc: 'Volby a Poslanecká sněmovna', icon: '<path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/>' },
     ]
   },
   {
@@ -107,7 +108,7 @@ const allNavItems = navGroups.flatMap(g => g.items);
         {
           "@type": "Dataset",
           "name": "Statistiky České republiky",
-          "description": "Otevřená data o České republice — 14 tematických sekcí, 67 statistik z ověřených zdrojů (ČSÚ, Eurostat, PČR, NIPOS).",
+          "description": "Otevřená data o České republice — 15 tematických sekcí, 75+ statistik z ověřených zdrojů (ČSÚ, Eurostat, PČR, NIPOS, volby.cz).",
           "url": "https://mojerepublika.cz",
           "license": "https://creativecommons.org/licenses/by/4.0/",
           "inLanguage": "cs",
@@ -128,7 +129,7 @@ const allNavItems = navGroups.flatMap(g => g.items);
           "keywords": [
             "Česká republika", "statistiky", "demografie", "ekonomika", "HDP",
             "obyvatelstvo", "nezaměstnanost", "bydlení", "vzdělání", "zdravotnictví",
-            "kriminalita", "doprava", "energie", "turismus", "kultura", "otevřená data"
+            "kriminalita", "doprava", "energie", "turismus", "kultura", "volby", "politika", "otevřená data"
           ]
         },
         {
@@ -328,7 +329,7 @@ const allNavItems = navGroups.flatMap(g => g.items);
             <span class="text-sm text-white/50">Obyvatel</span>
           </div>
           <div>
-            <span class="block text-2xl sm:text-3xl font-display font-bold tabular-nums">78 767</span>
+            <span class="block text-2xl sm:text-3xl font-display font-bold tabular-nums">78 871</span>
             <span class="text-sm text-white/50">km² rozloha</span>
           </div>
           <div>
@@ -345,7 +346,8 @@ const allNavItems = navGroups.flatMap(g => g.items);
           <div>
             <span class="font-display text-xl font-bold">Moje Republika</span>
             <p class="text-white/60 text-sm mt-3 leading-relaxed">
-              Open source projekt prezentující data o České republice na jednom místě.
+              Přehledné statistiky o České republice z ověřených zdrojů.
+              15 tematických sekcí, 75+ ukazatelů. Otevřená data.
             </p>
           </div>
 
@@ -355,14 +357,17 @@ const allNavItems = navGroups.flatMap(g => g.items);
               <li><a href="https://www.czso.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Český statistický úřad (ČSÚ)</a></li>
               <li><a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener" class="hover:text-white transition-colors">Eurostat</a></li>
               <li><a href="https://www.cnb.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Česká národní banka (ČNB)</a></li>
+              <li><a href="https://www.eru.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Energetický regulační úřad (ERÚ)</a></li>
             </ul>
           </div>
 
           <div>
             <h3 class="font-semibold mb-3 text-sm uppercase tracking-wider text-white/80">Další zdroje</h3>
             <ul class="space-y-2 text-sm text-white/60">
-              <li><a href="https://www.eru.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Energetický regulační úřad (ERÚ)</a></li>
               <li><a href="https://www.mzp.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Ministerstvo životního prostředí</a></li>
+              <li><a href="https://policie.gov.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Policie České republiky</a></li>
+              <li><a href="https://www.nipos.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">NIPOS (kultura)</a></li>
+              <li><a href="https://www.volby.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Volby.cz (ČSÚ)</a></li>
             </ul>
           </div>
 
@@ -389,8 +394,9 @@ const allNavItems = navGroups.flatMap(g => g.items);
 
         <div class="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <p class="text-xs text-white/40 max-w-2xl leading-relaxed">
-            Data mají informativní charakter a pocházejí z veřejně dostupných zdrojů.
-            Pro závazné informace se obracejte přímo na uvedené instituce.
+            Všechna data pocházejí z veřejně dostupných zdrojů a mají informativní charakter.
+            Pro oficiální a závazné informace se obracejte přímo na uvedené instituce.
+            Projekt nemá politickou ani komerční afiliaci.
           </p>
           <p class="text-xs text-white/30 shrink-0">
             © {new Date().getFullYear()} Moje Republika
