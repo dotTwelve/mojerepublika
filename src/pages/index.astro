@@ -16,7 +16,7 @@ const isStale = monthsOld > 12;
     <div class="h-1 bg-gradient-to-r from-brand-blue via-accent to-czech-red"></div>
 
     <!-- Headline -->
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-20 pb-10 sm:pb-14 text-center">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-12 sm:pb-16 text-center">
       <h1 class="text-5xl sm:text-6xl lg:text-8xl font-bold text-primary tracking-tight leading-[0.9]">
         Česká republika
         <span class="block text-accent">v číslech</span>
@@ -54,27 +54,27 @@ const isStale = monthsOld > 12;
     <div class="border-y border-border bg-surface">
       <div class="overflow-x-auto scrollbar-hide">
         <div class="flex min-w-max divide-x divide-border mx-auto max-w-6xl">
-          <div class="py-5 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
+          <div class="py-6 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
             <span class="font-display text-2xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="10.9" data-decimals="1">0</span>
             <span class="block text-[10px] sm:text-xs text-muted mt-1 uppercase tracking-wider">mil. obyvatel</span>
           </div>
-          <div class="py-5 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
+          <div class="py-6 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
             <span class="font-display text-2xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="290">0</span>
             <span class="block text-[10px] sm:text-xs text-muted mt-1 uppercase tracking-wider">mld. € HDP</span>
           </div>
-          <div class="py-5 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
+          <div class="py-6 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
             <span class="font-display text-2xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="78871" data-separator="true">0</span>
             <span class="block text-[10px] sm:text-xs text-muted mt-1 uppercase tracking-wider">km² rozloha</span>
           </div>
-          <div class="py-5 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
+          <div class="py-6 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
             <span class="font-display text-2xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="79.4" data-decimals="1">0</span>
             <span class="block text-[10px] sm:text-xs text-muted mt-1 uppercase tracking-wider">let dožití</span>
           </div>
-          <div class="py-5 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
+          <div class="py-6 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
             <span class="font-display text-2xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="22.8" data-decimals="1">0</span>
             <span class="block text-[10px] sm:text-xs text-muted mt-1 uppercase tracking-wider">mil. turistů</span>
           </div>
-          <div class="py-5 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
+          <div class="py-6 sm:py-8 px-5 sm:px-8 text-center flex-1 min-w-[120px]">
             <span class="font-display text-2xl sm:text-4xl font-bold text-primary tabular-nums">14</span>
             <span class="block text-[10px] sm:text-xs text-muted mt-1 uppercase tracking-wider">krajů</span>
           </div>
@@ -83,7 +83,7 @@ const isStale = monthsOld > 12;
     </div>
 
     <!-- Map as visual element -->
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
       <CzechMap />
     </div>
   </section>
@@ -96,7 +96,7 @@ const isStale = monthsOld > 12;
         <p class="text-muted mt-2">14 tematických sekcí s ověřenými statistikami</p>
       </header>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {sections.map((section) => {
           const highlightStat = section.data.stats.find((s: Stat) => s.highlight) || section.data.stats[0];
           return (

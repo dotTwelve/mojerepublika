@@ -23,7 +23,7 @@ const showMap = section.id === 'demografie' || section.id === 'geografie';
   title={`${section.data.title} – Statistiky ČR | Moje Republika`}
   description={description}
 >
-  <section class="py-12 sm:py-20">
+  <section class="py-16 sm:py-24">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <!-- Breadcrumb -->
       <nav class="mb-8 text-sm" aria-label="Breadcrumb">
@@ -57,7 +57,7 @@ const showMap = section.id === 'demografie' || section.id === 'geografie';
       <!-- Stats grid + nav wrapper (stat-grid class needed for takeover JS) -->
       <div class="stat-grid-wrapper">
         <div class:list={[
-          'stat-grid grid gap-4 sm:gap-6 items-start',
+          'stat-grid grid gap-6 items-start',
           section.data.stats.length <= 3 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
         ]}>
           {section.data.stats.map((stat: Stat) => (
