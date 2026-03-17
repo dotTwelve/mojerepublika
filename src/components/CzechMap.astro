@@ -44,7 +44,12 @@
       <div class="tooltip-value"></div>
     </div>
   </div>
-  
+
+  <!-- Region info panel (shown when a region is selected) -->
+  <div id="region-info" class="region-info hidden">
+    <div class="region-info-name"></div>
+    <div class="region-info-stats"></div>
+  </div>
 </div>
 
 <style>
@@ -107,6 +112,29 @@
   .map-tooltip.visible { opacity: 1; transform: translateY(0); }
   .tooltip-name { font-weight: 600; margin-bottom: 2px; font-size: 0.7rem; }
   .tooltip-value { font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  /* Region info panel */
+  .region-info {
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: all 0.2s ease;
+  }
+  .region-info.hidden { display: none; }
+  .region-info-name { font-weight: 600; font-size: 0.875rem; }
+  .region-info-stats {
+    display: flex;
+    gap: 1.25rem;
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .region-info-stats span { white-space: nowrap; }
+  .region-info-stats .stat-label { opacity: 0.6; margin-right: 0.25rem; }
+  .region-info-stats .stat-value { font-weight: 700; }
 </style>
 
 <script>

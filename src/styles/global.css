@@ -111,6 +111,7 @@
 .seg-btn:hover, .seg-btn.active { color: var(--c-text); }
 .map-tooltip { background: var(--c-surface-alt); color: var(--c-text); border: 1px solid var(--c-border); }
 .legend-labels { color: var(--c-muted); }
+.region-info { background: var(--c-surface); border: 1px solid var(--c-border); color: var(--c-text); }
 
 /* Scroll progress bar */
 #scroll-progress {

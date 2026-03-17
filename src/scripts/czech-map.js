@@ -84,15 +84,19 @@ function updateMap(metric) {
   if (legendMin) legendMin.textContent = format(min) + ' ' + unit;
   if (legendMax) legendMax.textContent = format(max) + ' ' + unit;
 
-  // Update pinned tooltip if a region is active
+  // Update info panel if a region is active
   const activeRegion = document.querySelector('.region.active');
   if (activeRegion) {
+    const regionInfoEl = document.getElementById('region-info');
+    const regionInfoStats = regionInfoEl?.querySelector('.region-info-stats');
     const regionId = activeRegion.dataset.region;
-    const data = regionData[regionId];
-    const tooltipName = document.querySelector('.tooltip-name');
-    const tooltipValue = document.querySelector('.tooltip-value');
-    if (data && tooltipName && tooltipValue) {
-      tooltipValue.textContent = format(data[metric]) + ' ' + unit;
+    const activeData = regionData[regionId];
+    if (activeData && regionInfoStats) {
+      regionInfoStats.innerHTML = Object.keys(metrics).map(key => {
+        const m = metrics[key];
+        const isCurrent = key === metric;
+        return `<span${isCurrent ? ' style="font-weight:800"' : ''}><span class="stat-label">${m.label}:</span> <span class="stat-value">${m.format(activeData[key])} ${m.unit}</span></span>`;
+      }).join('');
     }
   }
 }
@@ -123,36 +127,26 @@ function initCzechMap() {
     });
   });
 
-  // Show tooltip pinned to a region's center
-  function showPinnedTooltip(region) {
+  // Region info panel
+  const regionInfo = document.getElementById('region-info');
+  const regionInfoName = regionInfo?.querySelector('.region-info-name');
+  const regionInfoStats = regionInfo?.querySelector('.region-info-stats');
+
+  function showRegionInfo(region) {
     const regionId = region.dataset.region;
     const data = regionData[regionId];
-    if (!data || !tooltipName || !tooltipValue || !tooltip || !container) return;
+    if (!data || !regionInfo || !regionInfoName || !regionInfoStats) return;
 
-    const { unit, format } = metrics[currentMetric];
-    tooltipName.textContent = data.name;
-    tooltipValue.textContent = format(data[currentMetric]) + ' ' + unit;
-    tooltip.classList.add('visible');
+    regionInfoName.textContent = data.name;
+    regionInfoStats.innerHTML = Object.keys(metrics).map(key => {
+      const m = metrics[key];
+      return `<span><span class="stat-label">${m.label}:</span> <span class="stat-value">${m.format(data[key])} ${m.unit}</span></span>`;
+    }).join('');
+    regionInfo.classList.remove('hidden');
+  }
 
-    // Position at region center
-    const bbox = region.getBBox();
-    const svgEl = container.querySelector('svg');
-    if (!svgEl) return;
-    const svgRect = svgEl.getBoundingClientRect();
-    const viewBox = svgEl.viewBox.baseVal;
-    const scaleX = svgRect.width / viewBox.width;
-    const scaleY = svgRect.height / viewBox.height;
-
-    const cx = (bbox.x + bbox.width / 2) * scaleX;
-    const cy = (bbox.y + bbox.height / 2) * scaleY;
-    const tooltipWidth = tooltip.offsetWidth || 150;
-
-    let x = cx - tooltipWidth / 2;
-    if (x < 5) x = 5;
-    if (x + tooltipWidth > svgRect.width - 5) x = svgRect.width - tooltipWidth - 5;
-
-    tooltip.style.left = `${x}px`;
-    tooltip.style.top = `${cy - 40}px`;
+  function hideRegionInfo() {
+    regionInfo?.classList.add('hidden');
   }
 
   // Click to select region (desktop)
@@ -163,9 +157,9 @@ function initCzechMap() {
       if (!wasActive) {
         region.classList.add('active');
         region.parentNode.appendChild(region);
-        showPinnedTooltip(region);
+        showRegionInfo(region);
       } else {
-        tooltip?.classList.remove('visible');
+        hideRegionInfo();
       }
     });
   });
@@ -202,10 +196,7 @@ function initCzechMap() {
     });
 
     region.addEventListener('mouseleave', () => {
-      // Don't hide tooltip if this region is active (pinned)
-      if (!region.classList.contains('active')) {
-        tooltip?.classList.remove('visible');
-      }
+      tooltip?.classList.remove('visible');
     });
 
     // Touch support
@@ -216,24 +207,24 @@ function initCzechMap() {
       if (!wasActive) {
         region.classList.add('active');
         region.parentNode.appendChild(region);
-        showPinnedTooltip(region);
+        showRegionInfo(region);
       } else {
-        tooltip?.classList.remove('visible');
+        hideRegionInfo();
       }
     }, { passive: false });
   });
 
-  // Hide tooltip and deselect when clicking/touching outside map
+  // Deselect when clicking/touching outside map
   document.addEventListener('click', (e) => {
     if (!e.target.classList.contains('region') && !e.target.closest('.map-header')) {
       regions.forEach(r => r.classList.remove('active'));
-      tooltip?.classList.remove('visible');
+      hideRegionInfo();
     }
   });
   document.addEventListener('touchstart', (e) => {
     if (!e.target.classList.contains('region') && !e.target.closest('.map-header')) {
       regions.forEach(r => r.classList.remove('active'));
-      tooltip?.classList.remove('visible');
+      hideRegionInfo();
     }
   });
 
