@@ -196,8 +196,50 @@
   background: #131A2B !important;
 }
 
+:root.dark .seg-btn {
+  color: #94A3B8 !important;
+}
+
+:root.dark .seg-btn:hover {
+  color: #E2E8F0 !important;
+}
+
 :root.dark .seg-btn.active {
   color: #E2E8F0 !important;
+}
+
+:root.dark .map-btn {
+  background: #1A2332 !important;
+  border-color: #1E293B !important;
+  color: #94A3B8 !important;
+}
+
+:root.dark .map-btn.active {
+  background: #38BDF8 !important;
+  border-color: #38BDF8 !important;
+  color: #0B0F19 !important;
+}
+
+/* Back to top button */
+:root.dark #back-to-top {
+  background-color: #38BDF8 !important;
+  color: #0B0F19 !important;
+}
+
+/* Map tooltip */
+:root.dark .map-tooltip {
+  background: rgba(30, 41, 59, 0.95) !important;
+}
+
+/* Map legend */
+:root.dark .legend-title,
+:root.dark .legend-labels span {
+  color: #64748B !important;
+}
+
+/* Region stroke in dark mode */
+:root.dark .region {
+  stroke: #1E293B;
 }
 
 /* Stat takeover */
@@ -208,6 +250,25 @@
 /* Chart tooltip */
 :root.dark .apexcharts-tooltip {
   background: #1E293B !important;
+}
+
+/* Catch-all dark mode borders and inputs */
+:root.dark input, :root.dark select, :root.dark textarea {
+  background-color: #1A2332;
+  border-color: #1E293B;
+  color: #E2E8F0;
+}
+
+:root.dark [class*="border-border"] {
+  border-color: #1E293B !important;
+}
+
+:root.dark [class*="border-white"] {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+:root.dark [class*="bg-gray"] {
+  background-color: #1A2332 !important;
 }
 
 /* Tabular numbers for data values */
