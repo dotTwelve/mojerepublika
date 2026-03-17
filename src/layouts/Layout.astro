@@ -6,9 +6,18 @@ import StatModal from '../components/StatModal.astro';
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  canonicalPath?: string;
 }
 
-const { title, description = 'Přehledné statistiky a otevřená data o České republice — demografie, ekonomika, bydlení, vzdělání, zdravotnictví a další. 67 ověřených ukazatelů z ČSÚ, Eurostatu a dalších zdrojů.' } = Astro.props;
+const {
+  title,
+  description = 'Přehledné statistiky a otevřená data o České republice — demografie, ekonomika, bydlení, vzdělání, zdravotnictví a další. 67 ověřených ukazatelů z ČSÚ, Eurostatu a dalších zdrojů.',
+  ogImage = 'https://mojerepublika.cz/og-image.png',
+  canonicalPath = '/'
+} = Astro.props;
+
+const canonicalUrl = `https://mojerepublika.cz${canonicalPath}`;
 
 const navGroups = [
   {
@@ -59,16 +68,16 @@ const allNavItems = navGroups.flatMap(g => g.items);
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0F172A" />
     <meta name="color-scheme" content="light" />
-    <link rel="canonical" href="https://mojerepublika.cz/" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://mojerepublika.cz/" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:locale" content="cs_CZ" />
     <meta property="og:site_name" content="Moje Republika" />
-    <meta property="og:image" content="https://mojerepublika.cz/og-image.png" />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Moje Republika – Statistiky České republiky" />
@@ -77,7 +86,7 @@ const allNavItems = navGroups.flatMap(g => g.items);
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://mojerepublika.cz/og-image.png" />
+    <meta name="twitter:image" content={ogImage} />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
