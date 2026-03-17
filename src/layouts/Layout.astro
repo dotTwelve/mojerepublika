@@ -10,17 +10,35 @@ interface Props {
 
 const { title, description = 'Statistiky a data o České republice' } = Astro.props;
 
-const navItems = [
-  { href: '#demografie', label: 'Demografie' },
-  { href: '#ekonomika', label: 'Ekonomika' },
-  { href: '#geografie', label: 'Geografie' },
-  { href: '#vzdelani', label: 'Vzdělání' },
-  { href: '#zdravotnictvi', label: 'Zdravotnictví' },
-  { href: '#zivotni-prostredi', label: 'Životní prostředí' },
-  { href: '#doprava', label: 'Doprava' },
-  { href: '#energie', label: 'Energie' },
-  { href: '#turismus', label: 'Turismus' },
+const navGroups = [
+  {
+    label: 'Lidé',
+    items: [
+      { href: '#demografie', label: 'Demografie', desc: 'Obyvatelstvo a věková struktura', icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
+      { href: '#vzdelani', label: 'Vzdělání', desc: 'Školy, studenti a gramotnost', icon: '<path d="M22 10v6"/><path d="M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/>' },
+      { href: '#zdravotnictvi', label: 'Zdravotnictví', desc: 'Lékaři, nemocnice a zdraví', icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>' },
+    ]
+  },
+  {
+    label: 'Ekonomika',
+    items: [
+      { href: '#ekonomika', label: 'Ekonomika', desc: 'HDP, mzdy a zaměstnanost', icon: '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>' },
+      { href: '#doprava', label: 'Doprava', desc: 'Silnice, železnice a vozidla', icon: '<rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>' },
+      { href: '#energie', label: 'Energie', desc: 'Výroba a obnovitelné zdroje', icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
+    ]
+  },
+  {
+    label: 'Země',
+    items: [
+      { href: '#geografie', label: 'Geografie', desc: 'Rozloha, kraje a příroda', icon: '<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>' },
+      { href: '#zivotni-prostredi', label: 'Životní prostředí', desc: 'Lesy, chráněná území a emise', icon: '<path d="M2 22c3-3 4-6.5 4-10a6 6 0 0 1 12 0c0 3.5 1 7 4 10"/><path d="M8 22c1.5-1.5 2-3.5 2-5.5a4 4 0 0 1 8 0c0 2-0.5 4-2 5.5"/>' },
+      { href: '#turismus', label: 'Turismus', desc: 'Návštěvnost a UNESCO památky', icon: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>' },
+    ]
+  }
 ];
+
+// Flat list for IntersectionObserver
+const allNavItems = navGroups.flatMap(g => g.items);
 ---
 
 <!doctype html>
@@ -29,25 +47,28 @@ const navItems = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#08437f" />
-    
+    <meta name="theme-color" content="#0F172A" />
+    <meta name="color-scheme" content="light" />
+
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="cs_CZ" />
     <meta property="og:image" content="/og-image.png" />
-    
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <title>{title}</title>
   </head>
-  <body class="bg-white text-gray-900">
+  <body class="bg-white text-czech-blue-dark">
     <!-- Header -->
-    <header class="bg-white border-b-[3px] border-czech-blue sticky top-0 z-50 shadow-sm">
+    <header class="bg-white/95 backdrop-blur-sm border-b border-border sticky top-0 z-50">
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="flex items-center justify-between py-3">
           <!-- Logo -->
@@ -55,62 +76,101 @@ const navItems = [
             <svg class="w-10 h-7" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
               <rect width="900" height="600" fill="#d80c13"/>
               <rect width="900" height="300" fill="#ffffff"/>
-              <polygon points="0,0 450,300 0,600" fill="#08437f"/>
+              <polygon points="0,0 450,300 0,600" fill="#0F172A"/>
             </svg>
             <span class="text-sm sm:text-lg">Moje Republika</span>
           </a>
-          
-          <!-- Desktop nav - scrollable -->
-          <nav class="hidden lg:flex gap-1 overflow-x-auto" id="desktop-nav">
-            {navItems.map(item => (
-              <a 
-                href={item.href} 
-                data-nav-link={item.href}
-                class="nav-link font-medium text-sm text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all whitespace-nowrap"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          
-          <!-- Mobile menu button -->
-          <button 
-            id="menu-toggle" 
-            class="lg:hidden p-2 text-czech-blue hover:bg-gray-100 rounded-lg transition-colors"
-            aria-label="Toggle menu"
+
+          <!-- Active section indicator (visible when scrolled) -->
+          <span id="active-section-label" class="hidden sm:block text-xs font-medium text-muted truncate max-w-[200px]"></span>
+
+          <div class="flex items-center gap-2">
+            <!-- Ko-fi -->
+            <a
+              href="https://ko-fi.com/mojerepublika"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-[#FF5E5B] hover:bg-[#FF5E5B] hover:text-white border border-[#FF5E5B]/30 rounded-lg transition-colors"
+            >
+              <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+              Podpořit
+            </a>
+
+          <!-- Sections button -->
+          <button
+            id="nav-toggle"
+            class="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted hover:text-czech-blue bg-surface hover:bg-surface-alt rounded-lg transition-colors min-h-[44px]"
+            aria-label="Otevřít navigaci"
+            aria-expanded="false"
           >
-            <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
             </svg>
-            <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
+            <span class="hidden sm:inline">Sekce</span>
           </button>
+          </div>
         </div>
-        
-        <!-- Mobile nav -->
-        <nav id="mobile-menu" class="hidden lg:hidden pb-4 border-t border-gray-200">
-          <div class="grid grid-cols-2 gap-1 pt-4">
-            {navItems.map(item => (
-              <a 
-                href={item.href} 
-                data-nav-link={item.href}
-                class="nav-link font-medium text-sm text-gray-600 hover:text-czech-blue hover:bg-gray-50 px-3 py-2 rounded-lg transition-all"
-              >
-                {item.label}
-              </a>
+      </div>
+
+      <!-- Scroll progress bar (tricolor) -->
+      <div id="scroll-progress" class="h-[2px] bg-gradient-to-r from-czech-blue via-accent to-czech-red"></div>
+    </header>
+
+    <!-- Mega menu overlay -->
+    <div id="nav-overlay" class="fixed inset-0 z-[60] hidden">
+      <!-- Backdrop -->
+      <div id="nav-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+
+      <!-- Menu panel -->
+      <div id="nav-panel" class="absolute top-0 left-0 right-0 bg-white shadow-2xl transform -translate-y-2 opacity-0 transition-all duration-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+          <!-- Header row -->
+          <div class="flex items-center justify-between mb-6">
+            <span class="text-xs font-semibold text-muted uppercase tracking-widest">Prozkoumejte data</span>
+            <button id="nav-close" class="p-2 text-muted hover:text-czech-blue hover:bg-surface rounded-lg transition-colors" aria-label="Zavřít">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- 3-column grouped grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+            {navGroups.map(group => (
+              <div>
+                <h3 class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">{group.label}</h3>
+                <div class="space-y-1">
+                  {group.items.map(item => (
+                    <a
+                      href={item.href}
+                      data-nav-link={item.href}
+                      class="nav-link group flex items-start gap-3 p-3 -mx-3 rounded-xl hover:bg-surface transition-colors"
+                    >
+                      <div class="w-9 h-9 rounded-lg bg-surface-alt group-hover:bg-accent/10 flex items-center justify-center shrink-0 transition-colors">
+                        <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={item.icon} />
+                      </div>
+                      <div>
+                        <span class="block text-sm font-semibold text-czech-blue group-hover:text-accent transition-colors">{item.label}</span>
+                        <span class="block text-xs text-muted mt-0.5 leading-relaxed">{item.desc}</span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
-        </nav>
+        </div>
       </div>
-    </header>
+    </div>
 
     <main>
       <slot />
     </main>
 
     <!-- Back to top button -->
-    <button 
+    <button
       id="back-to-top"
       class="fixed bottom-6 right-6 w-12 h-12 bg-czech-blue text-white rounded-full shadow-lg hover:bg-czech-blue/90 transition-all opacity-0 invisible z-40"
       aria-label="Zpět nahoru"
@@ -121,154 +181,201 @@ const navItems = [
     </button>
 
     <!-- Tricolor divider -->
-    <div class="h-1 bg-gradient-to-r from-czech-blue via-white to-czech-red"></div>
+    <div class="h-2 bg-gradient-to-r from-czech-blue via-white to-czech-red"></div>
 
     <!-- Footer -->
     <footer class="bg-czech-blue text-white py-12" id="kontakt">
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <!-- Logo & popis -->
+        <!-- Quick stats bar -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 pb-10 border-b border-white/10">
+          <div>
+            <span class="block text-2xl sm:text-3xl font-display font-bold tabular-nums">10,9M</span>
+            <span class="text-sm text-white/50">Obyvatel</span>
+          </div>
+          <div>
+            <span class="block text-2xl sm:text-3xl font-display font-bold tabular-nums">78 767</span>
+            <span class="text-sm text-white/50">km² rozloha</span>
+          </div>
+          <div>
+            <span class="block text-2xl sm:text-3xl font-display font-bold tabular-nums">14</span>
+            <span class="text-sm text-white/50">Krajů</span>
+          </div>
+          <div>
+            <span class="block text-2xl sm:text-3xl font-display font-bold tabular-nums">17</span>
+            <span class="text-sm text-white/50">UNESCO památek</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <span class="font-display text-xl font-bold">Moje Republika</span>
-            <p class="text-white/70 text-sm mt-3">
+            <p class="text-white/60 text-sm mt-3 leading-relaxed">
               Open source projekt prezentující data o České republice na jednom místě.
             </p>
           </div>
-          
-          <!-- Zdroje dat -->
+
           <div>
-            <h3 class="font-semibold mb-3">Zdroje dat</h3>
-            <ul class="space-y-2 text-sm text-white/70">
+            <h3 class="font-semibold mb-3 text-sm uppercase tracking-wider text-white/80">Zdroje dat</h3>
+            <ul class="space-y-2 text-sm text-white/60">
               <li><a href="https://www.czso.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Český statistický úřad (ČSÚ)</a></li>
               <li><a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener" class="hover:text-white transition-colors">Eurostat</a></li>
               <li><a href="https://www.cnb.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Česká národní banka (ČNB)</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="font-semibold mb-3 text-sm uppercase tracking-wider text-white/80">Další zdroje</h3>
+            <ul class="space-y-2 text-sm text-white/60">
               <li><a href="https://www.eru.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Energetický regulační úřad (ERÚ)</a></li>
               <li><a href="https://www.mzp.cz" target="_blank" rel="noopener" class="hover:text-white transition-colors">Ministerstvo životního prostředí</a></li>
             </ul>
           </div>
-          
-          <!-- Kontakt -->
+
           <div>
-            <h3 class="font-semibold mb-3">Kontakt</h3>
-            <ul class="space-y-2 text-sm text-white/70">
-              <li>
-                <a href="mailto:mojerepublika@noah.fit" class="hover:text-white transition-colors">
-                  mojerepublika@noah.fit
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/your-repo/mojerepublika" target="_blank" rel="noopener" class="hover:text-white transition-colors">
-                  GitHub repozitář
-                </a>
-              </li>
-            </ul>
-            
-            <!-- Share -->
-            <h3 class="font-semibold mb-3 mt-6">Podpořte projekt</h3>
-            <a 
-              href="https://ko-fi.com/mojerepublika"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#FF5E5B] hover:bg-[#e54543] text-white text-sm rounded-lg transition-colors"
-            >
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311z"/>
-              </svg>
-              Přispět na Ko-fi
+            <h3 class="font-semibold mb-3 text-sm uppercase tracking-wider text-white/80">Kontakt</h3>
+            <a href="mailto:mojerepublika@noah.fit" class="text-sm text-white/60 hover:text-white transition-colors">
+              mojerepublika@noah.fit
             </a>
+            <div class="mt-6">
+              <a
+                href="https://ko-fi.com/mojerepublika"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#FF5E5B] hover:bg-[#e54543] text-white text-sm rounded-lg transition-colors"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                Přispět na Ko-fi
+              </a>
+            </div>
           </div>
         </div>
-        
-        <!-- Disclaimer -->
-        <div class="border-t border-white/20 mt-8 pt-8">
-          <p class="text-xs text-white/50 max-w-3xl">
-            <strong class="text-white/70">Disclaimer:</strong> Informace uvedené na těchto stránkách mají pouze informativní charakter. 
-            Přestože se snažíme o maximální přesnost, nemůžeme zaručit úplnost ani aktuálnost všech údajů. 
-            Data pocházejí z veřejně dostupných zdrojů a mohou být předmětem revizí. 
-            Pro oficiální a závazné informace se obracejte přímo na uvedené zdroje.
+
+        <div class="border-t border-white/10 mt-8 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <p class="text-xs text-white/40 max-w-2xl leading-relaxed">
+            Data mají informativní charakter a pocházejí z veřejně dostupných zdrojů.
+            Pro závazné informace se obracejte přímo na uvedené instituce.
           </p>
-          <p class="text-xs text-white/40 mt-4">
-            © {new Date().getFullYear()} Moje Republika. Všechna práva vyhrazena.
+          <p class="text-xs text-white/30 shrink-0">
+            © {new Date().getFullYear()} Moje Republika
           </p>
         </div>
       </div>
     </footer>
 
-    <!-- Stat Modal -->
     <StatModal />
-
     <Analytics />
-    
-    <!-- Scripts -->
+
     <script>
-      // Mobile menu toggle
-      const menuToggle = document.getElementById('menu-toggle');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const menuIcon = document.getElementById('menu-icon');
-      const closeIcon = document.getElementById('close-icon');
-      
-      menuToggle?.addEventListener('click', () => {
-        mobileMenu?.classList.toggle('hidden');
-        menuIcon?.classList.toggle('hidden');
-        closeIcon?.classList.toggle('hidden');
-      });
-      
-      // Close menu on link click
-      mobileMenu?.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu?.classList.add('hidden');
-          menuIcon?.classList.remove('hidden');
-          closeIcon?.classList.add('hidden');
+      // Mega menu toggle
+      const navToggle = document.getElementById('nav-toggle');
+      const navOverlay = document.getElementById('nav-overlay');
+      const navBackdrop = document.getElementById('nav-backdrop');
+      const navPanel = document.getElementById('nav-panel');
+      const navClose = document.getElementById('nav-close');
+
+      function openNav() {
+        navOverlay?.classList.remove('hidden');
+        navToggle?.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+        // Trigger animation
+        requestAnimationFrame(() => {
+          navPanel?.classList.remove('-translate-y-2', 'opacity-0');
+          navPanel?.classList.add('translate-y-0', 'opacity-100');
         });
+      }
+
+      function closeNav() {
+        navPanel?.classList.add('-translate-y-2', 'opacity-0');
+        navPanel?.classList.remove('translate-y-0', 'opacity-100');
+        navToggle?.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        setTimeout(() => navOverlay?.classList.add('hidden'), 200);
+      }
+
+      navToggle?.addEventListener('click', () => {
+        const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
+        isOpen ? closeNav() : openNav();
+      });
+      navClose?.addEventListener('click', closeNav);
+      navBackdrop?.addEventListener('click', closeNav);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeNav();
       });
 
-      // Back to top button
-      const backToTop = document.getElementById('back-to-top');
-      
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 500) {
-          backToTop?.classList.remove('opacity-0', 'invisible');
-          backToTop?.classList.add('opacity-100', 'visible');
-        } else {
-          backToTop?.classList.add('opacity-0', 'invisible');
-          backToTop?.classList.remove('opacity-100', 'visible');
-        }
+      // Close on link click
+      navOverlay?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeNav);
       });
+
+      // Back to top + Scroll progress + Active section label
+      const backToTop = document.getElementById('back-to-top');
+      const scrollProgress = document.getElementById('scroll-progress');
+      const activeSectionLabel = document.getElementById('active-section-label');
+
+      let scrollTicking = false;
+      window.addEventListener('scroll', () => {
+        if (!scrollTicking) {
+          requestAnimationFrame(() => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
+
+            if (scrollProgress) {
+              scrollProgress.style.transform = `scaleX(${scrollPercent})`;
+            }
+
+            if (scrollTop > 500) {
+              backToTop?.classList.remove('opacity-0', 'invisible');
+              backToTop?.classList.add('opacity-100', 'visible');
+            } else {
+              backToTop?.classList.add('opacity-0', 'invisible');
+              backToTop?.classList.remove('opacity-100', 'visible');
+            }
+            scrollTicking = false;
+          });
+          scrollTicking = true;
+        }
+      }, { passive: true });
 
       backToTop?.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
-      // Active section highlighting
+      // Active section highlighting via IntersectionObserver
       const sections = document.querySelectorAll('section[id]');
       const navLinks = document.querySelectorAll('.nav-link');
-      
-      const observerOptions = {
-        root: null,
-        rootMargin: '-20% 0px -60% 0px',
-        threshold: 0
-      };
-      
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const id = entry.target.getAttribute('id');
-            
-            // Remove active class from all links
+
             navLinks.forEach(link => {
-              link.classList.remove('text-czech-blue', 'bg-czech-blue/10');
-              link.classList.add('text-gray-600');
+              link.classList.remove('bg-accent/10');
+              link.removeAttribute('aria-current');
             });
-            
-            // Add active class to matching links
+
             document.querySelectorAll(`[data-nav-link="#${id}"]`).forEach(link => {
-              link.classList.add('text-czech-blue', 'bg-czech-blue/10');
-              link.classList.remove('text-gray-600');
+              link.classList.add('bg-accent/10');
+              link.setAttribute('aria-current', 'true');
+
+              // Update header label
+              const label = link.querySelector('.text-sm.font-semibold')?.textContent
+                || link.textContent?.trim() || '';
+              if (activeSectionLabel) {
+                activeSectionLabel.textContent = label;
+              }
             });
           }
         });
-      }, observerOptions);
-      
+      }, {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0
+      });
+
       sections.forEach(section => observer.observe(section));
     </script>
   </body>

@@ -16,6 +16,7 @@
     "@vercel/analytics": "^1.6.1",
     "apexcharts": "^5.3.6",
     "astro": "^5.0.0",
+    "chart.js": "^4.5.1",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18"
   },

@@ -1,324 +1,320 @@
 ---
-// Modal pro detailní zobrazení statistiky
-// Data se načítají z data-stat-details atributu na StatCard
+// Takeover detail view
+// Clicking a stat card replaces the grid with a full-width detail card
+// Uses Chart.js — lightweight, canvas-based, responsive
 ---
 
-<div 
-  id="stat-modal" 
-  class="fixed inset-0 z-50 hidden"
-  role="dialog"
-  aria-modal="true"
-  aria-labelledby="modal-title"
->
-  <!-- Overlay -->
-  <div id="modal-overlay" class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"></div>
-  
-  <!-- Modal content -->
-  <div class="absolute inset-4 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:max-w-2xl sm:w-full sm:max-h-[85vh] flex flex-col">
-    <div class="bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-full">
+<!-- Takeover panel (inserted into DOM dynamically) -->
+<template id="stat-takeover-template">
+  <div class="stat-takeover">
+    <!-- Close button -->
+    <button class="takeover-close inline-flex items-center gap-2 text-sm text-muted hover:text-czech-blue mb-6 group transition-colors">
+      <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+      Zpět na přehled
+    </button>
+
+    <!-- Detail card -->
+    <div class="bg-white border border-border rounded-2xl overflow-hidden">
       <!-- Header -->
-      <div class="relative bg-gradient-to-r from-czech-blue to-czech-blue/90 text-white p-6">
-        <button 
-          id="modal-close" 
-          class="absolute top-4 right-4 p-2 hover:bg-white/20 rounded-lg transition-colors"
-          aria-label="Zavřít"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-        
-        <span id="modal-label" class="text-sm font-semibold text-white/70 uppercase tracking-wider"></span>
-        <div class="flex items-baseline gap-2 mt-2">
-          <span id="modal-value" class="font-display text-5xl font-bold"></span>
-          <span id="modal-unit" class="text-xl text-white/70"></span>
-        </div>
-        <div id="modal-change-wrapper" class="mt-3 hidden">
-          <span id="modal-change" class="inline-flex items-center gap-1 text-sm font-semibold px-2 py-0.5 rounded bg-white/20"></span>
-        </div>
-      </div>
-      
-      <!-- Body -->
-      <div class="p-6 overflow-y-auto flex-1">
-        <p id="modal-description" class="text-gray-600"></p>
-        
-        <!-- Chart area -->
-        <div id="modal-chart-area" class="mt-6">
-          <!-- Actual chart container -->
-          <div id="chart-container" class="hidden">
-            <h3 id="chart-title" class="text-sm font-semibold text-gray-500 mb-4">Historický vývoj</h3>
-            <div id="apex-chart" class="w-full"></div>
+      <div class="p-4 sm:p-8 border-b border-border">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          <div>
+            <span class="takeover-label text-xs font-semibold text-muted uppercase tracking-wider"></span>
+            <div class="flex items-baseline gap-2 mt-2">
+              <span class="takeover-value font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-czech-blue tabular-nums"></span>
+              <span class="takeover-unit text-base sm:text-xl text-muted"></span>
+            </div>
+          </div>
+          <div class="takeover-change-wrapper hidden">
+            <span class="takeover-change inline-flex items-center gap-1 text-sm font-semibold px-3 py-1 rounded-lg tabular-nums"></span>
           </div>
         </div>
-        
-        <!-- Zdroj -->
-        <div id="modal-source-wrapper" class="mt-6 pt-4 border-t border-gray-200 hidden">
-          <span class="text-xs text-gray-400">Zdroj: </span>
-          <span id="modal-source" class="text-xs text-gray-500"></span>
+        <p class="takeover-description text-muted mt-4 leading-relaxed max-w-2xl"></p>
+      </div>
+
+      <!-- Chart -->
+      <div class="p-4 sm:p-8">
+        <h3 class="takeover-chart-title text-sm font-semibold text-muted mb-4">Historický vývoj</h3>
+        <div class="takeover-chart-wrapper relative w-full" style="height: 280px;">
+          <canvas class="takeover-chart"></canvas>
         </div>
+      </div>
+
+      <!-- Full data table -->
+      <div class="px-4 sm:px-8 pb-4 sm:pb-8">
+        <div class="border border-border rounded-xl overflow-hidden">
+          <table class="takeover-table w-full text-sm">
+            <thead>
+              <tr class="bg-surface">
+                <th class="text-left px-3 sm:px-4 py-2.5 text-xs font-semibold text-muted uppercase tracking-wider">Rok</th>
+                <th class="text-right px-3 sm:px-4 py-2.5 text-xs font-semibold text-muted uppercase tracking-wider">Hodnota</th>
+                <th class="text-right px-3 sm:px-4 py-2.5 text-xs font-semibold text-muted uppercase tracking-wider hidden sm:table-cell">Změna</th>
+              </tr>
+            </thead>
+            <tbody class="takeover-tbody tabular-nums"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Source -->
+      <div class="takeover-source-wrapper hidden px-4 sm:px-8 pb-4 sm:pb-8">
+        <span class="text-xs text-muted/60">Zdroj: </span>
+        <span class="takeover-source text-xs text-muted"></span>
       </div>
     </div>
   </div>
-</div>
+</template>
 
 <script>
-  import ApexCharts from 'apexcharts';
-  
-  // Typy
   interface HistoryPoint {
     year: number;
     value: number;
   }
-  
+
   interface Details {
     chartType?: string;
     chartLabel?: string;
     history?: HistoryPoint[];
   }
 
-  const modal = document.getElementById('stat-modal');
-  const overlay = document.getElementById('modal-overlay');
-  const closeBtn = document.getElementById('modal-close');
-  
-  // Modal elements
-  const modalLabel = document.getElementById('modal-label');
-  const modalValue = document.getElementById('modal-value');
-  const modalUnit = document.getElementById('modal-unit');
-  const modalDescription = document.getElementById('modal-description');
-  const modalChangeWrapper = document.getElementById('modal-change-wrapper');
-  const modalChange = document.getElementById('modal-change');
-  const modalSourceWrapper = document.getElementById('modal-source-wrapper');
-  const modalSource = document.getElementById('modal-source');
-  const chartContainer = document.getElementById('chart-container');
-  const chartTitle = document.getElementById('chart-title');
-  const apexChartEl = document.getElementById('apex-chart');
-  
-  let chartInstance: ApexCharts | null = null;
-  
-  function drawChart(data: HistoryPoint[], label: string) {
-    if (!apexChartEl) return;
-    
-    // Destroy previous chart if exists
-    if (chartInstance) {
-      chartInstance.destroy();
+  let ChartModule: any = null;
+  let activeChartInstance: any = null;
+  let activeGrid: HTMLElement | null = null;
+  let activeTakeover: HTMLElement | null = null;
+
+  async function loadChartJS() {
+    if (!ChartModule) {
+      const { Chart, registerables } = await import('chart.js');
+      Chart.register(...registerables);
+      ChartModule = Chart;
     }
-    
-    const options: ApexCharts.ApexOptions = {
-      series: [{
-        name: label,
-        data: data.map(d => d.value)
-      }],
-      chart: {
-        type: 'area',
-        height: 280,
-        fontFamily: 'DM Sans, sans-serif',
-        toolbar: {
-          show: false
+    return ChartModule;
+  }
+
+  function generateAriaLabel(data: HistoryPoint[], label: string): string {
+    if (!data.length) return label;
+    const first = data[0];
+    const last = data[data.length - 1];
+    const trend = last.value > first.value ? 'rostoucí' : last.value < first.value ? 'klesající' : 'stabilní';
+    return `${label}: ${trend} trend od ${first.year} (${first.value.toLocaleString('cs-CZ')}) do ${last.year} (${last.value.toLocaleString('cs-CZ')})`;
+  }
+
+  async function renderChart(canvas: HTMLCanvasElement, data: HistoryPoint[], label: string) {
+    const Chart = await loadChartJS();
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (activeChartInstance) {
+      activeChartInstance.destroy();
+      activeChartInstance = null;
+    }
+
+    canvas.setAttribute('role', 'img');
+    canvas.setAttribute('aria-label', generateAriaLabel(data, label));
+
+    const ctx = canvas.getContext('2d')!;
+
+    // Gradient fill
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.parentElement!.offsetHeight);
+    gradient.addColorStop(0, 'rgba(3, 105, 161, 0.2)');
+    gradient.addColorStop(1, 'rgba(3, 105, 161, 0.02)');
+
+    activeChartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: data.map(d => d.year.toString()),
+        datasets: [{
+          label: label,
+          data: data.map(d => d.value),
+          borderColor: '#0369A1',
+          backgroundColor: gradient,
+          borderWidth: 2.5,
+          fill: true,
+          tension: 0.35,
+          pointBackgroundColor: '#0369A1',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+          pointHoverBackgroundColor: '#0369A1',
+          pointHoverBorderColor: '#fff',
+          pointHoverBorderWidth: 2,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          duration: reducedMotion ? 0 : 600,
         },
-        animations: {
-          enabled: true,
-          speed: 600,
-          dynamicAnimation: {
-            enabled: true,
-            speed: 350
-          }
+        interaction: {
+          intersect: false,
+          mode: 'index',
         },
-        zoom: {
-          enabled: false
-        }
-      },
-      colors: ['#08437f'],
-      fill: {
-        type: 'gradient',
-        gradient: {
-          shadeIntensity: 1,
-          opacityFrom: 0.4,
-          opacityTo: 0.1,
-          stops: [0, 90, 100]
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: 'smooth',
-        width: 3
-      },
-      xaxis: {
-        categories: data.map(d => d.year.toString()),
-        labels: {
-          style: {
-            colors: '#6b7280',
-            fontSize: '12px'
-          }
-        },
-        axisBorder: {
-          show: false
-        },
-        axisTicks: {
-          show: false
-        }
-      },
-      yaxis: {
-        labels: {
-          style: {
-            colors: '#6b7280',
-            fontSize: '12px'
+        plugins: {
+          legend: {
+            display: false,
           },
-          formatter: (val: number) => val.toLocaleString('cs-CZ')
-        }
-      },
-      grid: {
-        borderColor: '#e5e7eb',
-        strokeDashArray: 4,
-        xaxis: {
-          lines: {
-            show: false
-          }
-        }
-      },
-      tooltip: {
-        theme: 'light',
-        x: {
-          show: true
+          tooltip: {
+            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+            titleFont: { family: 'Inter, sans-serif', size: 12 },
+            bodyFont: { family: 'Inter, sans-serif', size: 13, weight: '600' },
+            padding: { top: 8, bottom: 8, left: 12, right: 12 },
+            cornerRadius: 8,
+            displayColors: false,
+            callbacks: {
+              label: (ctx: any) => ctx.parsed.y.toLocaleString('cs-CZ'),
+            }
+          },
         },
-        y: {
-          formatter: (val: number) => val.toLocaleString('cs-CZ')
+        scales: {
+          x: {
+            grid: {
+              color: '#E2E8F0',
+              drawTicks: false,
+            },
+            border: {
+              display: false,
+            },
+            ticks: {
+              color: '#94A3B8',
+              font: { family: 'Inter, sans-serif', size: 11 },
+              padding: 8,
+            },
+          },
+          y: {
+            grid: {
+              color: '#E2E8F0',
+              drawTicks: false,
+            },
+            border: {
+              display: false,
+            },
+            ticks: {
+              color: '#94A3B8',
+              font: { family: 'Inter, sans-serif', size: 11 },
+              padding: 8,
+              callback: (v: any) => Number(v).toLocaleString('cs-CZ'),
+            },
+          },
         },
-        marker: {
-          show: true
-        }
       },
-      markers: {
-        size: 5,
-        colors: ['#08437f'],
-        strokeColors: '#fff',
-        strokeWidth: 2,
-        hover: {
-          size: 7
-        }
-      }
-    };
-    
-    chartInstance = new ApexCharts(apexChartEl, options);
-    chartInstance.render();
-  }
-  
-  function openModal(data: {
-    id: string;
-    label: string;
-    value: string;
-    unit: string;
-    description: string;
-    change: string;
-    source: string;
-    details: Details | null;
-  }) {
-    if (!modal) return;
-    
-    // Populate modal
-    if (modalLabel) modalLabel.textContent = data.label;
-    if (modalValue) modalValue.textContent = data.value;
-    if (modalUnit) modalUnit.textContent = data.unit;
-    if (modalDescription) modalDescription.textContent = data.description || 'Podrobnosti budou brzy k dispozici.';
-    
-    // Change
-    if (data.change && modalChangeWrapper && modalChange) {
-      const changeNum = parseFloat(data.change);
-      modalChange.textContent = `${changeNum >= 0 ? '↑' : '↓'} ${Math.abs(changeNum)}%`;
-      modalChange.className = `inline-flex items-center gap-1 text-sm font-semibold px-2 py-0.5 rounded ${changeNum >= 0 ? 'bg-green-400/30 text-green-100' : 'bg-red-400/30 text-red-100'}`;
-      modalChangeWrapper.classList.remove('hidden');
-    } else {
-      modalChangeWrapper?.classList.add('hidden');
-    }
-    
-    // Source
-    if (data.source && modalSourceWrapper && modalSource) {
-      modalSource.textContent = data.source;
-      modalSourceWrapper.classList.remove('hidden');
-    } else {
-      modalSourceWrapper?.classList.add('hidden');
-    }
-    
-    // Chart - data come from JSON via data attribute
-    if (data.details?.history && chartContainer) {
-      chartContainer.classList.remove('hidden');
-      
-      // Set chart title if provided
-      const chartLabel = data.details.chartLabel || 'Historický vývoj';
-      if (chartTitle) {
-        chartTitle.textContent = chartLabel;
-      }
-      
-      // Small delay to ensure container is visible before rendering
-      setTimeout(() => {
-        drawChart(data.details!.history!, chartLabel);
-      }, 50);
-    } else {
-      chartContainer?.classList.add('hidden');
-    }
-    
-    // Show modal
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-  }
-  
-  function closeModal() {
-    modal?.classList.add('hidden');
-    document.body.style.overflow = '';
-    
-    // Destroy chart on close to prevent memory leaks
-    if (chartInstance) {
-      chartInstance.destroy();
-      chartInstance = null;
-    }
-  }
-  
-  // Event listeners
-  closeBtn?.addEventListener('click', closeModal);
-  overlay?.addEventListener('click', closeModal);
-  
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
-  
-  // Stat card clicks
-  document.querySelectorAll('.stat-card').forEach(card => {
-    card.addEventListener('click', () => {
-      // Only open modal if card has details
-      if (card.getAttribute('data-has-details') !== 'true') return;
-      
-      const detailsStr = card.getAttribute('data-stat-details');
-      let details: Details | null = null;
-      
-      if (detailsStr) {
-        try {
-          details = JSON.parse(detailsStr);
-        } catch (e) {
-          console.error('Failed to parse details:', e);
-        }
-      }
-      
-      const data = {
-        id: card.getAttribute('data-stat-id') || '',
-        label: card.getAttribute('data-stat-label') || '',
-        value: card.getAttribute('data-stat-value') || '',
-        unit: card.getAttribute('data-stat-unit') || '',
-        description: card.getAttribute('data-stat-description') || '',
-        change: card.getAttribute('data-stat-change') || '',
-        source: card.getAttribute('data-stat-source') || '',
-        details,
-      };
-      openModal(data);
     });
-    
-    // Keyboard support - only for cards with details
+  }
+
+  function populateTable(takeover: HTMLElement, data: HistoryPoint[]) {
+    const tbody = takeover.querySelector('.takeover-tbody');
+    if (!tbody) return;
+
+    const reversed = [...data].reverse();
+    tbody.innerHTML = reversed.map((d, i) => {
+      const prev = i < reversed.length - 1 ? reversed[i + 1] : null;
+      let changeHtml = '<td class="text-right px-3 sm:px-4 py-2 hidden sm:table-cell text-muted">—</td>';
+      if (prev && prev.value !== 0) {
+        const pct = ((d.value - prev.value) / prev.value * 100).toFixed(1);
+        const num = parseFloat(pct);
+        const color = num >= 0 ? 'text-emerald-600' : 'text-red-600';
+        const sign = num >= 0 ? '+' : '';
+        changeHtml = `<td class="text-right px-3 sm:px-4 py-2 hidden sm:table-cell ${color}">${sign}${pct}%</td>`;
+      }
+      return `
+        <tr class="border-t border-border/50 hover:bg-surface/50 transition-colors">
+          <td class="px-3 sm:px-4 py-2 text-czech-blue-dark font-medium">${d.year}</td>
+          <td class="text-right px-3 sm:px-4 py-2 font-semibold text-czech-blue">${d.value.toLocaleString('cs-CZ')}</td>
+          ${changeHtml}
+        </tr>`;
+    }).join('');
+  }
+
+  function closeTakeover() {
+    if (!activeGrid || !activeTakeover) return;
+
+    if (activeChartInstance) {
+      activeChartInstance.destroy();
+      activeChartInstance = null;
+    }
+
+    activeGrid.classList.remove('hidden');
+    activeTakeover.remove();
+    activeTakeover = null;
+    activeGrid = null;
+  }
+
+  function openTakeover(card: HTMLElement) {
+    if (activeTakeover) closeTakeover();
+
+    const grid = card.closest('.stat-grid') as HTMLElement;
+    if (!grid) return;
+
+    const template = document.getElementById('stat-takeover-template') as HTMLTemplateElement;
+    if (!template) return;
+
+    const detailsStr = card.dataset.statDetails || '';
+    let details: Details | null = null;
+    try { details = JSON.parse(detailsStr); } catch {}
+    if (!details?.history?.length) return;
+
+    const takeoverEl = template.content.firstElementChild!.cloneNode(true) as HTMLElement;
+
+    const label = card.dataset.statLabel || '';
+    const value = card.dataset.statValue || '';
+    const unit = card.dataset.statUnit || '';
+    const description = card.dataset.statDescription || '';
+    const change = card.dataset.statChange || '';
+    const source = card.dataset.statSource || '';
+
+    takeoverEl.querySelector('.takeover-label')!.textContent = label;
+    takeoverEl.querySelector('.takeover-value')!.textContent = value;
+    takeoverEl.querySelector('.takeover-unit')!.textContent = unit;
+    takeoverEl.querySelector('.takeover-description')!.textContent = description || 'Podrobnosti o vývoji tohoto ukazatele.';
+
+    if (change) {
+      const changeNum = parseFloat(change);
+      const changeEl = takeoverEl.querySelector('.takeover-change') as HTMLElement;
+      const changeWrapper = takeoverEl.querySelector('.takeover-change-wrapper') as HTMLElement;
+      changeEl.textContent = `${changeNum >= 0 ? '↑ +' : '↓ −'}${Math.abs(changeNum)}%`;
+      changeEl.className = `takeover-change inline-flex items-center gap-1 text-sm font-semibold px-3 py-1 rounded-lg tabular-nums ${changeNum >= 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-600'}`;
+      changeWrapper.classList.remove('hidden');
+    }
+
+    if (source) {
+      takeoverEl.querySelector('.takeover-source')!.textContent = source;
+      takeoverEl.querySelector('.takeover-source-wrapper')!.classList.remove('hidden');
+    }
+
+    const chartTitle = details.chartLabel || 'Historický vývoj';
+    takeoverEl.querySelector('.takeover-chart-title')!.textContent = chartTitle;
+
+    takeoverEl.querySelector('.takeover-close')!.addEventListener('click', closeTakeover);
+
+    activeGrid = grid;
+    grid.classList.add('hidden');
+    grid.parentElement!.appendChild(takeoverEl);
+    activeTakeover = takeoverEl;
+
+    const canvas = activeTakeover.querySelector('.takeover-chart') as HTMLCanvasElement;
+
+    populateTable(activeTakeover, details!.history!);
+
+    requestAnimationFrame(() => {
+      renderChart(canvas, details!.history!, chartTitle);
+    });
+  }
+
+  // Bind events
+  document.querySelectorAll('.stat-card[data-has-details="true"]').forEach(card => {
+    card.addEventListener('click', () => openTakeover(card as HTMLElement));
     card.addEventListener('keydown', (e) => {
-      if (card.getAttribute('data-has-details') !== 'true') return;
       if (e instanceof KeyboardEvent && (e.key === 'Enter' || e.key === ' ')) {
         e.preventDefault();
-        (card as HTMLElement).click();
+        openTakeover(card as HTMLElement);
       }
     });
+  });
+
+  // ESC to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeTakeover();
   });
 </script>

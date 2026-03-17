@@ -1,29 +1,76 @@
 @import "tailwindcss";
 
 @theme {
+  /* Czech flag branding */
   --color-czech-red: #d80c13;
   --color-czech-red-dark: #a80a0f;
-  --color-czech-blue: #08437f;
-  --color-czech-blue-light: #0a5299;
-  --color-czech-blue-dark: #052a52;
-  
+  --color-czech-blue: #0F172A;
+  --color-czech-blue-light: #0369A1;
+  --color-czech-blue-dark: #020617;
+
+  /* Government civic palette */
+  --color-accent: #0369A1;
+  --color-surface: #F8FAFC;
+  --color-surface-alt: #F1F5F9;
+  --color-muted: #64748B;
+  --color-border: #E2E8F0;
+
+  /* Typography — Inter (body) + Libre Baskerville (display) */
   --font-display: 'Libre Baskerville', Georgia, serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
 }
 
 @layer base {
   html {
     font-family: var(--font-body);
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 3.5rem;
   }
-  
+
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color: #020617;
+    background: #FFFFFF;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
+  }
+}
+
+/* Tabular numbers for data values */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hide scrollbar for horizontal nav */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Scroll progress bar */
+#scroll-progress {
+  transform-origin: left;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

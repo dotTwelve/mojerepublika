@@ -2,25 +2,25 @@
 import regionData from '../data/regionData.json';
 
 const metrics = {
-  density: { 
-    label: 'Hustota', 
-    unit: 'obyv./km²', 
-    colorLow: '#dbeafe', 
-    colorHigh: '#1e40af',
+  density: {
+    label: 'Hustota',
+    unit: 'obyv./km²',
+    colorLow: '#e0f2fe',
+    colorHigh: '#0369A1',
     format: (v) => v.toLocaleString('cs-CZ')
   },
-  unemployment: { 
-    label: 'Nezaměstnanost', 
-    unit: '%', 
-    colorLow: '#dcfce7', 
-    colorHigh: '#dc2626',
+  unemployment: {
+    label: 'Nezaměstnanost',
+    unit: '%',
+    colorLow: '#dcfce7',
+    colorHigh: '#b91c1c',
     format: (v) => v.toFixed(1)
   },
-  salary: { 
-    label: 'Průměrná mzda', 
-    unit: 'Kč', 
-    colorLow: '#fef3c7', 
-    colorHigh: '#16a34a',
+  salary: {
+    label: 'Průměrná mzda',
+    unit: 'Kč',
+    colorLow: '#ecfdf5',
+    colorHigh: '#059669',
     format: (v) => v.toLocaleString('cs-CZ')
   }
 };
@@ -51,16 +51,23 @@ function getColor(value, min, max, colorLow, colorHigh) {
   return `rgb(${r}, ${g}, ${b})`;
 }
 
+// Move the sliding indicator to the active button
+function moveIndicator(activeBtn, indicator) {
+  if (!indicator || !activeBtn) return;
+  indicator.style.width = `${activeBtn.offsetWidth}px`;
+  indicator.style.transform = `translateX(${activeBtn.offsetLeft - 2}px)`;
+}
+
 function updateMap(metric) {
   currentMetric = metric;
   const regions = document.querySelectorAll('.region');
   const legendMin = document.querySelector('.legend-min');
   const legendMax = document.querySelector('.legend-max');
   const legendBar = document.querySelector('.legend-bar');
-  
+
   const { min, max } = getMinMax(metric);
   const { colorLow, colorHigh, unit, format } = metrics[metric];
-  
+
   regions.forEach(region => {
     const regionId = region.dataset.region;
     const data = regionData[regionId];
@@ -70,7 +77,7 @@ function updateMap(metric) {
       region.style.fill = color;
     }
   });
-  
+
   if (legendBar) {
     legendBar.style.background = `linear-gradient(to right, ${colorLow}, ${colorHigh})`;
   }
@@ -84,17 +91,39 @@ function initCzechMap() {
   const tooltipName = tooltip?.querySelector('.tooltip-name');
   const tooltipValue = tooltip?.querySelector('.tooltip-value');
   const regions = document.querySelectorAll('.region');
-  const buttons = document.querySelectorAll('.map-btn');
-  
+  const buttons = document.querySelectorAll('.seg-btn');
+  const indicator = document.querySelector('.seg-indicator');
+
+  // Position indicator on initial active button
+  const initialActive = document.querySelector('.seg-btn.active');
+  if (initialActive && indicator) {
+    // Wait for layout
+    requestAnimationFrame(() => moveIndicator(initialActive, indicator));
+  }
+
   // Button handlers
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+      moveIndicator(btn, indicator);
       updateMap(btn.dataset.metric);
     });
   });
-  
+
+  // Click to select region (desktop)
+  regions.forEach(region => {
+    region.addEventListener('click', () => {
+      const wasActive = region.classList.contains('active');
+      regions.forEach(r => r.classList.remove('active'));
+      if (!wasActive) {
+        region.classList.add('active');
+        // Move to end of SVG so it renders on top (SVG has no z-index)
+        region.parentNode.appendChild(region);
+      }
+    });
+  });
+
   // Tooltip handlers
   regions.forEach(region => {
     region.addEventListener('mouseenter', (e) => {
@@ -107,36 +136,36 @@ function initCzechMap() {
         tooltip?.classList.add('visible');
       }
     });
-    
+
     region.addEventListener('mousemove', (e) => {
       const rect = container?.getBoundingClientRect();
       if (rect && tooltip) {
         const tooltipWidth = tooltip.offsetWidth || 150;
         let x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
-        // Pokud by tooltip přesahoval vpravo, posuneme doleva
+
         if (x + tooltipWidth + 20 > rect.width) {
           x = x - tooltipWidth - 15;
         } else {
           x = x + 15;
         }
-        
+
         tooltip.style.left = `${Math.max(5, x)}px`;
         tooltip.style.top = `${y - 10}px`;
       }
     });
-    
+
     region.addEventListener('mouseleave', () => {
       tooltip?.classList.remove('visible');
     });
-    
+
     // Touch support
     region.addEventListener('touchstart', (e) => {
       e.preventDefault();
       regions.forEach(r => r.classList.remove('active'));
       region.classList.add('active');
-      
+      region.parentNode.appendChild(region);
+
       const regionId = e.target.dataset.region;
       const data = regionData[regionId];
       if (data && tooltipName && tooltipValue) {
@@ -144,28 +173,27 @@ function initCzechMap() {
         tooltipName.textContent = data.name;
         tooltipValue.textContent = format(data[currentMetric]) + ' ' + unit;
         tooltip?.classList.add('visible');
-        
+
         const touch = e.touches[0];
         const rect = container?.getBoundingClientRect();
         if (rect && tooltip) {
           const tooltipWidth = tooltip.offsetWidth || 150;
           let x = touch.clientX - rect.left;
           const y = touch.clientY - rect.top;
-          
-          // Pokud by tooltip přesahoval vpravo, posuneme doleva
+
           if (x + tooltipWidth + 20 > rect.width) {
             x = x - tooltipWidth - 15;
           } else {
             x = x + 15;
           }
-          
+
           tooltip.style.left = `${Math.max(5, x)}px`;
           tooltip.style.top = `${y - 40}px`;
         }
       }
     }, { passive: false });
   });
-  
+
   // Hide tooltip when touching outside
   document.addEventListener('touchstart', (e) => {
     if (!e.target.classList.contains('region')) {
@@ -173,7 +201,7 @@ function initCzechMap() {
       tooltip?.classList.remove('visible');
     }
   });
-  
+
   // Initialize with density
   updateMap('density');
 }
