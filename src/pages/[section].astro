@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import StatCard from '../components/StatCard.astro';
-import StatModal from '../components/StatModal.astro';
 import CzechMap from '../components/CzechMap.astro';
 import { sections, seoDescriptions, type Stat } from '../data/sections';
 
@@ -93,5 +92,4 @@ const showMap = section.id === 'demografie' || section.id === 'geografie';
     </div>
   </section>
 
-  <StatModal />
 </Layout>
