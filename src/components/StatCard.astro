@@ -82,12 +82,13 @@ const hasDetails = details && details.history && details.history.length > 0;
     </cite>
   )}
 
-  <!-- Chart icon -->
+  <!-- Detail CTA -->
   {hasDetails && (
-    <div class="absolute top-4 right-4 text-accent/40 group-hover:text-accent transition-colors">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <div class="flex items-center gap-1 mt-4 text-xs font-medium text-accent/60 group-hover:text-accent transition-colors">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
       </svg>
+      Zobrazit detail
     </div>
   )}
 </article>
