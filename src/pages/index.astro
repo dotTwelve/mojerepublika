@@ -33,72 +33,68 @@ const isStale = monthsOld > 12;
         </p>
       </div>
 
-      <!-- Bento Grid -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 auto-rows-[140px] sm:auto-rows-[160px]">
-        <!-- Big stat: Population -->
-        <div class="bento-card col-span-2 row-span-1 bg-primary text-white rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden group">
-          <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-accent/10 rounded-full"></div>
-          <span class="text-xs font-semibold text-white/50 uppercase tracking-wider">Počet obyvatel</span>
-          <div class="flex items-baseline gap-2">
-            <span class="font-display text-5xl sm:text-6xl font-bold tabular-nums counter" data-target="10.9" data-decimals="1">0</span>
-            <span class="text-xl text-white/60">mil.</span>
-          </div>
-        </div>
-
-        <!-- GDP -->
-        <div class="bento-card bg-card rounded-2xl p-5 flex flex-col justify-between border border-border hover:shadow-md transition-shadow">
-          <span class="text-xs font-semibold text-muted uppercase tracking-wider">HDP</span>
-          <div>
-            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="290">0</span>
-            <span class="text-sm text-muted ml-1">mld. €</span>
-          </div>
-          <span class="inline-flex items-center text-xs font-semibold text-emerald-600 tabular-nums">↑ +1,1%</span>
-        </div>
-
-        <!-- Area -->
-        <div class="bento-card bg-card rounded-2xl p-5 flex flex-col justify-between border border-border hover:shadow-md transition-shadow">
-          <span class="text-xs font-semibold text-muted uppercase tracking-wider">Rozloha</span>
-          <div>
-            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="78871" data-separator="true">0</span>
-            <span class="block text-sm text-muted mt-1">km²</span>
-          </div>
-          <span class="text-xs text-muted">14 krajů</span>
-        </div>
-
+      <!-- Split hero: Map left, Stats right -->
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
         <!-- Map -->
-        <div class="col-span-2 row-span-2 p-2 sm:p-4">
+        <div class="order-2 lg:order-1">
           <CzechMap />
         </div>
 
-        <!-- Life expectancy -->
-        <div class="bento-card bg-gradient-to-br from-accent/5 to-accent/10 rounded-2xl p-5 flex flex-col justify-between border border-accent/10">
-          <span class="text-xs font-semibold text-accent uppercase tracking-wider">Délka života</span>
-          <div>
-            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="79.4" data-decimals="1">0</span>
-            <span class="text-sm text-muted ml-1">let</span>
+        <!-- Stats -->
+        <div class="order-1 lg:order-2 space-y-4">
+          <!-- Population (hero stat) -->
+          <div class="bg-primary text-primary-text rounded-2xl p-6 relative overflow-hidden">
+            <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-accent/10 rounded-full"></div>
+            <span class="text-xs font-semibold text-primary-text/50 uppercase tracking-wider">Počet obyvatel</span>
+            <div class="flex items-baseline gap-2 mt-2">
+              <span class="font-display text-5xl sm:text-6xl font-bold tabular-nums counter" data-target="10.9" data-decimals="1">0</span>
+              <span class="text-xl text-primary-text/60">mil.</span>
+            </div>
           </div>
-          <span class="text-xs text-muted">Průměr EU: 80,1</span>
-        </div>
 
-        <!-- Tourists -->
-        <div class="bento-card bg-card rounded-2xl p-5 flex flex-col justify-between border border-border hover:shadow-md transition-shadow">
-          <span class="text-xs font-semibold text-muted uppercase tracking-wider">Turistů ročně</span>
-          <div>
-            <span class="font-display text-3xl sm:text-4xl font-bold text-primary tabular-nums counter" data-target="22.8" data-decimals="1">0</span>
-            <span class="text-sm text-muted ml-1">mil.</span>
+          <!-- 2x2 grid of key stats -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-card rounded-xl p-4 border border-border">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">HDP</span>
+              <div class="mt-1">
+                <span class="font-display text-2xl sm:text-3xl font-bold text-primary tabular-nums counter" data-target="290">0</span>
+                <span class="text-sm text-muted ml-1">mld. €</span>
+              </div>
+              <span class="inline-flex items-center text-xs font-semibold text-positive tabular-nums mt-1">↑ +1,1%</span>
+            </div>
+
+            <div class="bg-card rounded-xl p-4 border border-border">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Rozloha</span>
+              <div class="mt-1">
+                <span class="font-display text-2xl sm:text-3xl font-bold text-primary tabular-nums counter" data-target="78871" data-separator="true">0</span>
+                <span class="block text-xs text-muted mt-1">km² · 14 krajů</span>
+              </div>
+            </div>
+
+            <div class="bg-card rounded-xl p-4 border border-accent/10">
+              <span class="text-xs font-semibold text-accent uppercase tracking-wider">Délka života</span>
+              <div class="mt-1">
+                <span class="font-display text-2xl sm:text-3xl font-bold text-primary tabular-nums counter" data-target="79.4" data-decimals="1">0</span>
+                <span class="text-sm text-muted ml-1">let</span>
+              </div>
+              <span class="text-xs text-muted mt-1">Průměr EU: 80,1</span>
+            </div>
+
+            <div class="bg-card rounded-xl p-4 border border-border">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Turistů</span>
+              <div class="mt-1">
+                <span class="font-display text-2xl sm:text-3xl font-bold text-primary tabular-nums counter" data-target="22.8" data-decimals="1">0</span>
+                <span class="text-sm text-muted ml-1">mil./rok</span>
+              </div>
+              <span class="inline-flex items-center text-xs font-semibold text-positive tabular-nums mt-1">↑ +3,6%</span>
+            </div>
           </div>
-          <span class="inline-flex items-center text-xs font-semibold text-emerald-600 tabular-nums">↑ +3,6%</span>
-        </div>
 
-        <!-- CTA row -->
-        <div class="col-span-2 flex flex-col sm:flex-row items-start sm:items-center gap-3 py-2">
-          <p class="text-muted text-sm leading-relaxed flex-1">
-            Otevřená data z ČSÚ, Eurostatu a dalších zdrojů. 14 sekcí, 67 statistik.
-          </p>
-          <div class="flex gap-2 shrink-0">
+          <!-- CTA -->
+          <div class="flex flex-wrap gap-3 pt-2">
             <a
               href="#sekce"
-              class="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors"
+              class="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-primary-text text-sm font-medium rounded-lg transition-colors"
             >
               Prozkoumat data
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>

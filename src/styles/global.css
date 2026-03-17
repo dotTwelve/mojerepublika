@@ -103,7 +103,7 @@
 }
 
 /* Map — needs global scope for CSS var access */
-.region { stroke: var(--c-border); }
+.region { stroke: var(--c-bg); }
 .region:hover, .region.active { stroke: var(--c-text); }
 .segmented-control { background: var(--c-surface-alt); }
 .seg-indicator { background: var(--c-card); }
