@@ -244,7 +244,7 @@
   function openTakeover(card: HTMLElement) {
     if (activeTakeover) closeTakeover();
 
-    const grid = card.closest('.stat-grid') as HTMLElement;
+    const grid = card.closest('.stat-grid-wrapper') || card.closest('.stat-grid') as HTMLElement;
     if (!grid) return;
 
     const template = document.getElementById('stat-takeover-template') as HTMLTemplateElement;
